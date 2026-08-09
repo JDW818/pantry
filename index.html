@@ -384,6 +384,10 @@ ol.steps .amt{font-weight:600;color:#1B1815}
 .seg{display:flex;gap:5px;background:var(--ink-2);border:1px solid var(--line-2);border-radius:12px;padding:4px}
 .seg button{flex:1;border-radius:8px;padding:12px;font-size:14.5px;font-weight:500;color:var(--muted);transition:all .16s}
 .seg button.on{background:var(--herb);color:#161A08;font-weight:600}
+.opt-label{
+  font-family:var(--fb);font-size:9.5px;letter-spacing:0;text-transform:none;
+  color:var(--dim);margin-left:5px;
+}
 .reassure{display:flex;gap:10px;align-items:flex-start;margin-top:24px;font-size:12.5px;line-height:1.55;color:var(--muted-2)}
 .reassure svg{width:15px;height:15px;stroke:var(--herb-deep);fill:none;stroke-width:1.7;flex-shrink:0;margin-top:1px}
 .helplink{display:block;margin:18px auto 0;color:var(--muted-2);font-size:12.5px;text-decoration:underline}
@@ -437,7 +441,7 @@ ol.steps .amt{font-weight:600;color:#1B1815}
       <line class="b" x1="2" y1="72.7" x2="130" y2="72.7"/>
     </svg>
     <h1>The <em>Pantry</em></h1>
-    <p class="lede" id="lede">Everything you cook, in one place. Paste your token once and you're in.</p>
+    <p class="lede" id="lede">Everything your household cooks, in one place. Paste your token once and you're in.</p>
     <div class="repochip" id="repochip"></div>
     <div class="form">
       <div class="field tokenrow">
@@ -446,16 +450,14 @@ ol.steps .amt{font-weight:600;color:#1B1815}
         <button class="paste" onclick="pasteToken()">Paste</button>
       </div>
       <div class="field">
-        <label>Who's cooking</label>
-        <div class="seg" id="seg-who">
-          <button data-who="jess" onclick="setWho('jess')">Jess</button>
-          <button data-who="partner" onclick="setWho('partner')">Partner</button>
-        </div>
+        <label for="f-name">Your name <span class="opt-label">optional</span></label>
+        <input id="f-name" placeholder="What should we call you?" autocapitalize="words"
+               autocorrect="off" spellcheck="false" enterkeyhint="go">
       </div>
       <button class="btn btn-p btn-w" onclick="saveSettings()">Open the pantry</button>
       <div class="reassure">
         <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        <span>The token stays on this phone and only ever talks to GitHub. Nothing else sees it.</span>
+        <span>Your token stays on this device and only ever talks to GitHub. Nothing else sees it.</span>
       </div>
       <button class="btn btn-s btn-w" style="margin-top:10px" onclick="importSeed()">Import from seed.json</button>
       <button class="helplink" onclick="toggleHelp()">Token not working?</button>
@@ -507,7 +509,7 @@ ol.steps .amt{font-weight:600;color:#1B1815}
   </div>
 
   <div class="pane" id="pane-week">
-    <p class="sub">Tap a day to pick something. You and your wife see the same plan.</p>
+    <p class="sub">Tap a day to pick something. Everyone on this repo sees the same plan.</p>
     <div id="week"></div>
   </div>
 
@@ -567,10 +569,17 @@ function deriveRepo(){
   return '';
 }
 
+/* Earlier builds stored a two-person 'who' toggle. Carry over anything
+   meaningful from it, then never write it again. */
+function migrateName(){
+  const old = store.get('pantry.who');
+  return old && old !== 'partner' && old !== 'jess' ? old : '';
+}
+
 let CFG = {
   repo:  store.get('pantry.repo')  || deriveRepo(),
   token: store.get('pantry.token') || '',
-  who:   store.get('pantry.who')   || 'jess',
+  name:  store.get('pantry.name') ?? migrateName(),
 };
 
 /* ==================== github ==================== */
@@ -653,7 +662,8 @@ async function boot(){
 
 function prefill(){
   document.getElementById('f-token').value = CFG.token;
-  setWho(CFG.who); paintRepo();
+  document.getElementById('f-name').value = CFG.name || '';
+  paintRepo();
   document.body.classList.add('locked');
   if (CFG.token) document.getElementById('lede').textContent =
     'Welcome back. Reconnect to pick up where you left off.';
@@ -669,10 +679,7 @@ function editRepo(){
   CFG.repo = v.trim().replace(/^https?:\/\/github\.com\//,'').replace(/\/$/,'');
   store.set('pantry.repo', CFG.repo); paintRepo();
 }
-function setWho(w){
-  CFG.who = w;
-  document.querySelectorAll('#seg-who button').forEach(b => b.classList.toggle('on', b.dataset.who === w));
-}
+
 async function pasteToken(){
   try {
     const t = await navigator.clipboard.readText();
@@ -686,9 +693,10 @@ function saveSettings(){
   if (!CFG.repo) return toast('Set the repository first', true);
   if (!tok)      return toast('Paste your token first', true);
   CFG.token = tok;
+  CFG.name = document.getElementById('f-name').value.trim();
   store.set('pantry.repo', CFG.repo);
   store.set('pantry.token', CFG.token);
-  store.set('pantry.who', CFG.who);
+  store.set('pantry.name', CFG.name);
   boot();
 }
 function openSettings(){ prefill(); go('settings'); }
@@ -922,9 +930,8 @@ function renderHome(){
 
 function greeting(){
   const hr = new Date().getHours();
-  const name = CFG.who === 'jess' ? 'Jess' : '';
   const g = hr < 11 ? 'Good morning' : hr < 17 ? 'Good afternoon' : 'Good evening';
-  return name ? `${g}, ${name}` : g;
+  return CFG.name ? `${g}, ${esc(CFG.name)}` : g;
 }
 
 /* ---------- queue ---------- */
@@ -948,7 +955,7 @@ function renderColl(){
 
   const cuisines = [...new Set(APPROVED.map(r => r.cuisine).filter(Boolean))].sort();
   document.getElementById('filters').innerHTML =
-    [['all','All'],['veg','For both of us'],['quick','Under 45 min'],
+    [['all','All'],['veg','Vegetarian'],['quick','Under 45 min'],
      ...cuisines.map(c => [c, c[0].toUpperCase()+c.slice(1).replace(/-/g,' ')])]
     .map(([k,l]) => `<button class="fchip ${filter===k?'on':''}" onclick="setFilter('${k}')">${esc(l)}</button>`).join('');
 
@@ -1432,9 +1439,10 @@ function toast(msg, bad){
   toastH = setTimeout(() => t.classList.remove('up'), bad ? 5200 : 2300);
 }
 
-document.getElementById('f-token')?.addEventListener('keydown', e => {
-  if (e.key === 'Enter') saveSettings();
-});
+for (const id of ['f-token','f-name'])
+  document.getElementById(id)?.addEventListener('keydown', e => {
+    if (e.key === 'Enter') saveSettings();
+  });
 
 boot();
 </script>

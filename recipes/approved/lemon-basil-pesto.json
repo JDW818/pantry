@@ -1,0 +1,189 @@
+{
+  "id": "lemon-basil-pesto",
+  "title": "Lemon Basil Pesto",
+  "description": "Spinach stretches the basil and keeps it green. Toasted nuts, plenty of parm, lemon to lift it.",
+  "source": {
+    "type": "personal",
+    "url": null,
+    "author": "jess",
+    "addedBy": "jess"
+  },
+  "dateAdded": "2026-08-09",
+  "status": "approved",
+  "recipeType": "component",
+  "cuisine": "italian",
+  "tags": [
+    "sauce",
+    "component",
+    "quick",
+    "no-cook",
+    "make-ahead"
+  ],
+  "mainProtein": "none",
+  "equipment": [
+    "food-processor"
+  ],
+  "activeTimeMin": 12,
+  "totalTimeMin": 12,
+  "serves": 6,
+  "vegetarian": {
+    "status": "easily-adaptable",
+    "notes": "Parmesan is the only catch — most is made with animal rennet. Use a vegetarian hard cheese and it's fine.",
+    "swaps": [
+      {
+        "ingredientId": "i04",
+        "with": "vegetarian hard cheese (or a rennet-free parmesan)"
+      }
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "i01",
+      "qty": 2,
+      "unit": "cup",
+      "item": "raw spinach",
+      "prep": null,
+      "note": "2 cups / big handfuls",
+      "section": "produce",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i02",
+      "qty": 0.75,
+      "unit": "cup",
+      "item": "basil",
+      "prep": null,
+      "note": "1 small bunch",
+      "section": "produce",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i03",
+      "qty": 2,
+      "unit": "clove",
+      "item": "garlic",
+      "prep": null,
+      "note": null,
+      "section": "produce",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i04",
+      "qty": 0.5,
+      "unit": "cup",
+      "item": "Parmesan",
+      "prep": null,
+      "note": null,
+      "section": "dairy",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i05",
+      "qty": 0.5,
+      "unit": "cup",
+      "item": "toasted walnuts or pine nuts",
+      "prep": null,
+      "note": null,
+      "section": "pantry",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i06",
+      "qty": 1,
+      "unit": "tbsp",
+      "item": "lemon juice",
+      "prep": null,
+      "note": "plus some zest, optional",
+      "section": "produce",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i07",
+      "qty": 0.5,
+      "unit": "tsp",
+      "item": "salt",
+      "prep": null,
+      "note": null,
+      "section": "spices",
+      "vague": false,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i08",
+      "qty": 0.25,
+      "unit": "tsp",
+      "item": "black pepper",
+      "prep": null,
+      "note": null,
+      "section": "spices",
+      "vague": false,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i09",
+      "qty": 0.5,
+      "unit": "cup",
+      "item": "olive oil",
+      "prep": null,
+      "note": null,
+      "section": "pantry",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    }
+  ],
+  "steps": [
+    {
+      "id": "s01",
+      "title": "Blend it",
+      "text": "Blend {i01}, {i02}, {i03}, {i04}, {i05}, {i06}, {i07}, and {i08}, streaming in {i09} until it comes together.",
+      "timerSeconds": null,
+      "unattended": false,
+      "ingredientIds": [
+        "i01",
+        "i02",
+        "i03",
+        "i04",
+        "i05",
+        "i06",
+        "i07",
+        "i08",
+        "i09"
+      ]
+    },
+    {
+      "id": "s02",
+      "title": "Save the pasta water",
+      "text": "Always retain pasta water — a splash loosens the pesto and makes it cling.",
+      "timerSeconds": null,
+      "unattended": false,
+      "ingredientIds": []
+    }
+  ],
+  "household": {
+    "lastCooked": null,
+    "timesCooked": null,
+    "ratings": {},
+    "kidNotes": null,
+    "inRotation": true
+  },
+  "rawText": "Lemon Basil Pesto\n- 2 cups/big handfuls raw spinach\n- 1 small bunch basil (3/4 cup)\n- 2 garlic cloves\n- 1/2 cup Parmesan\n- 1/2 cup toasted walnuts/pine nuts\n- 1 tablespoon lemon juice + some zest (optional)\n- 1/2 teaspoon salt\n- 1/4 teaspoon black pepper\n- 1/2 cup olive oil\n\nAlways retain pasta water",
+  "componentOf": [
+    "pasta"
+  ],
+  "yield": "about 1 1/2 cups"
+}

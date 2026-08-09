@@ -117,7 +117,7 @@ h1{font-family:var(--fd);font-weight:600;font-size:26px;line-height:1.12;letter-
   letter-spacing:-.025em;margin:0 0 12px;
 }
 .hero h2.none{font-family:var(--fb);font-size:19px;font-weight:450;color:var(--muted);letter-spacing:0}
-.hero .facts{display:flex;flex-wrap:wrap;gap:7px}
+.hero .facts{display:flex;flex-wrap:wrap;align-items:center;gap:7px}
 
 .banner{
   display:flex;width:100%;align-items:center;gap:13px;text-align:left;
@@ -140,15 +140,15 @@ h1{font-family:var(--fd);font-weight:600;font-size:26px;line-height:1.12;letter-
 .strip{display:flex;gap:9px;overflow-x:auto;scrollbar-width:none;margin:0 -20px;padding:2px 20px 2px;align-items:stretch}
 .strip::-webkit-scrollbar{display:none}
 .tile{
-  flex-shrink:0;width:158px;min-height:118px;text-align:left;background:var(--ink-2);
+  flex-shrink:0;width:158px;min-height:104px;text-align:left;background:var(--ink-2);
   border:1px solid var(--line);border-radius:var(--r);padding:14px;
   display:flex;flex-direction:column;transition:border-color .18s;
 }
 .tile h4{
-  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;
-  overflow:hidden;flex:1;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;
+  overflow:hidden;margin-bottom:0;
 }
-.tile .m{margin-top:auto;padding-top:8px}
+.tile .m{margin-top:auto;padding-top:10px}
 .tile:active{border-color:var(--line-2)}
 .tile .dot{width:6px;height:6px;border-radius:50%;background:var(--herb);margin-bottom:9px}
 .tile .dot.warn{background:var(--ochre)} .tile .dot.no{background:var(--chile)}
@@ -167,10 +167,10 @@ h1{font-family:var(--fd);font-weight:600;font-size:26px;line-height:1.12;letter-
 
 /* ============ pills ============ */
 .pill{
-  display:inline-flex;align-items:center;gap:5px;
+  display:inline-flex;align-items:center;justify-content:center;gap:5px;
   background:var(--ink-3);border:1px solid var(--line);
-  border-radius:8px;padding:5px 9px;font-size:11.5px;color:var(--muted);
-  white-space:nowrap;
+  border-radius:8px;padding:0 10px;height:28px;line-height:1;
+  font-size:11.5px;color:var(--muted);white-space:nowrap;flex:0 0 auto;
 }
 .pill.veg{background:var(--herb-dim);border-color:rgba(163,194,74,.24);color:#B9D468}
 .pill.warn{background:var(--ochre-dim);border-color:rgba(217,154,43,.24);color:#E0B15E}
@@ -236,7 +236,7 @@ label{display:block;font-family:var(--fm);font-size:10px;letter-spacing:.12em;te
 .sheet{background:var(--paper);color:#1B1815;border-radius:18px;padding:22px 19px;margin-bottom:12px}
 .sheet h2{font-family:var(--fd);font-size:27px;font-weight:600;line-height:1.1;letter-spacing:-.026em;margin:0 0 9px}
 .sheet .desc{font-size:14px;line-height:1.55;color:#5C534B;margin:0 0 16px}
-.sheet .facts{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:18px}
+.sheet .facts{display:flex;flex-wrap:wrap;align-items:center;gap:7px;margin-bottom:18px}
 .sheet .pill{background:var(--paper-2);border-color:var(--paper-3);color:#5C534B}
 .sheet .pill.veg{background:rgba(110,140,36,.13);border-color:rgba(110,140,36,.28);color:#4E6618}
 .sheet .pill.warn{background:rgba(217,154,43,.16);border-color:rgba(217,154,43,.32);color:#8A5E0F}
@@ -631,6 +631,30 @@ async function listFolder(folder){
     return r;
   }));
 }
+/* Two taps in a row fire two PUTs holding the same sha; GitHub rejects the
+   second. Serialize per file, and on conflict re-read the sha and retry. */
+const writeChain = {};
+function queueWrite(key, fn){
+  const next = (writeChain[key] || Promise.resolve()).then(fn, fn);
+  writeChain[key] = next.catch(() => {});
+  return next;
+}
+
+async function saveJson(path, data, getSha, setSha){
+  for (let attempt = 0; attempt < 3; attempt++) {
+    try {
+      const r = await putFile(path, data, getSha());
+      setSha(r.content.sha);
+      return true;
+    } catch (e) {
+      if (!/\b(409|422)\b/.test(e.message)) throw e;
+      const f = await gh(`/repos/${CFG.repo}/contents/${path}`);   // someone else wrote first
+      setSha(f?.sha);
+    }
+  }
+  return false;
+}
+
 async function putFile(path, obj, sha){
   return gh(`/repos/${CFG.repo}/contents/${path}`, { method:'PUT', body: JSON.stringify({
     message:`pantry: update ${path}`,
@@ -758,21 +782,31 @@ async function loadHave(){
     HAVE = new Set(Array.isArray(j) ? j : (j.alwaysHave || []));
     HAVE_SHA = f.sha;
   } else {
-    HAVE = new Set(STAPLES);   // sensible starting point, editable
+    HAVE = new Set();   // starts empty -- this list is the user's, not ours
     HAVE_SHA = null;
   }
 }
-async function saveHave(){
-  try {
-    const r = await putFile('pantry.json', [...HAVE].sort(), HAVE_SHA);
-    HAVE_SHA = r.content.sha;
-  } catch (e) { toast("Couldn't save that", true); }
+function saveHave(){
+  return queueWrite('pantry.json', () =>
+    saveJson('pantry.json', [...HAVE].sort(), () => HAVE_SHA, sha => { HAVE_SHA = sha; }));
 }
+
+/* Move it locally for immediate feedback, but put it back if the write
+   fails -- the screen should never claim something the repo doesn't have. */
 async function toggleHave(key){
-  if (HAVE.has(key)) { HAVE.delete(key); toast('Back on the list'); }
-  else { HAVE.add(key); got.delete(key); toast('Moved to Always have'); }
+  const wasHad = HAVE.has(key);
+  wasHad ? HAVE.delete(key) : HAVE.add(key);
+  if (!wasHad) got.delete(key);
   renderList();
-  saveHave();
+  try {
+    const ok = await saveHave();
+    if (!ok) throw new Error('conflict');
+    toast(wasHad ? 'Back on the list' : 'Moved to Always have');
+  } catch {
+    wasHad ? HAVE.add(key) : HAVE.delete(key);
+    renderList();
+    toast("Couldn't save that — put it back", true);
+  }
 }
 function toggleHaveSection(){ showHave = !showHave; renderList(); }
 
@@ -798,9 +832,12 @@ async function loadPlan(){
   if (f && f.content) { PLAN = normalizePlan(JSON.parse(b64decode(f.content))); PLAN_SHA = f.sha; }
   else { PLAN = {}; PLAN_SHA = null; }
 }
-async function savePlan(){
-  const r = await putFile('plan.json', PLAN, PLAN_SHA);
-  PLAN_SHA = r.content.sha;
+function savePlan(){
+  return queueWrite('plan.json', async () => {
+    const ok = await saveJson('plan.json', PLAN, () => PLAN_SHA, sha => { PLAN_SHA = sha; });
+    if (!ok) throw new Error("Couldn't save the plan");
+    return ok;
+  });
 }
 
 /* ==================== nav ==================== */
@@ -1308,7 +1345,6 @@ const UNIT_WORDS = new Set(['clove','sprig','stalk','head','bunch','can','slice'
 const ALIAS = { scallion:'green onion','spring onion':'green onion',capsicum:'bell pepper',
   courgette:'zucchini','garbanzo bean':'chickpea','kosher salt':'salt','sea salt':'salt',
   'cayenne pepper':'cayenne','chile powder':'chili powder' };
-const STAPLES = new Set(['salt','olive oil','vegetable oil','neutral oil','water','butter','sugar','flour','black pepper']);
 const SEC_ORDER = ['produce','meat','dairy','frozen','canned','pantry','spices','bakery','other'];
 
 function depl(s){

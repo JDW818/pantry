@@ -12,6 +12,7 @@ permissions:
 
 jobs:
   extract:
+    if: contains(github.event.issue.labels.*.name, 'recipe')
     runs-on: ubuntu-latest
     timeout-minutes: 15
 
@@ -21,6 +22,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+          cache: pip
 
       - name: Install dependencies
         run: pip install anthropic requests yt-dlp
@@ -62,6 +64,11 @@ jobs:
               issue_number: context.issue.number,
               body,
             });
+            // Only close when a recipe actually landed. An issue left open is
+            // the signal that something needs looking at -- a job that goes
+            // green while quietly saving nothing is worse than a failure.
+            const saved = '${{ steps.extract.outputs.saved }}' === 'true';
+            if (!saved) return;
             await github.rest.issues.update({
               ...context.repo,
               issue_number: context.issue.number,

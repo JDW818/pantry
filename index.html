@@ -26,11 +26,15 @@
   --r:14px;
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html{background:var(--ink)}
+html{
+  background:var(--ink);
+  -webkit-text-size-adjust:100%;      /* landscape shouldn't reflow the type */
+}
 body{
   margin:0;font-family:var(--fb);color:var(--text);background:var(--ink);
   min-height:100dvh;display:flex;flex-direction:column;
   -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+  overscroll-behavior-y:contain;      /* no rubber-band past the app */
 }
 /* warmth from above -- keeps large dark areas from reading as void */
 body::before{
@@ -47,7 +51,7 @@ button{font-family:inherit;color:inherit;cursor:pointer;border:0;background:none
   position:sticky;top:0;z-index:30;
   background:rgba(18,16,14,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
   border-bottom:1px solid var(--line);
-  padding:calc(10px + env(safe-area-inset-top)) 20px 11px;
+  padding:calc(8px + env(safe-area-inset-top)) 14px 9px 20px;
   display:flex;align-items:center;justify-content:space-between;gap:12px;
 }
 .mark{font-family:var(--fd);font-size:19px;font-weight:600;letter-spacing:-.02em;line-height:1}
@@ -56,7 +60,7 @@ button{font-family:inherit;color:inherit;cursor:pointer;border:0;background:none
 body.locked #refresh-btn{display:none}
 #refresh-btn.spinning svg{animation:sp .8s linear infinite}
 .icon-btn{
-  width:34px;height:34px;border-radius:10px;display:grid;place-items:center;
+  width:42px;height:42px;border-radius:10px;display:grid;place-items:center;
   color:var(--muted);transition:background .16s,color .16s;
 }
 .icon-btn:hover,.icon-btn:active{background:var(--ink-3);color:var(--text)}
@@ -140,31 +144,6 @@ h1{font-family:var(--fd);font-weight:600;font-size:26px;line-height:1.12;letter-
 .banner .txt small{display:block;color:var(--muted);font-size:12px;margin-top:2px}
 .banner .arw{color:var(--herb);font-size:17px}
 
-.strip{
-  display:flex;gap:9px;overflow-x:auto;scrollbar-width:none;
-  margin:0 -20px;padding:2px 20px;align-items:flex-start;
-  scroll-snap-type:x proximity;
-}
-.strip .tile{scroll-snap-align:start}
-.strip::-webkit-scrollbar{display:none}
-.tile{
-  flex-shrink:0;width:170px;text-align:left;background:var(--ink-2);
-  border:1px solid var(--line);border-radius:var(--r);padding:13px 14px 14px;
-  transition:border-color .18s;
-}
-.tile h4{
-  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;
-  overflow:hidden;margin:0 0 5px;font-size:15px;line-height:1.25;
-}
-.tile .m{margin:0}
-.tile:active{border-color:var(--line-2)}
-.tile .dot{
-  width:6px;height:6px;border-radius:50%;background:var(--herb);
-  display:inline-block;vertical-align:middle;margin-right:7px;
-}
-.tile .dot.warn{background:var(--ochre)} .tile .dot.no{background:var(--chile)}
-.tile h4{font-family:var(--fd);font-size:15px;font-weight:600;line-height:1.2;margin:0 0 6px;letter-spacing:-.01em}
-.tile .m{font-size:11.5px;color:var(--muted-2)}
 
 .sec-head{
   display:flex;align-items:baseline;justify-content:space-between;
@@ -244,6 +223,12 @@ label{display:block;font-family:var(--fm);font-size:10px;letter-spacing:.12em;te
 .empty p{color:var(--muted-2);font-size:13.5px;line-height:1.6;max-width:280px;margin:0 auto}
 
 /* ============ detail ============ */
+/* Recipe text is for reading in a kitchen, often at arm's length. */
+@media (max-width:430px){
+  ol.steps p{font-size:14.5px;line-height:1.65}
+  ul.ing li{font-size:14.5px}
+  .sheet{padding:20px 17px}
+}
 .sheet{background:var(--paper);color:#1B1815;border-radius:18px;padding:22px 19px;margin-bottom:12px}
 .sheet h2{font-family:var(--fd);font-size:27px;font-weight:600;line-height:1.1;letter-spacing:-.026em;margin:0 0 9px}
 .sheet .desc{font-size:14px;line-height:1.55;color:#5C534B;margin:0 0 16px}
@@ -291,7 +276,7 @@ label{display:block;font-family:var(--fm);font-size:10px;letter-spacing:.12em;te
 
 .sec{font-family:var(--fm);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#8A8079;padding-top:16px;border-top:1px solid var(--paper-2);margin-bottom:9px}
 ul.ing{list-style:none;margin:0;padding:0}
-ul.ing li{display:flex;gap:11px;padding:8px 0;font-size:14px;line-height:1.4;border-bottom:1px solid rgba(0,0,0,.05);cursor:pointer;align-items:flex-start}
+ul.ing li{display:flex;gap:11px;padding:10px 0;min-height:42px;font-size:14px;line-height:1.4;border-bottom:1px solid rgba(0,0,0,.05);cursor:pointer;align-items:flex-start}
 ul.ing li:last-child{border-bottom:0}
 ul.ing li.got{opacity:.35}
 ul.ing li.got .nm{text-decoration:line-through}
@@ -346,13 +331,14 @@ ol.steps .amt{font-weight:600;color:#1B1815}
 .dline{display:flex;align-items:center;gap:8px}
 .day .t{
   font-family:var(--fd);font-size:16px;font-weight:600;flex:1;letter-spacing:-.012em;
-  line-height:1.3;min-width:0;text-align:left;padding:3px 0;
+  line-height:1.3;min-width:0;text-align:left;padding:9px 0;min-height:42px;
 }
-.day .x{color:var(--dim);padding:6px;margin:-6px -4px -6px 0;flex-shrink:0}
+.day .x{color:var(--dim);padding:12px;margin:-12px -8px -12px 0;flex-shrink:0;display:grid;place-items:center}
 .day .x:active{color:var(--chile)}
 .day .x svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
 .day .add{
-  align-self:flex-start;font-size:13px;color:var(--dim);padding:4px 0;text-align:left;
+  align-self:flex-start;font-size:13px;color:var(--dim);text-align:left;
+  padding:10px 0;min-height:40px;display:flex;align-items:center;
 }
 .day.filled .add{font-size:12px;padding-top:5px}
 .day .add:active{color:var(--herb)}
@@ -366,7 +352,7 @@ ol.steps .amt{font-weight:600;color:#1B1815}
   font-family:var(--fm);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
   color:var(--herb);margin:0 0 4px;padding-bottom:8px;border-bottom:1px solid var(--line);
 }
-.li{display:flex;gap:13px;padding:12px 0;border-bottom:1px solid var(--line);cursor:pointer;align-items:flex-start}
+.li{display:flex;gap:13px;padding:11px 0;min-height:46px;border-bottom:1px solid var(--line);cursor:pointer;align-items:center}
 .li:last-child{border-bottom:0}
 .li.got{opacity:.32}
 .li.got .nm{text-decoration:line-through}
@@ -381,8 +367,9 @@ ol.steps .amt{font-weight:600;color:#1B1815}
 .li .qq{font-family:var(--fm);font-size:12.5px;color:var(--herb);flex-shrink:0;padding-top:2px}
 .li .fr{display:block;font-size:11.5px;color:var(--muted-2);margin-top:3px}
 .have{
-  flex-shrink:0;padding:5px 9px;border-radius:7px;font-size:11.5px;
+  flex-shrink:0;padding:10px 11px;border-radius:8px;font-size:11.5px;line-height:1;
   color:var(--muted-2);border:1px solid var(--line);white-space:nowrap;
+  min-height:40px;display:inline-flex;align-items:center;margin:-6px 0;
   transition:color .16s,border-color .16s;
 }
 .have:active{color:var(--herb);border-color:rgba(163,194,74,.4)}
@@ -1112,7 +1099,7 @@ function renderHome(){
   const tonight = tonightAll[0];
   const alongside = tonightAll.slice(1);
   const meals = APPROVED.filter(r => r.recipeType !== 'component');
-  const recent = [...meals].slice(0, 6);
+  const recent = [...meals].slice(0, 4);
 
   let h = `<p class="eyebrow">${greeting()}</p>`;
 
@@ -1168,17 +1155,15 @@ function renderHome(){
         rowCard(r, `openRecipe('${r.id}','approved','home','Kitchen')`, d)).join('')}</div>`;
   }
 
-  /* recently added */
+  /* Your collection. A vertical list rather than a sideways strip: it shows
+     more per screen, matches every other list here, and there's nothing on a
+     phone that makes horizontal scrolling worth the trade. */
   if (recent.length) {
-    h += `<div class="sec-head"><h3>In your collection</h3><button onclick="go('coll')">See all ${meals.length}</button></div>
-      <div class="strip">${recent.map(r => {
-        const tone = (VEG[r.vegetarian?.status] || [])[1] || '';
-        const meta = [dur(r.totalTimeMin), r.cuisine].filter(Boolean)[0] || '';
-        return `<button class="tile" onclick="openRecipe('${r.id}','approved','home','Kitchen')">
-          <h4>${esc(r.title)}</h4>
-          <span class="m"><span class="dot ${tone}"></span>${esc(meta)}</span>
-        </button>`;
-      }).join('')}</div>`;
+    h += `<div class="sec-head"><h3>In your collection</h3>${
+      meals.length > recent.length ? `<button onclick="go('coll')">See all ${meals.length}</button>` : ''
+    }</div>
+      <div class="rows">${recent.map(r =>
+        rowCard(r, `openRecipe('${r.id}','approved','home','Kitchen')`)).join('')}</div>`;
   } else if (!PENDING.length && !SEED_WAITING) {
     h += emptyState('book', 'Nothing here yet',
       'Share a recipe link from your phone and it turns up in the queue within a minute.');

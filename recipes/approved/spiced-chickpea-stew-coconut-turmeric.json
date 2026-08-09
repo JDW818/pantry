@@ -1,0 +1,318 @@
+{
+  "id": "spiced-chickpea-stew-coconut-turmeric",
+  "title": "Spiced Chickpea Stew With Coconut and Turmeric",
+  "description": "A deeply savory, pantry-friendly chickpea stew simmered in coconut milk and stock with turmeric and red-pepper flakes, finished with wilted greens, fresh mint, and a drizzle of olive oil.",
+  "source": {
+    "type": "web",
+    "url": "https://www.alisoneroman.com/recipes/spiced-chickpea-stew-with-coconut-and-turmeric/",
+    "author": "www.alisoneroman.com",
+    "addedBy": "JDW818"
+  },
+  "dateAdded": "2026-08-09",
+  "status": "approved",
+  "recipeType": "meal",
+  "componentOf": [],
+  "yield": "4 to 6 servings",
+  "cuisine": "Middle Eastern-inspired",
+  "tags": [
+    "stew",
+    "chickpeas",
+    "coconut milk",
+    "turmeric",
+    "weeknight",
+    "one-pot",
+    "vegetarian-friendly"
+  ],
+  "mainProtein": "chickpeas",
+  "equipment": [
+    "large pot",
+    "wooden spoon or spatula"
+  ],
+  "activeTimeMin": 30,
+  "totalTimeMin": 65,
+  "serves": 5,
+  "vegetarian": {
+    "status": "easily-adaptable",
+    "notes": "Use vegetable stock instead of chicken stock — no extra pan needed. Everything else is already vegetarian.",
+    "swaps": [
+      {
+        "ingredientId": "i11",
+        "with": "vegetable stock"
+      }
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "i01",
+      "qty": 0.25,
+      "unit": "cup",
+      "item": "olive oil",
+      "prep": null,
+      "note": "plus more for serving; source says \"1/4 cup olive oil, plus more for serving\"",
+      "section": "pantry",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i02",
+      "qty": 4,
+      "unit": "cloves",
+      "item": "garlic",
+      "prep": "chopped",
+      "note": null,
+      "section": "produce",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i03",
+      "qty": 1,
+      "unit": null,
+      "item": "large yellow onion",
+      "prep": "chopped",
+      "note": null,
+      "section": "produce",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i04",
+      "qty": 1,
+      "unit": "2-inch piece",
+      "item": "fresh ginger",
+      "prep": "finely chopped",
+      "note": "source says \"1 (2-inch) piece ginger, finely chopped\"",
+      "section": "produce",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i05",
+      "qty": null,
+      "unit": null,
+      "item": "kosher salt",
+      "prep": null,
+      "note": "to taste",
+      "section": "pantry",
+      "vague": true,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i06",
+      "qty": null,
+      "unit": null,
+      "item": "black pepper",
+      "prep": null,
+      "note": "to taste",
+      "section": "spices",
+      "vague": true,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i07",
+      "qty": 1.5,
+      "unit": "teaspoons",
+      "item": "ground turmeric",
+      "prep": null,
+      "note": "plus more for serving; source says \"1 1/2 teaspoons ground turmeric, plus more for serving\"",
+      "section": "spices",
+      "vague": false,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i08",
+      "qty": 1,
+      "unit": "teaspoon",
+      "item": "red-pepper flakes",
+      "prep": null,
+      "note": "plus more for serving",
+      "section": "spices",
+      "vague": false,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i09",
+      "qty": 30,
+      "unit": "oz",
+      "item": "canned chickpeas",
+      "prep": "drained and rinsed",
+      "note": "source says \"2 (15-ounce) cans chickpeas, drained and rinsed\"",
+      "section": "canned",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i10",
+      "qty": 30,
+      "unit": "oz",
+      "item": "full-fat coconut milk",
+      "prep": null,
+      "note": "source says \"2 (15-ounce) cans full-fat coconut milk\"",
+      "section": "canned",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i11",
+      "qty": 2,
+      "unit": "cups",
+      "item": "vegetable or chicken stock",
+      "prep": null,
+      "note": null,
+      "section": "pantry",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i12",
+      "qty": 1,
+      "unit": "bunch",
+      "item": "leafy greens (Swiss chard, kale, or collard greens)",
+      "prep": "stems removed, torn into bite-size pieces",
+      "note": "source says \"1 bunch Swiss chard, kale or collard greens, stems removed, torn into bite-size pieces\"; all are vegetables",
+      "section": "produce",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i13",
+      "qty": 1,
+      "unit": "cup",
+      "item": "mint leaves",
+      "prep": null,
+      "note": "for serving",
+      "section": "produce",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i14",
+      "qty": null,
+      "unit": null,
+      "item": "yogurt",
+      "prep": null,
+      "note": "for serving",
+      "section": "dairy",
+      "vague": true,
+      "optional": true,
+      "scalable": true
+    },
+    {
+      "id": "i15",
+      "qty": null,
+      "unit": null,
+      "item": "toasted pita, lavash, or other flatbread",
+      "prep": "toasted",
+      "note": "for serving",
+      "section": "bakery",
+      "vague": true,
+      "optional": true,
+      "scalable": true
+    }
+  ],
+  "steps": [
+    {
+      "id": "s01",
+      "title": "Sauté aromatics",
+      "text": "Heat {i01} in a large pot over medium. Add {i02}, {i03}, and {i04}. Season with {i05} and {i06}, and cook, stirring occasionally until onion is translucent and starts to brown a little at the edges, 3 to 5 minutes.",
+      "timerSeconds": 240,
+      "unattended": false,
+      "ingredientIds": [
+        "i01",
+        "i02",
+        "i03",
+        "i04",
+        "i05",
+        "i06"
+      ]
+    },
+    {
+      "id": "s02",
+      "title": "Fry chickpeas with spices",
+      "text": "Add {i07}, {i08}, and {i09}, and season with {i05} and {i06}. Cook, stirring frequently, so the chickpeas sizzle and fry a bit in the spices and oil, until they've started to break down and get a little browned and crisp, 8 to 10 minutes. Remove about a cup of chickpeas and set aside for garnish.",
+      "timerSeconds": 540,
+      "unattended": false,
+      "ingredientIds": [
+        "i07",
+        "i08",
+        "i09",
+        "i05",
+        "i06"
+      ]
+    },
+    {
+      "id": "s03",
+      "title": "Crush chickpeas and add liquid",
+      "text": "Using a wooden spoon or spatula, further crush the remaining chickpeas slightly to release their starchy insides. (This will help thicken the stew.) Add {i10} and {i11}, and season with {i05} and {i06}.",
+      "timerSeconds": null,
+      "unattended": false,
+      "ingredientIds": [
+        "i10",
+        "i11",
+        "i05",
+        "i06"
+      ]
+    },
+    {
+      "id": "s04",
+      "title": "Simmer until thickened",
+      "text": "Bring to a simmer, scraping up any bits that have formed on the bottom of the pot. Cook, stirring occasionally, until stew has thickened, 30 to 35 minutes. (Taste a chickpea or two, not just the liquid, to make sure they have simmered long enough to be as delicious as possible.) If after 30 to 35 minutes, you want the stew a bit thicker, keep simmering until you've reached your desired consistency. Determining perfect stew thickness is a personal journey!",
+      "timerSeconds": 1950,
+      "unattended": true,
+      "ingredientIds": []
+    },
+    {
+      "id": "s05",
+      "title": "Wilt the greens",
+      "text": "Add {i12} and stir, making sure they're submerged in the liquid. Cook until they wilt and soften, 3 to 7 minutes, depending on what you're using. (Swiss chard and spinach will wilt and soften much faster than kale or collard greens.) Season again with {i05} and {i06}.",
+      "timerSeconds": 300,
+      "unattended": false,
+      "ingredientIds": [
+        "i12",
+        "i05",
+        "i06"
+      ]
+    },
+    {
+      "id": "s06",
+      "title": "Serve",
+      "text": "Divide among bowls and top with {i13}, reserved chickpeas, a sprinkle of {i08} and a good drizzle of {i01}. Serve alongside {i14} and {i15} if using; dust the {i14} with {i07} if you'd like.",
+      "timerSeconds": null,
+      "unattended": false,
+      "ingredientIds": [
+        "i13",
+        "i08",
+        "i01",
+        "i14",
+        "i15",
+        "i07"
+      ]
+    }
+  ],
+  "household": {
+    "lastCooked": null,
+    "timesCooked": null,
+    "ratings": {},
+    "kidNotes": null,
+    "inRotation": true
+  },
+  "rawText": "{\n \"@context\": \"https://schema.org/\",\n \"@type\": \"Recipe\",\n \"name\": \"Spiced Chickpea Stew With Coconut and Turmeric\",\n \"image\": \"https://www.alisoneroman.com/content/images/images-squarespace-cdn-com/content/v1/541b1515e4b0a990b33a796e/1611424595681-H7HIZ2T6BLAU3E0H0N5E/alison-roman-spiced-chickpea-stew-with-coconut-and-turmeric.jpg\",\n \"author\": {\n  \"@type\": \"Person\",\n  \"name\": \"Alison Roman\"\n },\n \"recipeYield\": \"YIELD \\u2014 4 to 6 servings\",\n \"recipeIngredient\": [\n  \"\\u00bc cup olive oil, plus more for serving\",\n  \"4 garlic cloves, chopped\",\n  \"1 large yellow onion, chopped\",\n  \"1 (2-inch) piece ginger, finely chopped\",\n  \"Kosher salt and black pepper\",\n  \"1 \\u00bd teaspoons ground turmeric, plus more for serving\",\n  \"1 teaspoon red-pepper flakes, plus more for serving\",\n  \"2 (15-ounce) cans chickpeas, drained and rinsed\",\n  \"2 (15-ounce) cans full-fat coconut milk\",\n  \"2 cups vegetable or chicken stock\",\n  \"1 bunch Swiss chard, kale or collard greens, stems removed, torn into bite-size pieces\",\n  \"1 cup mint leaves, for serving\",\n  \"Yogurt, for serving (optional)\",\n  \"Toasted pita, lavash or other flatbread, for serving (optional)\"\n ],\n \"recipeInstructions\": [\n  {\n   \"@type\": \"HowToStep\",\n   \"text\": \"Heat 1/4 cup oil in a large pot over medium. Add garlic, onion and ginger. Season with salt and pepper, and cook, stirring occasionally until onion is translucent and starts to brown a little at the edges, 3 to 5 minutes.Add 1 1/2 teaspoons turmeric, 1 teaspoon red-pepper flakes, and the chickpeas, and season with salt and pepper. Cook, stirring frequently, so the chickpeas sizzle and fry a bit in the spices and oil, until they\\u2019ve started to break down and get a little browned and crisp, 8 to 10 minutes. Remove about a cup of chickpeas and set aside for garnish.Using a wooden spoon or spatula, further crush the remaining chickpeas slightly to release their starchy insides. (This will help thicken the stew.) Add coconut milk and stock, and season with salt and pepper.Bring to a simmer, scraping up any bits that have formed on the bottom of the pot. Cook, stirring occasionally, until stew has thickened, 30 to 35 minutes. (Taste a chickpea or two, not just the liquid, to make sure they have simmered long enough to be as delicious as possible.) If after 30 to 35 minutes, you want the stew a bit thicker, keep simmering until you've reached your desired consistency. Determining perfect stew thickness is a personal journey!Add greens and stir, making sure they\\u2019re submerged in the liquid. Cook until they wilt and soften, 3 to 7 minutes, depending on what you\\u2019re using. (Swiss chard and spinach will wilt and soften much faster than kale or collard greens.) Season again with salt and pepper.Divide among bowls and top with mint, reserved chickpeas, a sprinkle of red-pepper flakes and a good drizzle of olive oil. Serve alongside yogurt and toasted pita if using; dust the yogurt with turmeric if you'd like.\"\n  }\n ]\n}",
+  "sourceNotes": "The recipe lists \"vegetable or chicken stock\" — use vegetable stock to keep this vegetarian without any extra work. Read from the page's structured recipe data.",
+  "confidence": "low",
+  "extractionErrors": [
+    "i12 (leafy greens (Swiss chard, kale, or collard greens)) is pork fat, status is easily-adaptable, and no swap targets it -- add a swap or change the status"
+  ]
+}

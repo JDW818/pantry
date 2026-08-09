@@ -1,0 +1,226 @@
+{
+  "id": "shredded-chicken",
+  "title": "Shredded Chicken",
+  "description": "Instant Pot shredded chicken seasoned with chili powder, cumin, and garlic, pressure-cooked in salsa and broth, then finished uncovered to absorb the liquid. Works great with salsa verde.",
+  "source": {
+    "type": "text",
+    "url": null,
+    "author": null,
+    "addedBy": "JDW818"
+  },
+  "dateAdded": "2026-08-09",
+  "status": "approved",
+  "recipeType": "component",
+  "componentOf": [],
+  "yield": null,
+  "cuisine": "Mexican-American",
+  "tags": [
+    "instant-pot",
+    "shredded-chicken",
+    "meal-prep",
+    "weeknight"
+  ],
+  "mainProtein": "chicken",
+  "equipment": [
+    "Instant Pot",
+    "KitchenAid stand mixer"
+  ],
+  "activeTimeMin": 20,
+  "totalTimeMin": 50,
+  "serves": null,
+  "vegetarian": {
+    "status": "not-adaptable",
+    "notes": "Chicken is structural to this recipe. No vegetarian adaptation is possible.",
+    "swaps": []
+  },
+  "ingredients": [
+    {
+      "id": "i01",
+      "qty": null,
+      "unit": null,
+      "item": "chicken",
+      "prep": null,
+      "note": "Source specifies only 'sear in instant pot' with no quantity or cut given",
+      "section": "meat",
+      "vague": true,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i02",
+      "qty": 1,
+      "unit": "cup",
+      "item": "chicken broth",
+      "prep": null,
+      "note": null,
+      "section": "canned",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i03",
+      "qty": 1,
+      "unit": "cup",
+      "item": "salsa",
+      "prep": null,
+      "note": "Any kind; source says verde rules",
+      "section": "pantry",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i04",
+      "qty": 1,
+      "unit": "tsp",
+      "item": "chili powder",
+      "prep": null,
+      "note": null,
+      "section": "spices",
+      "vague": false,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i05",
+      "qty": 1,
+      "unit": "tsp",
+      "item": "garlic powder",
+      "prep": null,
+      "note": null,
+      "section": "spices",
+      "vague": false,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i06",
+      "qty": 1,
+      "unit": "tsp",
+      "item": "cumin",
+      "prep": null,
+      "note": null,
+      "section": "spices",
+      "vague": false,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i07",
+      "qty": 1,
+      "unit": "tsp",
+      "item": "salt",
+      "prep": null,
+      "note": null,
+      "section": "pantry",
+      "vague": false,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i08",
+      "qty": 1,
+      "unit": "tsp",
+      "item": "black pepper",
+      "prep": null,
+      "note": null,
+      "section": "spices",
+      "vague": false,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i09",
+      "qty": null,
+      "unit": null,
+      "item": "fresh cilantro",
+      "prep": null,
+      "note": "Source says 'a handful'",
+      "section": "produce",
+      "vague": true,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i10",
+      "qty": null,
+      "unit": null,
+      "item": "lime",
+      "prep": "juiced",
+      "note": "Source says 'some lime', quantity not specified",
+      "section": "produce",
+      "vague": true,
+      "optional": false,
+      "scalable": false
+    }
+  ],
+  "steps": [
+    {
+      "id": "s01",
+      "title": "Sear chicken",
+      "text": "Using the sauté function, sear {i01} in the Instant Pot.",
+      "timerSeconds": null,
+      "unattended": false,
+      "ingredientIds": [
+        "i01"
+      ]
+    },
+    {
+      "id": "s02",
+      "title": "Season and add liquids",
+      "text": "Add {i04}, {i05}, {i06}, {i07}, and {i08} to the chicken. Pour {i03} over the top to cover, then pour in {i02}.",
+      "timerSeconds": null,
+      "unattended": false,
+      "ingredientIds": [
+        "i04",
+        "i05",
+        "i06",
+        "i07",
+        "i08",
+        "i03",
+        "i02"
+      ]
+    },
+    {
+      "id": "s03",
+      "title": "Pressure cook",
+      "text": "Seal the Instant Pot and cook on high pressure for 12 minutes.",
+      "timerSeconds": 720,
+      "unattended": true,
+      "ingredientIds": []
+    },
+    {
+      "id": "s04",
+      "title": "Shred chicken",
+      "text": "Release pressure and transfer {i01} to the KitchenAid stand mixer. Shred using the paddle attachment.",
+      "timerSeconds": null,
+      "unattended": false,
+      "ingredientIds": [
+        "i01"
+      ]
+    },
+    {
+      "id": "s05",
+      "title": "Finish in pot",
+      "text": "Return shredded {i01} to the Instant Pot. Add {i09} and {i10}. Cook uncovered on high (sauté mode) for 5 minutes, or until the broth is mostly absorbed.",
+      "timerSeconds": 300,
+      "unattended": false,
+      "ingredientIds": [
+        "i01",
+        "i09",
+        "i10"
+      ]
+    }
+  ],
+  "household": {
+    "lastCooked": null,
+    "timesCooked": null,
+    "ratings": {},
+    "kidNotes": null,
+    "inRotation": true
+  },
+  "rawText": "Shredded Chicken\n\n\t⁃\t1 cup chicken broth \n\t⁃\t1 cup salsa (any kind, but verde rules)\n\n\t⁃\t1 tsp chili powder\n\t⁃\t1 tsp garlic powder \n\t⁃\t1 tsp cumin\n\t⁃\t1 tsp salt\n\t⁃\t1 tsp black pepper \n\nSear in instant pot \nAdd seasoning\nCover in salsa\nPour in broth \n12 min on high\nShred in KitchenAid\nPut back in pot, add a handful of cilantro and some lime, and cook uncovered on high for 5 min, or until broth is mostly absorbed",
+  "sourceNotes": "The source lists no quantity or cut for the chicken. The recipe is extracted faithfully with qty: null on that ingredient.",
+  "confidence": "medium"
+}

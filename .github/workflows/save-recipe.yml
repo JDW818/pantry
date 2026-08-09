@@ -12,7 +12,6 @@ permissions:
 
 jobs:
   extract:
-    if: contains(github.event.issue.labels.*.name, 'recipe')
     runs-on: ubuntu-latest
     timeout-minutes: 15
 

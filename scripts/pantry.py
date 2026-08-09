@@ -13,8 +13,10 @@ from __future__ import annotations
 import base64
 import json
 import os
+from pathlib import Path
 import pathlib
 import re
+import time
 import subprocess
 import sys
 import tempfile
@@ -405,6 +407,80 @@ class Fetched:
     author: str | None
     used_transcript: bool = False
     note: str | None = None   # anything the reviewer should know
+    images: list[tuple[str, str]] = field(default_factory=list)  # (media_type, base64)
+
+
+IMAGE_TYPES = {
+    ".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".png": "image/png",
+    ".gif": "image/gif", ".webp": "image/webp", ".heic": "image/jpeg",
+}
+
+
+# GitHub rewrites a pasted photo into one of these markdown links.
+ATTACHMENT_RE = re.compile(
+    r"!\[[^\]]*\]\((https://(?:user-images\.githubusercontent\.com|github\.com/user-attachments)/[^\s)]+)\)"
+    r"|<img[^>]+src=\"(https://(?:user-images\.githubusercontent\.com|github\.com/user-attachments)/[^\"]+)\"",
+    re.I,
+)
+
+
+def attachment_urls(body: str) -> list[str]:
+    return [u for m in ATTACHMENT_RE.finditer(body) for u in m.groups() if u]
+
+
+def fetch_attachments(urls: list[str]) -> Fetched:
+    """Photos pasted straight into the issue -- no Shortcut needed."""
+    images = []
+    for url in urls[:3]:                       # a recipe spread is rarely more
+        r = requests.get(url, timeout=30, headers={"User-Agent": UA})
+        r.raise_for_status()
+        blob = r.content
+        if len(blob) > 5_000_000:
+            raise ValueError("that image is over 5MB")
+        media = r.headers.get("content-type", "image/jpeg").split(";")[0]
+        if media not in IMAGE_TYPES.values():
+            media = "image/jpeg"
+        images.append((media, base64.b64encode(blob).decode()))
+
+    if not images:
+        raise ValueError("no readable image in the issue")
+
+    return Fetched(
+        text="",
+        source_type="image",
+        url=None,
+        author=None,
+        note=f"read from {len(images)} attached image(s)",
+        images=images,
+    )
+
+
+def looks_like_image(path: str) -> bool:
+    return Path(path).suffix.lower() in IMAGE_TYPES
+
+
+def fetch_image(path: str) -> Fetched:
+    """A screenshot or photo committed to the repo, referenced by path."""
+    root = Path(os.environ.get("GITHUB_WORKSPACE", "."))
+    full = (root / path.lstrip("/")).resolve()
+    if not str(full).startswith(str(root.resolve())):
+        raise ValueError("image path escapes the repository")
+    if not full.exists():
+        raise FileNotFoundError(f"no file at {path}")
+
+    data = full.read_bytes()
+    if len(data) > 5_000_000:
+        raise ValueError("image is over 5MB — take a smaller screenshot")
+
+    media = IMAGE_TYPES[full.suffix.lower()]
+    return Fetched(
+        text="",
+        source_type="image",
+        url=None,
+        author=None,
+        note=f"read from the image at {path}",
+        images=[(media, base64.b64encode(data).decode())],
+    )
 
 
 def classify(url: str) -> str:
@@ -716,7 +792,7 @@ def extract(fetched: Fetched, added_by: str = "jess",
         f"still invalid after {MAX_ATTEMPTS} attempts:\n{last}")
 
 
-def _build_user_message(f: Fetched, added_by: str) -> str:
+def _build_user_message(f: Fetched, added_by: str) -> list[dict]:
     head = [f"Source type: {f.source_type}"]
     if f.url:
         head.append(f"URL: {f.url}")
@@ -725,8 +801,26 @@ def _build_user_message(f: Fetched, added_by: str) -> str:
     if f.used_transcript:
         head.append("NOTE: partly reconstructed from spoken audio. "
                     "Set confidence to low and be conservative with amounts.")
+    if f.images:
+        head.append(
+            "NOTE: the recipe is in the attached image. Transcribe it exactly as "
+            "written into rawText -- do not tidy it up. If any quantity is cut "
+            "off, blurred, or you are guessing at a digit, leave qty null, set "
+            "vague true, and say so in sourceNotes. Never fill in a number you "
+            "cannot actually read. Set confidence to medium or low."
+        )
     head.append(f"addedBy: {added_by}")
-    return "\n".join(head) + "\n\n---\n\n" + f.text
+
+    text = "\n".join(head)
+    if f.text.strip():
+        text += "\n\n---\n\n" + f.text
+
+    blocks: list[dict] = []
+    for media, b64 in f.images:
+        blocks.append({"type": "image",
+                       "source": {"type": "base64", "media_type": media, "data": b64}})
+    blocks.append({"type": "text", "text": text})
+    return blocks
 
 
 def _call(client, messages) -> str:
@@ -819,13 +913,42 @@ def existing_ids() -> dict[str, str]:
     return found
 
 
+def existing_urls() -> dict[str, str]:
+    """Source URLs already ingested -- the only reliable 'same recipe' signal."""
+    found = {}
+    for folder in ("pending", "approved", "rejected"):
+        d = ROOT / "recipes" / folder
+        if not d.exists():
+            continue
+        for f in d.glob("*.json"):
+            try:
+                url = (json.loads(f.read_text()).get("source") or {}).get("url")
+            except Exception:
+                continue
+            if url:
+                found[url.split("?")[0].rstrip("/")] = f.stem
+    return found
+
+
+def free_id(base: str, taken: dict[str, str]) -> str:
+    """Two different recipes can slug the same. Don't throw the second away."""
+    if base not in taken:
+        return base
+    for n in range(2, 100):
+        candidate = f"{base}-{n}"
+        if candidate not in taken:
+            return candidate
+    return f"{base}-{int(time.time())}"
+
+
 def main() -> int:
     body = (os.environ.get("ISSUE_BODY") or "").strip()
     author = os.environ.get("ISSUE_AUTHOR", "")
     added_by = PEOPLE.get(author, author or "unknown")
 
     if not body:
-        say("Nothing in the issue body. Send a link or paste the recipe text.")
+        say("Nothing in the issue body. Send a link, paste the recipe text, "
+            "or attach a photo.")
         out("saved", "false")
         return 0
 
@@ -833,21 +956,31 @@ def main() -> int:
     m = re.search(r"https?://\S+", body)
     source = m.group(0) if m else body
 
+    # A photo pasted into the issue, or a path committed by a Shortcut.
+    attached = attachment_urls(body)
+    img = re.search(r"(?:^|\s)([\w./-]+\.(?:jpe?g|png|gif|webp|heic))\s*$", body, re.I)
+
     try:
-        fetched = fetch(
-            source,
-            allow_transcription=os.environ.get("PANTRY_TRANSCRIBE") == "1",
-        )
+        if attached:
+            fetched = fetch_attachments(attached)
+        elif img and not m:
+            fetched = fetch_image(img.group(1))
+        else:
+            fetched = fetch(
+                source,
+                allow_transcription=os.environ.get("PANTRY_TRANSCRIBE") == "1",
+            )
     except Exception as e:
         say(
             "**Couldn't read that link.**\n\n"
             f"```\n{e}\n```\n\n"
-            "Open the page, copy the recipe text, and paste it into a new issue instead."
+            "Open the page, copy the recipe text, and paste it into a new issue "
+            "instead -- or attach a photo of the recipe to an issue."
         )
         out("saved", "false")
         return 0
 
-    if len(fetched.text.strip()) < 60:
+    if not fetched.images and len(fetched.text.strip()) < 60:
         say(
             "**Not enough text there to work with.**\n\n"
             "The page or caption came back nearly empty. Paste the recipe text directly."
@@ -867,17 +1000,31 @@ def main() -> int:
         return 0
 
     seen = existing_ids()
-    if recipe["id"] in seen:
-        where = seen[recipe["id"]]
-        say(f"**{recipe['title']}** is already saved (in `{where}`). Nothing to do.")
-        out("saved", "false")
-        return 0
+
+    # Same source URL means we really have already ingested this one.
+    src_url = (recipe.get("source") or {}).get("url")
+    if src_url:
+        prior = existing_urls().get(src_url.split("?")[0].rstrip("/"))
+        if prior:
+            say(f"**{recipe['title']}** came from a link already saved as "
+                f"`{prior}`. Nothing to do.")
+            out("saved", "false")
+            return 0
+
+    # A slug collision is just two recipes with similar names -- keep both.
+    original = recipe["id"]
+    recipe["id"] = free_id(original, seen)
+    renamed = recipe["id"] != original
 
     PENDING.mkdir(parents=True, exist_ok=True)
     path = PENDING / f"{recipe['id']}.json"
     path.write_text(json.dumps(recipe, indent=2, ensure_ascii=False) + "\n")
 
-    say(_report(recipe, result, fetched))
+    report = _report(recipe, result, fetched)
+    if renamed:
+        report += (f"\n\nSaved as `{recipe['id']}` — `{original}` was taken by a "
+                   f"different recipe.")
+    say(report)
     out("saved", "true")
     out("title", recipe["title"].replace("\n", " "))
     return 0

@@ -1,0 +1,204 @@
+{
+  "id": "tomato-sauce",
+  "title": "Tomato Sauce",
+  "description": "A slow-infused olive oil base with garlic, basil, and red pepper flakes, finished with San Marzano and datterino tomatoes, simmered uncovered and blended smooth.",
+  "source": {
+    "type": "text",
+    "url": null,
+    "author": null,
+    "addedBy": "JDW818"
+  },
+  "dateAdded": "2026-08-09",
+  "status": "pending",
+  "recipeType": "component",
+  "componentOf": [
+    "spaghetti",
+    "pasta"
+  ],
+  "yield": "roughly 1 quart",
+  "cuisine": "Italian",
+  "tags": [
+    "sauce",
+    "pasta",
+    "make-ahead",
+    "vegetarian"
+  ],
+  "mainProtein": "none",
+  "equipment": [
+    "heavy pot",
+    "immersion blender"
+  ],
+  "activeTimeMin": 15,
+  "totalTimeMin": 50,
+  "serves": null,
+  "vegetarian": {
+    "status": "inherently-veg",
+    "notes": null,
+    "swaps": []
+  },
+  "ingredients": [
+    {
+      "id": "i01",
+      "qty": null,
+      "unit": null,
+      "item": "garlic cloves",
+      "prep": null,
+      "note": "6-8 cloves",
+      "section": "produce",
+      "vague": true,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i02",
+      "qty": null,
+      "unit": null,
+      "item": "fresh basil leaves",
+      "prep": null,
+      "note": "handful",
+      "section": "produce",
+      "vague": true,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i03",
+      "qty": null,
+      "unit": null,
+      "item": "red pepper flakes",
+      "prep": null,
+      "note": "couple good shakes",
+      "section": "spices",
+      "vague": true,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i04",
+      "qty": null,
+      "unit": null,
+      "item": "good olive oil",
+      "prep": null,
+      "note": "a bunch of glugs — enough to cover garlic and basil in tilted pot, plus more",
+      "section": "pantry",
+      "vague": true,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i05",
+      "qty": 28,
+      "unit": "oz",
+      "item": "whole peeled San Marzano tomatoes",
+      "prep": null,
+      "note": "1 28 oz. can",
+      "section": "canned",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i06",
+      "qty": 15,
+      "unit": "oz",
+      "item": "datterino tomatoes",
+      "prep": null,
+      "note": "1 15 oz. can; source says \"if you're making spaghetti sauce\"",
+      "section": "canned",
+      "vague": false,
+      "optional": true,
+      "scalable": true
+    },
+    {
+      "id": "i07",
+      "qty": 1,
+      "unit": "tbsp",
+      "item": "dried oregano",
+      "prep": null,
+      "note": null,
+      "section": "spices",
+      "vague": false,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i08",
+      "qty": 2,
+      "unit": "tsp",
+      "item": "salt",
+      "prep": null,
+      "note": null,
+      "section": "spices",
+      "vague": false,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i09",
+      "qty": null,
+      "unit": null,
+      "item": "sugar",
+      "prep": null,
+      "note": "two big pinches",
+      "section": "pantry",
+      "vague": true,
+      "optional": false,
+      "scalable": false
+    }
+  ],
+  "steps": [
+    {
+      "id": "s01",
+      "title": "Infuse oil with aromatics",
+      "text": "Add {i04}, {i01}, {i02}, and {i03} to a heavy pot. Tilt the pot so everything is submerged in the oil. Heat on low for 10–15 minutes, just until bubbling and the basil and garlic are barely crispy.",
+      "timerSeconds": 750,
+      "unattended": false,
+      "ingredientIds": [
+        "i01",
+        "i02",
+        "i03",
+        "i04"
+      ]
+    },
+    {
+      "id": "s02",
+      "title": "Add tomatoes and seasonings",
+      "text": "Add {i05}, {i06} (if using), {i07}, {i08}, and {i09} to the pot.",
+      "timerSeconds": null,
+      "unattended": false,
+      "ingredientIds": [
+        "i05",
+        "i06",
+        "i07",
+        "i08",
+        "i09"
+      ]
+    },
+    {
+      "id": "s03",
+      "title": "Simmer uncovered",
+      "text": "Raise heat to medium-low and simmer with the lid off until the oil looks orangey and glossy on top. Watch occasionally and adjust heat to maintain a gentle simmer.",
+      "timerSeconds": 1800,
+      "unattended": true,
+      "ingredientIds": []
+    },
+    {
+      "id": "s04",
+      "title": "Blend smooth",
+      "text": "Use an immersion blender to blend the sauce until smooth.",
+      "timerSeconds": null,
+      "unattended": false,
+      "ingredientIds": []
+    }
+  ],
+  "household": {
+    "lastCooked": null,
+    "timesCooked": null,
+    "ratings": {},
+    "kidNotes": null,
+    "inRotation": true
+  },
+  "rawText": "Tomato Sauce\n\n\t⁃\t6-8 garlic cloves\n\t⁃\tHandful fresh basil leaves\n\t⁃\tCouple good shakes of red pepper flakes\n\t⁃\tA bunch of glugs of good olive oil (enough to cover, more in instructions)b\n\n\t⁃\t1 28 oz. cans whole peeled San Marzano tomatoes \n\t⁃\t1 15 oz. can of datterino tomatoes (if you’re making spaghetti sauce)\n\n\t⁃\t1 tbsp. dried oregano\n\t⁃\t2 tsp. salt\n\t⁃\ttwo big pinches sugar\n\nHeat up olive oil, garlic, basil, and red pepper leaves in heavy pot on low. Tilt pot so that everything is submerged. Let it cook for 10-15 minutes, just until it’s bubbling and the basil and garlic are barely crispy. Add everything else and let it simmer on medium low with the lid off until the oil looks nice and orangey on top. Blend it up with an immersion blender.",
+  "sourceNotes": "The simmer step has no stated time — totalTimeMin estimated at ~50 minutes based on a ~30-minute simmer following the 10–15 minute oil infusion. The source says \"red pepper leaves\" in the instructions but \"red pepper flakes\" in the ingredient list; treated as flakes throughout.",
+  "confidence": "high"
+}

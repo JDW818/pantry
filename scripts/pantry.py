@@ -545,7 +545,7 @@ from datetime import date
 import anthropic
 
 
-MODEL = "claude-sonnet-5"
+MODEL = "claude-sonnet-4-6"
 MAX_ATTEMPTS = 3
 
 SYSTEM = """You convert unstructured recipe content into a strict JSON schema.
@@ -559,11 +559,12 @@ vegetarian and the household is practiced at splitting meals. The cook is
 skilled and equipped: gas range, well-seasoned cast iron, carbon steel wok,
 Ooni, Big Green Egg.
 
-Standing constraints, applied to every recipe:
-- No skin-on cuts. Substitute the skinless version and say so in sourceNotes.
-- No lamb. Extract faithfully but set household.inRotation to false and
-  explain in sourceNotes.
-- The household stocks vegetarian Worcestershire. Don't flag it as a problem.
+Standing constraints. Apply them silently -- only mention one in sourceNotes
+if you ACTUALLY changed something because of it. Never state that a constraint
+did not apply; a recipe with no meat in it should say nothing about meat.
+- No skin-on cuts. Substitute the skinless version.
+- No lamb. Extract faithfully but set household.inRotation to false.
+- The household stocks vegetarian Worcestershire. Never flag it.
 
 ## Rules
 
@@ -618,8 +619,11 @@ Standing constraints, applied to every recipe:
     "extractionWarnings": ["..."] describing what's missing.
 
 Also set:
-- sourceNotes: anything the cook should know -- substitutions you applied,
-  steps the source glossed over, claims that look wrong.
+- sourceNotes: ONLY things that change what the cook does -- a substitution you
+  applied, a step the source skipped, a quantity that looks wrong, a time that
+  omits unattended work. Leave it null if there is nothing of that kind. Never
+  use it to narrate your own process, restate the schema, or report that a
+  household rule was not triggered.
 - confidence: "high" | "medium" | "low". Use "low" for anything reconstructed
   from spoken audio alone.
 

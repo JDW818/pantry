@@ -490,6 +490,8 @@ ol.steps .amt{font-weight:600;color:#1B1815}
         <span>Your token stays on this device and only ever talks to GitHub. Nothing else sees it.</span>
       </div>
       <button class="btn btn-s btn-w" style="margin-top:10px" onclick="importSeed()">Import from seed.json</button>
+      <button class="btn btn-s btn-w" style="margin-top:8px" onclick="clearHave()">Clear the "already have" list</button>
+      <p class="note" id="have-count" style="text-align:center;margin-top:8px"></p>
       <button class="helplink" onclick="toggleHelp()">Token not working?</button>
       <p class="note" id="help" hidden style="margin-top:14px">
         It needs <b>Contents: read and write</b> on this repo, not just Issues —
@@ -727,6 +729,7 @@ function prefill(){
   document.getElementById('f-token').value = CFG.token;
   document.getElementById('f-name').value = CFG.name || '';
   paintRepo();
+  paintHaveCount();
   document.body.classList.add('locked');
   if (CFG.token) document.getElementById('lede').textContent =
     'Welcome back. Reconnect to pick up where you left off.';
@@ -827,7 +830,7 @@ async function loadHave(){
   const f = await gh(`/repos/${CFG.repo}/contents/pantry.json`);
   if (f && f.content) {
     const j = JSON.parse(b64decode(f.content));
-    HAVE = new Set(Array.isArray(j) ? j : (j.alwaysHave || []));
+    HAVE = new Set(Array.isArray(j) ? j : (j.alreadyHave || j.alwaysHave || []));
     HAVE_SHA = f.sha;
   } else {
     HAVE = new Set();   // starts empty -- this list is the user's, not ours
@@ -837,7 +840,7 @@ async function loadHave(){
 function saveHave(key, add){
   return queueWrite('pantry.json', async () => {
     const res = await commitShared('pantry.json', raw => {
-      const set = new Set(Array.isArray(raw) ? raw : (raw?.alwaysHave || []));
+      const set = new Set(Array.isArray(raw) ? raw : (raw?.alreadyHave || raw?.alwaysHave || []));
       add ? set.add(key) : set.delete(key);
       return [...set].sort();
     }, () => []);
@@ -858,7 +861,7 @@ async function toggleHave(key){
   try {
     const ok = await saveHave(key, !wasHad);
     if (!ok) throw new Error('conflict');
-    toast(wasHad ? 'Back on the list' : 'Moved to Always have');
+    toast(wasHad ? 'Back on the list' : 'Moved to Already have');
   } catch {
     wasHad ? HAVE.add(key) : HAVE.delete(key);
     renderList();
@@ -866,6 +869,29 @@ async function toggleHave(key){
   }
 }
 function toggleHaveSection(){ showHave = !showHave; renderList(); }
+
+/* An earlier build seeded this list with staples the user never picked.
+   Give them a way to wipe it without going into the repo by hand. */
+async function clearHave(){
+  if (!HAVE.size) return toast('That list is already empty');
+  if (!confirm(`Clear all ${HAVE.size} items from "already have"?`)) return;
+  const res = await queueWrite('pantry.json', () =>
+    commitShared('pantry.json', () => [], () => []));
+  if (!res) return toast("Couldn't clear it", true);
+  HAVE = new Set(res.value);
+  HAVE_SHA = res.sha;
+  render();
+  if (pane === 'list') renderList();
+  paintHaveCount();
+  toast('Cleared');
+}
+
+function paintHaveCount(){
+  const el = document.getElementById('have-count');
+  if (el) el.textContent = HAVE.size
+    ? `${HAVE.size} item${HAVE.size===1?'':'s'} hidden from your shopping list`
+    : 'Nothing is being hidden from your shopping list';
+}
 
 /* A day used to hold one recipe id. It now holds a list, so a main and its
    sides can share a night. Older plans stored a bare string -- lift those. */
@@ -1576,7 +1602,7 @@ function renderList(){
         ${from ? `<span class="fr">${esc(from)}</span>` : ''}</span>
       ${qty ? `<span class="qq">${esc(qty)}</span>` : ''}
       <button class="have" onclick="toggleHave('${esc(k)}')"
-              aria-label="Always have ${esc(v.item)} — hide from future lists">Have it</button>
+              aria-label="Already have ${esc(v.item)} — hide it from future lists">Have it</button>
     </div>`;
   };
 
@@ -1591,7 +1617,7 @@ function renderList(){
   const haveBlock = haveItems.length ? `
     <div class="lsec have-sec">
       <button class="have-head" onclick="toggleHaveSection()">
-        <span>Always have · ${haveItems.length}</span>
+        <span>Already have · ${haveItems.length}</span>
         <span class="caret ${showHave?'open':''}">›</span>
       </button>
       ${showHave ? haveItems.map(([k,v]) => `

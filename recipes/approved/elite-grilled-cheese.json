@@ -1,0 +1,177 @@
+{
+  "id": "elite-grilled-cheese",
+  "title": "Elite Grilled Cheese",
+  "description": "Gouda and sharp cheddar with red wine vinegar caramelized onions, pepperoncinis, and sriracha on sourdough. Built for the tomato soup.",
+  "source": {
+    "type": "personal",
+    "url": null,
+    "author": "jess",
+    "addedBy": "jess"
+  },
+  "dateAdded": "2026-08-09",
+  "status": "approved",
+  "recipeType": "meal",
+  "cuisine": "american",
+  "tags": [
+    "sandwich",
+    "quick",
+    "comfort",
+    "cast-iron",
+    "kid-friendly"
+  ],
+  "mainProtein": "none",
+  "equipment": [
+    "cast-iron"
+  ],
+  "activeTimeMin": 25,
+  "totalTimeMin": 45,
+  "serves": 4,
+  "vegetarian": {
+    "status": "inherently-veg",
+    "notes": "Nothing to change.",
+    "swaps": []
+  },
+  "ingredients": [
+    {
+      "id": "i01",
+      "qty": null,
+      "unit": null,
+      "item": "sourdough bread",
+      "prep": null,
+      "note": "two slices per sandwich",
+      "section": "bakery",
+      "vague": true,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i02",
+      "qty": null,
+      "unit": null,
+      "item": "Gouda",
+      "prep": null,
+      "note": "to taste",
+      "section": "dairy",
+      "vague": true,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i03",
+      "qty": null,
+      "unit": null,
+      "item": "sharp cheddar",
+      "prep": null,
+      "note": "to taste",
+      "section": "dairy",
+      "vague": true,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i04",
+      "qty": null,
+      "unit": null,
+      "item": "sriracha",
+      "prep": null,
+      "note": "to taste",
+      "section": "pantry",
+      "vague": true,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i05",
+      "qty": null,
+      "unit": null,
+      "item": "onions",
+      "prep": "sliced",
+      "note": "enough to caramelize down",
+      "section": "produce",
+      "vague": true,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i06",
+      "qty": null,
+      "unit": null,
+      "item": "red wine vinegar",
+      "prep": null,
+      "note": "for the onions",
+      "section": "pantry",
+      "vague": true,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i07",
+      "qty": null,
+      "unit": null,
+      "item": "pepperoncinis",
+      "prep": null,
+      "note": "to taste",
+      "section": "canned",
+      "vague": true,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i08",
+      "qty": null,
+      "unit": null,
+      "item": "butter",
+      "prep": null,
+      "note": "for the pan",
+      "section": "dairy",
+      "vague": true,
+      "optional": false,
+      "scalable": false
+    }
+  ],
+  "steps": [
+    {
+      "id": "s01",
+      "title": "Caramelize the onions",
+      "text": "Cook {i05} low and slow until deeply browned, deglazing with {i06} as they go.",
+      "timerSeconds": 1800,
+      "unattended": false,
+      "ingredientIds": [
+        "i05",
+        "i06"
+      ]
+    },
+    {
+      "id": "s02",
+      "title": "Build",
+      "text": "Layer {i02}, {i03}, {i04}, the onions, and {i07} between slices of {i01}.",
+      "timerSeconds": null,
+      "unattended": false,
+      "ingredientIds": [
+        "i01",
+        "i02",
+        "i03",
+        "i04",
+        "i07"
+      ]
+    },
+    {
+      "id": "s03",
+      "title": "Griddle",
+      "text": "Butter the outsides with {i08} and cook in cast iron over medium until deeply golden and the cheese has gone.",
+      "timerSeconds": 480,
+      "unattended": false,
+      "ingredientIds": [
+        "i08"
+      ]
+    }
+  ],
+  "household": {
+    "lastCooked": null,
+    "timesCooked": null,
+    "ratings": {},
+    "kidNotes": null,
+    "inRotation": true
+  },
+  "rawText": "Elite grilled cheese — usually Gouda, sharp cheddar, sriracha, red wine vinegar caramelized onions, pepperoncinis, sourdough. Goes with the tomato soup."
+}

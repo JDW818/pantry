@@ -1,0 +1,177 @@
+{
+  "id": "taco-seasoning",
+  "title": "Taco Seasoning",
+  "description": "A quick homemade spice blend for seasoning taco meat or fillings.",
+  "source": {
+    "type": "text",
+    "url": null,
+    "author": null,
+    "addedBy": "JDW818"
+  },
+  "dateAdded": "2026-08-09",
+  "status": "approved",
+  "recipeType": "component",
+  "componentOf": [],
+  "yield": null,
+  "cuisine": "Tex-Mex",
+  "tags": [
+    "spice blend",
+    "seasoning",
+    "taco"
+  ],
+  "mainProtein": "none",
+  "equipment": [
+    "small bowl"
+  ],
+  "activeTimeMin": 3,
+  "totalTimeMin": 3,
+  "serves": null,
+  "vegetarian": {
+    "status": "inherently-veg",
+    "notes": "This is a spice blend with no animal products; no changes needed.",
+    "swaps": []
+  },
+  "ingredients": [
+    {
+      "id": "i01",
+      "qty": 1.5,
+      "unit": "teaspoon",
+      "item": "chili powder",
+      "prep": null,
+      "note": null,
+      "section": "spices",
+      "vague": false,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i02",
+      "qty": 0.5,
+      "unit": "teaspoon",
+      "item": "garlic powder",
+      "prep": null,
+      "note": null,
+      "section": "spices",
+      "vague": false,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i03",
+      "qty": 0.5,
+      "unit": "teaspoon",
+      "item": "onion powder",
+      "prep": null,
+      "note": null,
+      "section": "spices",
+      "vague": false,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i04",
+      "qty": 0.5,
+      "unit": "teaspoon",
+      "item": "crushed red pepper flakes",
+      "prep": null,
+      "note": null,
+      "section": "spices",
+      "vague": false,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i05",
+      "qty": 0.5,
+      "unit": "teaspoon",
+      "item": "dried oregano",
+      "prep": null,
+      "note": null,
+      "section": "spices",
+      "vague": false,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i06",
+      "qty": 0.5,
+      "unit": "teaspoon",
+      "item": "paprika",
+      "prep": null,
+      "note": null,
+      "section": "spices",
+      "vague": false,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i07",
+      "qty": 1,
+      "unit": "teaspoon",
+      "item": "ground cumin",
+      "prep": null,
+      "note": null,
+      "section": "spices",
+      "vague": false,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i08",
+      "qty": 1,
+      "unit": "teaspoon",
+      "item": "sea salt",
+      "prep": null,
+      "note": null,
+      "section": "spices",
+      "vague": false,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i09",
+      "qty": 1,
+      "unit": "teaspoon",
+      "item": "black pepper",
+      "prep": null,
+      "note": null,
+      "section": "spices",
+      "vague": false,
+      "optional": false,
+      "scalable": false
+    }
+  ],
+  "steps": [
+    {
+      "id": "s01",
+      "title": "Combine the spices",
+      "text": "In a small bowl, mix together {i01}, {i02}, {i03}, {i04}, {i05}, {i06}, {i07}, {i08}, and {i09} until evenly blended.",
+      "timerSeconds": null,
+      "unattended": false,
+      "ingredientIds": [
+        "i01",
+        "i02",
+        "i03",
+        "i04",
+        "i05",
+        "i06",
+        "i07",
+        "i08",
+        "i09"
+      ]
+    }
+  ],
+  "household": {
+    "lastCooked": null,
+    "timesCooked": null,
+    "ratings": {},
+    "kidNotes": null,
+    "inRotation": true
+  },
+  "rawText": "Image\nTaco Seasoning \n\n\t⁃\t1 1/2 teaspoons chili powder \n\t⁃\t1/2 teaspoon garlic powder \n\t⁃\t1/2 teaspoon onion powder \n\t⁃\t1/2 teaspoon crushed red pepper flakes \n\t⁃\t1/2 teaspoon dried oregano \n\t⁃\t1/2 teaspoon paprika \n\t⁃\t1 teaspoon ground cumin \n\t⁃\t1 teaspoon sea salt\n\t⁃\t1 teaspoon black pepper\n \n￼\n\n￼",
+  "sourceNotes": "Source gave only an ingredient list, no mixing instructions or yield -- step was inferred as a simple combine. No meat present, so no skin-on or lamb substitutions apply.",
+  "confidence": "medium",
+  "extractionWarnings": [
+    "No preparation steps or yield/serving size given in source; instructions and yield were inferred."
+  ]
+}

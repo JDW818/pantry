@@ -256,6 +256,17 @@ label{display:block;font-family:var(--fm);font-size:10px;letter-spacing:.12em;te
 }
 .badge-veg::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--herb-deep);flex-shrink:0}
 .notes{font-size:13.5px;line-height:1.62;color:#5C534B;margin:0}
+.flagged{
+  border-left:3px solid var(--chile);background:rgba(196,84,58,.1);
+  border-radius:0 10px 10px 0;padding:13px 15px;margin-bottom:16px;
+}
+.flagged .st{
+  font-family:var(--fm);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  color:#9A3A24;font-weight:500;display:block;margin-bottom:6px;
+}
+.flagged p{margin:0 0 8px;font-size:13px;line-height:1.55;color:#3C352F}
+.flagged ul{margin:0;padding-left:18px}
+.flagged li{font-size:12.5px;line-height:1.5;color:#5C534B;margin-bottom:4px}
 .veg{border-left:3px solid var(--herb-deep);background:rgba(110,140,36,.09);border-radius:0 10px 10px 0;padding:13px 15px;margin-bottom:18px}
 .veg.warn{border-color:var(--ochre);background:rgba(217,154,43,.11)}
 .veg.no{border-color:var(--chile);background:rgba(196,84,58,.09)}
@@ -1182,7 +1193,8 @@ function renderQueue(){
   el.innerHTML = PENDING.length
     ? `<div class="rows">${PENDING.map(r => rowCard(
         r, `openRecipe('${r.id}','pending','queue','Waiting on you')`,
-        r.confidence && r.confidence !== 'high' ? `${r.confidence} confidence` : null
+        r.extractionErrors?.length ? `${r.extractionErrors.length} thing${r.extractionErrors.length===1?'':'s'} to check`
+          : r.confidence && r.confidence !== 'high' ? `${r.confidence} confidence` : null
       )).join('')}</div>`
     : emptyState('check', 'All clear',
         "Nothing waiting. Share a link from anywhere and it'll show up here.");
@@ -1288,6 +1300,11 @@ function renderDetail(){
       ${[r.cuisine, ...(r.equipment||[]).slice(0,2)].filter(Boolean).length
         ? `<p class="crumb">${[r.cuisine, ...(r.equipment||[]).slice(0,2)]
             .filter(Boolean).map(x => esc(x.replace(/-/g,' '))).join(' · ')}</p>` : ''}
+      ${(r.extractionErrors || []).length ? `<div class="flagged">
+        <span class="st">Didn't pass validation</span>
+        <p>Extraction couldn't get this one clean. Check these against the original before you save it:</p>
+        <ul>${r.extractionErrors.map(e => `<li>${esc(e)}</li>`).join('')}</ul>
+      </div>` : ''}
       ${vegNote(r, tone, label)}
       ${r.serves > 1 && r.recipeType !== 'component' ? `<div class="scaler">
         <span class="lab">Scale</span>

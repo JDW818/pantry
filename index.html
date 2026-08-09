@@ -126,6 +126,9 @@ h1{font-family:var(--fd);font-weight:600;font-size:26px;line-height:1.12;letter-
   transition:background .18s;
 }
 .banner:active{background:rgba(163,194,74,.19)}
+.banner.seed{background:var(--ink-2);border-color:var(--line-2)}
+.banner.seed .n{color:var(--muted)}
+.banner.seed .arw{color:var(--muted)}
 .banner .n{
   font-family:var(--fd);font-size:22px;font-weight:600;color:var(--herb);
   line-height:1;min-width:26px;
@@ -600,6 +603,7 @@ async function deleteFile(path, sha){
 /* ==================== state ==================== */
 let PENDING = [], APPROVED = [], PLAN = {}, PLAN_SHA = null;
 let HAVE = new Set(), HAVE_SHA = null, showHave = false;
+let SEED_WAITING = 0;   // recipes in seed.json not yet in the collection
 let current = null, scale = 1, checked = new Set(), got = new Set();
 let filter = 'all', pickDay = null, prevView = 'home', prevLabel = 'Kitchen';
 
@@ -622,7 +626,7 @@ async function boot(){
     '<div class="skel" style="height:150px"></div><div class="skel"></div><div class="skel"></div>';
   try {
     [PENDING, APPROVED] = await Promise.all([listFolder('pending'), listFolder('approved')]);
-    await Promise.all([loadPlan(), loadHave()]);
+    await Promise.all([loadPlan(), loadHave(), checkSeed()]);
     render();
   } catch (e) {
     toast(/40[13]/.test(e.message)
@@ -675,6 +679,21 @@ function saveSettings(){
 function openSettings(){ prefill(); go('settings'); }
 
 /* Things the household always has. Lives in the repo so both phones agree. */
+/* Cheap check on load: is there anything in seed.json we don't have yet?
+   Gating the import on "collection is empty" hid it the moment one recipe
+   was approved -- which is exactly when it was still needed. */
+async function checkSeed(){
+  SEED_WAITING = 0;
+  try {
+    const f = await gh(`/repos/${CFG.repo}/contents/seed.json`);
+    if (!f || !f.content) return;
+    const seed = JSON.parse(b64decode(f.content));
+    if (!Array.isArray(seed)) return;
+    const have = new Set([...APPROVED, ...PENDING].map(r => r.id));
+    SEED_WAITING = seed.filter(r => r && r.id && !have.has(r.id)).length;
+  } catch { /* no seed file, or unreadable -- just don't offer it */ }
+}
+
 async function loadHave(){
   const f = await gh(`/repos/${CFG.repo}/contents/pantry.json`);
   if (f && f.content) {
@@ -850,18 +869,20 @@ function renderHome(){
           <span class="m">${dur(r.totalTimeMin) || (r.cuisine || '')}</span>
         </button>`;
       }).join('')}</div>`;
-  } else {
-    /* No approved recipes yet. Offer the import regardless of what's pending --
-       gating this behind an empty queue hid it exactly when it was needed. */
-    if (!PENDING.length) {
-      h += emptyState('book', 'Nothing here yet',
-        'Share a recipe link from your phone and it turns up in the queue within a minute.');
-    } else {
-      h += `<div class="sec-head"><h3>Your collection</h3></div>`;
-    }
-    h += `<button class="btn btn-s btn-w" onclick="importSeed()">Import your recipes</button>
-          <p class="note" style="text-align:center;margin-top:10px">
-            Brings in the recipes written up in <code>seed.json</code>.</p>`;
+  } else if (!PENDING.length && !SEED_WAITING) {
+    h += emptyState('book', 'Nothing here yet',
+      'Share a recipe link from your phone and it turns up in the queue within a minute.');
+  }
+
+  /* Independent of everything above: if seed.json has recipes we don't, say so. */
+  if (SEED_WAITING) {
+    h += `<button class="banner seed" onclick="importSeed()">
+      <span class="n">${SEED_WAITING}</span>
+      <span class="txt">Ready to import
+        <small>${SEED_WAITING === 1 ? 'A recipe is' : 'Recipes are'} written up in seed.json and not in your collection yet</small>
+      </span>
+      <span class="arw">›</span>
+    </button>`;
   }
 
   document.getElementById('home').innerHTML = h;
@@ -907,8 +928,9 @@ function renderColl(){
     : q
       ? emptyState('search', 'No matches', `Nothing matching "${esc(q)}".`)
       : emptyState('book', 'Nothing here yet', 'Approve something from the queue and it lands here.')
-        + (APPROVED.length ? '' :
-           `<button class="btn btn-s btn-w" onclick="importSeed()">Import your recipes</button>`);
+        + (SEED_WAITING
+           ? `<button class="btn btn-s btn-w" onclick="importSeed()">Import ${SEED_WAITING} from seed.json</button>`
+           : '');
 }
 function searchable(r){
   return [r.title, r.cuisine, ...(r.tags||[]), ...r.ingredients.map(i => i.item)].join(' ').toLowerCase();
@@ -1346,6 +1368,7 @@ async function importSeed(){
     } catch (e) { /* keep going -- one bad record shouldn't stop the rest */ }
   }
   APPROVED.sort((a,b) => a.title.localeCompare(b.title));
+  await checkSeed();
   render();
   go(done ? 'coll' : 'home');
   toast(done === todo.length

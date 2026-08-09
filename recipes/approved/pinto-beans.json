@@ -1,0 +1,229 @@
+{
+  "id": "pinto-beans",
+  "title": "Pinto Beans",
+  "description": "Dried pintos with onion sautéed in toasted cumin and chili powder. A side that works with everything Tex-Mex.",
+  "source": {
+    "type": "personal",
+    "url": null,
+    "author": "jess",
+    "addedBy": "jess"
+  },
+  "dateAdded": "2026-08-09",
+  "status": "approved",
+  "recipeType": "meal",
+  "cuisine": "tex-mex",
+  "tags": [
+    "side",
+    "beans",
+    "make-ahead",
+    "freezer-friendly",
+    "budget"
+  ],
+  "mainProtein": "beans",
+  "equipment": [
+    "dutch-oven"
+  ],
+  "activeTimeMin": 15,
+  "totalTimeMin": 150,
+  "serves": 8,
+  "vegetarian": {
+    "status": "inherently-veg",
+    "notes": "Nothing to change.",
+    "swaps": []
+  },
+  "ingredients": [
+    {
+      "id": "i01",
+      "qty": 2,
+      "unit": "cup",
+      "item": "dried pinto beans",
+      "prep": null,
+      "note": null,
+      "section": "pantry",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i02",
+      "qty": 0.5,
+      "unit": "each",
+      "item": "onion",
+      "prep": "sautéed",
+      "note": null,
+      "section": "produce",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i03",
+      "qty": 1.5,
+      "unit": "tsp",
+      "item": "cumin",
+      "prep": null,
+      "note": null,
+      "section": "spices",
+      "vague": false,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i04",
+      "qty": 1,
+      "unit": "tsp",
+      "item": "chili powder",
+      "prep": null,
+      "note": null,
+      "section": "spices",
+      "vague": false,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i05",
+      "qty": 0.5,
+      "unit": "tsp",
+      "item": "chipotle powder",
+      "prep": null,
+      "note": null,
+      "section": "spices",
+      "vague": false,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i06",
+      "qty": 0.5,
+      "unit": "tsp",
+      "item": "coriander",
+      "prep": null,
+      "note": null,
+      "section": "spices",
+      "vague": false,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i07",
+      "qty": 1,
+      "unit": "tsp",
+      "item": "garlic powder",
+      "prep": null,
+      "note": null,
+      "section": "spices",
+      "vague": false,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i08",
+      "qty": null,
+      "unit": null,
+      "item": "cayenne",
+      "prep": null,
+      "note": "dash",
+      "section": "spices",
+      "vague": true,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i09",
+      "qty": 2,
+      "unit": "tsp",
+      "item": "oregano",
+      "prep": null,
+      "note": null,
+      "section": "spices",
+      "vague": false,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i10",
+      "qty": 2,
+      "unit": "tsp",
+      "item": "salt",
+      "prep": null,
+      "note": null,
+      "section": "spices",
+      "vague": false,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i11",
+      "qty": 1,
+      "unit": "tsp",
+      "item": "black pepper",
+      "prep": null,
+      "note": null,
+      "section": "spices",
+      "vague": false,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i12",
+      "qty": null,
+      "unit": null,
+      "item": "cilantro",
+      "prep": null,
+      "note": "handful",
+      "section": "produce",
+      "vague": true,
+      "optional": false,
+      "scalable": true
+    }
+  ],
+  "steps": [
+    {
+      "id": "s01",
+      "title": "Toast the aromatics",
+      "text": "Sauté {i02} with {i03} and {i04} until fragrant.",
+      "timerSeconds": 300,
+      "unattended": false,
+      "ingredientIds": [
+        "i02",
+        "i03",
+        "i04"
+      ]
+    },
+    {
+      "id": "s02",
+      "title": "Cook the beans",
+      "text": "Add {i01} and cover with water. Add {i05}, {i06}, {i07}, {i08}, {i09}, {i10}, and {i11}. Simmer until tender.",
+      "timerSeconds": 7200,
+      "unattended": true,
+      "ingredientIds": [
+        "i01",
+        "i05",
+        "i06",
+        "i07",
+        "i08",
+        "i09",
+        "i10",
+        "i11"
+      ]
+    },
+    {
+      "id": "s03",
+      "title": "Finish",
+      "text": "Stir in {i12}.",
+      "timerSeconds": null,
+      "unattended": false,
+      "ingredientIds": [
+        "i12"
+      ]
+    }
+  ],
+  "household": {
+    "lastCooked": null,
+    "timesCooked": null,
+    "ratings": {},
+    "kidNotes": null,
+    "inRotation": true
+  },
+  "rawText": "Pinto Beans\n- 2 cups dried beans\n- 1/2 onion sautéed with toasted cumin and chili powder\n- 1.5 tsp cumin\n- 1 tsp chili powder\n- .5 tsp chipotle powder\n- .5 tsp coriander\n- 1 tsp garlic powder\n- Dash cayenne\n- 2 tsp oregano\n- 2 tsp salt\n- 1 tsp black pepper\n- handful cilantro"
+}

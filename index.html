@@ -99,7 +99,7 @@ h1{font-family:var(--fd);font-weight:600;font-size:26px;line-height:1.12;letter-
 .hero{
   display:block;width:100%;text-align:left;border-radius:18px;overflow:hidden;
   background:linear-gradient(158deg,#211C18 0%,#191512 68%);
-  border:1px solid var(--line-2);padding:20px;margin-bottom:12px;
+  border:1px solid var(--line-2);padding:20px;margin-bottom:10px;
   position:relative;transition:transform .14s,border-color .18s;
 }
 .hero:active{transform:scale(.992)}
@@ -122,7 +122,7 @@ h1{font-family:var(--fd);font-weight:600;font-size:26px;line-height:1.12;letter-
 .banner{
   display:flex;width:100%;align-items:center;gap:13px;text-align:left;
   background:var(--herb-dim);border:1px solid rgba(163,194,74,.26);
-  border-radius:var(--r);padding:14px 16px;margin-bottom:12px;
+  border-radius:var(--r);padding:14px 16px;margin-bottom:10px;
   transition:background .18s;
 }
 .banner:active{background:rgba(163,194,74,.19)}
@@ -137,13 +137,18 @@ h1{font-family:var(--fd);font-weight:600;font-size:26px;line-height:1.12;letter-
 .banner .txt small{display:block;color:var(--muted);font-size:12px;margin-top:2px}
 .banner .arw{color:var(--herb);font-size:17px}
 
-.strip{display:flex;gap:9px;overflow-x:auto;scrollbar-width:none;margin:0 -20px;padding:2px 20px 4px}
+.strip{display:flex;gap:9px;overflow-x:auto;scrollbar-width:none;margin:0 -20px;padding:2px 20px 2px;align-items:stretch}
 .strip::-webkit-scrollbar{display:none}
 .tile{
-  flex-shrink:0;width:158px;text-align:left;background:var(--ink-2);
+  flex-shrink:0;width:158px;min-height:118px;text-align:left;background:var(--ink-2);
   border:1px solid var(--line);border-radius:var(--r);padding:14px;
-  transition:border-color .18s;
+  display:flex;flex-direction:column;transition:border-color .18s;
 }
+.tile h4{
+  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;
+  overflow:hidden;flex:1;
+}
+.tile .m{margin-top:auto;padding-top:8px}
 .tile:active{border-color:var(--line-2)}
 .tile .dot{width:6px;height:6px;border-radius:50%;background:var(--herb);margin-bottom:9px}
 .tile .dot.warn{background:var(--ochre)} .tile .dot.no{background:var(--chile)}
@@ -152,8 +157,10 @@ h1{font-family:var(--fd);font-weight:600;font-size:26px;line-height:1.12;letter-
 
 .sec-head{
   display:flex;align-items:baseline;justify-content:space-between;
-  margin:26px 0 11px;
+  margin:24px 0 12px;
 }
+/* the eyebrow greeting shouldn't add to the hero's own top spacing */
+#home .eyebrow{margin-bottom:10px}
 .sec-head h3{font-family:var(--fd);font-size:16px;font-weight:600;margin:0;letter-spacing:-.01em}
 .sec-head button{font-size:12.5px;color:var(--muted);}
 .sec-head button:active{color:var(--text)}
@@ -311,10 +318,25 @@ ol.steps .amt{font-weight:600;color:#1B1815}
   color:var(--muted-2);width:34px;flex-shrink:0;
 }
 .day.today .dn{color:var(--herb)}
-.day .t{font-family:var(--fd);font-size:16px;font-weight:600;flex:1;letter-spacing:-.012em;line-height:1.25;min-width:0}
-.day .t.none{font-family:var(--fb);font-size:13.5px;font-weight:400;color:var(--dim);letter-spacing:0}
-.day .x{color:var(--dim);padding:6px;margin:-6px}
-.day .x svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round}
+.day{align-items:flex-start}
+.day .dn{padding-top:3px}
+.dbody{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.dline{display:flex;align-items:center;gap:8px}
+.day .t{
+  font-family:var(--fd);font-size:16px;font-weight:600;flex:1;letter-spacing:-.012em;
+  line-height:1.3;min-width:0;text-align:left;padding:3px 0;
+}
+.day .x{color:var(--dim);padding:6px;margin:-6px -4px -6px 0;flex-shrink:0}
+.day .x:active{color:var(--chile)}
+.day .x svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+.day .add{
+  align-self:flex-start;font-size:13px;color:var(--dim);padding:4px 0;text-align:left;
+}
+.day.filled .add{font-size:12px;padding-top:5px}
+.day .add:active{color:var(--herb)}
+.hero .with{
+  margin:-6px 0 12px;font-size:13.5px;color:var(--muted);line-height:1.4;
+}
 
 /* ============ shopping ============ */
 .lsec{margin-bottom:24px}
@@ -337,12 +359,12 @@ ol.steps .amt{font-weight:600;color:#1B1815}
 .li .qq{font-family:var(--fm);font-size:12.5px;color:var(--herb);flex-shrink:0;padding-top:2px}
 .li .fr{display:block;font-size:11.5px;color:var(--muted-2);margin-top:3px}
 .have{
-  flex-shrink:0;width:30px;height:30px;border-radius:8px;display:grid;place-items:center;
-  color:var(--ink-5);margin:-4px -6px -4px 0;transition:color .16s,background .16s;
+  flex-shrink:0;padding:5px 9px;border-radius:7px;font-size:11.5px;
+  color:var(--muted-2);border:1px solid var(--line);white-space:nowrap;
+  transition:color .16s,border-color .16s;
 }
-.have:active{background:var(--ink-3);color:var(--herb)}
-.have svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
-.have.on{width:auto;padding:6px 11px;font-size:12px;color:var(--muted);border:1px solid var(--line);border-radius:8px}
+.have:active{color:var(--herb);border-color:rgba(163,194,74,.4)}
+.have.on{color:var(--muted)}
 .have-sec{margin-top:28px;border-top:1px solid var(--line);padding-top:16px}
 .have-head{
   display:flex;width:100%;align-items:center;justify-content:space-between;
@@ -748,15 +770,32 @@ async function saveHave(){
 }
 async function toggleHave(key){
   if (HAVE.has(key)) { HAVE.delete(key); toast('Back on the list'); }
-  else { HAVE.add(key); got.delete(key); toast('Marked as always have'); }
+  else { HAVE.add(key); got.delete(key); toast('Moved to Always have'); }
   renderList();
   saveHave();
 }
 function toggleHaveSection(){ showHave = !showHave; renderList(); }
 
+/* A day used to hold one recipe id. It now holds a list, so a main and its
+   sides can share a night. Older plans stored a bare string -- lift those. */
+function normalizePlan(raw){
+  const out = {};
+  for (const d of DAYS) {
+    const v = raw?.[d];
+    if (!v) continue;
+    out[d] = (Array.isArray(v) ? v : [v]).filter(Boolean);
+    if (!out[d].length) delete out[d];
+  }
+  return out;
+}
+/* Ids planned for a day, dropping any recipe that has since been deleted. */
+function dayItems(d){
+  return (PLAN[d] || []).map(id => APPROVED.find(r => r.id === id)).filter(Boolean);
+}
+
 async function loadPlan(){
   const f = await gh(`/repos/${CFG.repo}/contents/plan.json`);
-  if (f && f.content) { PLAN = JSON.parse(b64decode(f.content)); PLAN_SHA = f.sha; }
+  if (f && f.content) { PLAN = normalizePlan(JSON.parse(b64decode(f.content))); PLAN_SHA = f.sha; }
   else { PLAN = {}; PLAN_SHA = null; }
 }
 async function savePlan(){
@@ -873,7 +912,9 @@ function rowCard(r, click, flag){
 /* ---------- kitchen ---------- */
 function renderHome(){
   const today = todayKey();
-  const tonight = APPROVED.find(r => r.id === PLAN[today]);
+  const tonightAll = dayItems(today);
+  const tonight = tonightAll[0];
+  const alongside = tonightAll.slice(1);
   const meals = APPROVED.filter(r => r.recipeType !== 'component');
   const recent = [...meals].slice(0, 6);
 
@@ -885,6 +926,7 @@ function renderHome(){
     h += `<button class="hero" onclick="openRecipe('${tonight.id}','approved','home','Kitchen')">
       <span class="when">Tonight</span>
       <h2>${esc(tonight.title)}</h2>
+      ${alongside.length ? `<p class="with">with ${alongside.map(r => esc(r.title)).join(', ')}</p>` : ''}
       <span class="facts">
         ${vegPill(tonight)}
         ${d ? `<span class="pill">${d} hands-on</span>` : ''}
@@ -896,6 +938,17 @@ function renderHome(){
       <span class="when">Tonight</span>
       <h2 class="none">${meals.length ? 'Nothing planned — pick something' : 'Nothing planned yet'}</h2>
       <span class="facts"><span class="pill">${meals.length ? 'Tap to choose' : 'Approve a recipe first'}</span></span>
+    </button>`;
+  }
+
+  /* Banners sit together under the hero -- both are "something needs you". */
+  if (SEED_WAITING) {
+    h += `<button class="banner seed" onclick="importSeed()">
+      <span class="n">${SEED_WAITING}</span>
+      <span class="txt">Ready to import
+        <small>Written up in your seed file, not in the collection yet</small>
+      </span>
+      <span class="arw">›</span>
     </button>`;
   }
 
@@ -912,7 +965,7 @@ function renderHome(){
 
   /* rest of the week */
   const rest = DAYS.slice(DAYS.indexOf(today) + 1).concat(DAYS.slice(0, DAYS.indexOf(today)))
-    .map(d => ({ d, r: APPROVED.find(x => x.id === PLAN[d]) })).filter(x => x.r).slice(0, 3);
+    .flatMap(d => dayItems(d).map(r => ({ d, r }))).slice(0, 3);
   if (rest.length) {
     h += `<div class="sec-head"><h3>Coming up</h3><button onclick="go('plan','week')">Whole week</button></div>
       <div class="rows">${rest.map(({d,r}) =>
@@ -935,16 +988,7 @@ function renderHome(){
       'Share a recipe link from your phone and it turns up in the queue within a minute.');
   }
 
-  /* Independent of everything above: if seed.json has recipes we don't, say so. */
-  if (SEED_WAITING) {
-    h += `<button class="banner seed" onclick="importSeed()">
-      <span class="n">${SEED_WAITING}</span>
-      <span class="txt">Ready to import
-        <small>${SEED_WAITING === 1 ? 'A recipe is' : 'Recipes are'} written up in seed.json and not in your collection yet</small>
-      </span>
-      <span class="arw">›</span>
-    </button>`;
-  }
+
 
   document.getElementById('home').innerHTML = h;
 }
@@ -1179,32 +1223,43 @@ async function removeRecipe(){
     await deleteFile(`recipes/approved/${r.id}.json`, r._sha);
     APPROVED = APPROVED.filter(x => x.id !== r.id);
     let touched = false;
-    Object.keys(PLAN).forEach(d => { if (PLAN[d] === r.id) { delete PLAN[d]; touched = true; } });
+    for (const d of Object.keys(PLAN)) {
+      const kept = PLAN[d].filter(x => x !== r.id);
+      if (kept.length !== PLAN[d].length) { touched = true; kept.length ? PLAN[d] = kept : delete PLAN[d]; }
+    }
     if (touched) await savePlan();
     render(); go('coll'); toast('Removed');
   } catch (e) { toast(e.message, true); }
 }
 function planIt(){
-  const id = current.id;
-  const free = DAYS.find(d => !PLAN[d]) || DAYS[0];
-  pickDay = free; setDay(id);
-  toast(`Added to ${free}`);
+  const already = DAYS.find(d => (PLAN[d] || []).includes(current.id));
+  if (already) return toast(`Already planned for ${already}`);
+  pickDay = DAYS.find(d => !(PLAN[d] || []).length) || todayKey();
+  const day = pickDay;
+  setDay(current.id).then(() => toast(`Added to ${day}`));
 }
 
 /* ---------- week ---------- */
 function renderWeek(){
   const today = todayKey();
   document.getElementById('week').innerHTML = DAYS.map(d => {
-    const r = APPROVED.find(x => x.id === PLAN[d]);
-    return `<div class="day ${d===today?'today':''}">
+    const items = dayItems(d);
+    return `<div class="day ${d===today?'today':''} ${items.length?'filled':''}">
       <span class="dn">${d}</span>
-      <button class="t ${r?'':'none'}" style="text-align:left;flex:1" onclick="pick('${d}')">
-        ${r ? esc(r.title) : 'Add a meal'}</button>
-      ${r ? `<button class="x" onclick="clearDay('${d}')" aria-label="Clear ${d}">
-        <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>` : ''}
+      <span class="dbody">
+        ${items.length
+          ? items.map(r => `<span class="dline">
+              <button class="t" onclick="openRecipe('${r.id}','approved','plan','This week')">${esc(r.title)}</button>
+              <button class="x" onclick="removeFromDay('${d}','${r.id}')" aria-label="Remove ${esc(r.title)}">
+                <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+            </span>`).join('')
+          : ''}
+        <button class="add" onclick="pick('${d}')">${items.length ? '+ Add another' : 'Add a meal'}</button>
+      </span>
     </div>`;
   }).join('');
 }
+
 function pick(day){
   pickDay = day;
   document.getElementById('pick-h').textContent = `What's for ${day}?`;
@@ -1219,12 +1274,16 @@ function renderPick(){
     : emptyState('book','Nothing to pick from','Approve a few recipes and they show up here.');
 }
 async function setDay(id){
-  PLAN[pickDay] = id;
+  const list = PLAN[pickDay] || (PLAN[pickDay] = []);
+  if (list.includes(id)) { toast('Already on that day'); go('plan','week'); return; }
+  list.push(id);
   render(); go('plan','week');
   try { await savePlan(); } catch (e) { toast(e.message, true); }
 }
-async function clearDay(d){
-  delete PLAN[d]; render();
+async function removeFromDay(d, id){
+  PLAN[d] = (PLAN[d] || []).filter(x => x !== id);
+  if (!PLAN[d].length) delete PLAN[d];
+  render();
   try { await savePlan(); } catch (e) { toast(e.message, true); }
 }
 
@@ -1321,8 +1380,7 @@ function shoppingQty(v, key){
 }
 
 function buildList(){
-  const recipes = DAYS.map(d => PLAN[d]).filter(Boolean)
-    .map(id => APPROVED.find(r => r.id === id)).filter(Boolean);
+  const recipes = DAYS.flatMap(d => dayItems(d));
   const lines = {};
   for (const r of recipes) for (const i of r.ingredients) {
     const key = normItem(i.item);
@@ -1363,8 +1421,8 @@ function renderList(){
         v.optional?'<span class="opt">optional</span>':''}
         ${from ? `<span class="fr">${esc(from)}</span>` : ''}</span>
       ${qty ? `<span class="qq">${esc(qty)}</span>` : ''}
-      <button class="have" onclick="toggleHave('${esc(k)}')" aria-label="Always have ${esc(v.item)}">
-        <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></button>
+      <button class="have" onclick="toggleHave('${esc(k)}')"
+              aria-label="Always have ${esc(v.item)} — hide from future lists">Have it</button>
     </div>`;
   };
 
@@ -1379,7 +1437,7 @@ function renderList(){
   const haveBlock = haveItems.length ? `
     <div class="lsec have-sec">
       <button class="have-head" onclick="toggleHaveSection()">
-        <span>Already have · ${haveItems.length}</span>
+        <span>Always have · ${haveItems.length}</span>
         <span class="caret ${showHave?'open':''}">›</span>
       </button>
       ${showHave ? haveItems.map(([k,v]) => `

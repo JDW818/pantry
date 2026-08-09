@@ -545,7 +545,7 @@ from datetime import date
 import anthropic
 
 
-MODEL = "claude-sonnet-4-6"
+MODEL = "claude-sonnet-5"
 MAX_ATTEMPTS = 3
 
 SYSTEM = """You convert unstructured recipe content into a strict JSON schema.

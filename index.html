@@ -205,6 +205,48 @@ ol.steps .amt{font-family:var(--font-m);font-size:12.5px;color:var(--tomatillo-d
 @keyframes sp{to{transform:rotate(360deg)}}
 .note{font-size:12.5px;color:var(--muted);line-height:1.6}
 .note code{font-family:var(--font-m);font-size:11.5px;background:var(--ink-3);padding:2px 5px;border-radius:4px}
+
+/* ---------- welcome ---------- */
+body.locked nav{display:none}
+.welcome{padding-top:6vh;text-align:center}
+.jars{margin:0 auto 26px;display:block;width:132px;height:auto}
+.jars .body{fill:none;stroke:var(--ink-4);stroke-width:1.4}
+.jars .lid{fill:none;stroke:var(--tomatillo);stroke-width:1.4}
+.jars .fill{fill:var(--tomatillo);opacity:.16}
+.jars .fill.b{opacity:.3}
+.welcome h1{font-size:34px;margin-bottom:10px}
+.welcome h1 em{font-style:italic;color:var(--tomatillo)}
+.welcome .lede{font-size:14.5px;line-height:1.6;color:var(--muted);max-width:300px;margin:0 auto 30px}
+.repochip{
+  display:inline-flex;align-items:center;gap:8px;margin:0 auto 24px;
+  background:var(--tomatillo-dim);border:1px solid rgba(143,181,60,.3);
+  border-radius:20px;padding:7px 14px;font-family:var(--font-m);font-size:12px;color:var(--tomatillo);
+}
+.repochip .edit{background:none;border:0;color:var(--muted);font-size:11px;text-decoration:underline;padding:0}
+.form{text-align:left;max-width:380px;margin:0 auto}
+.tokenrow{position:relative}
+.tokenrow input{padding-right:74px}
+.paste{
+  position:absolute;right:6px;top:50%;transform:translateY(-50%);
+  background:var(--ink-4);border:0;color:var(--paper);border-radius:7px;
+  padding:8px 12px;font-size:12.5px;font-weight:500;
+}
+.seg{display:flex;gap:6px;background:var(--ink-3);border-radius:10px;padding:4px}
+.seg button{
+  flex:1;background:none;border:0;color:var(--muted);border-radius:7px;
+  padding:11px;font-size:14px;font-weight:500;transition:all .16s;
+}
+.seg button.on{background:var(--tomatillo);color:#0E1207;font-weight:600}
+.reassure{
+  display:flex;gap:9px;align-items:flex-start;margin-top:22px;
+  font-size:12.5px;line-height:1.55;color:var(--muted-2);text-align:left;
+}
+.reassure .k{color:var(--tomatillo-deep);flex-shrink:0;font-size:13px;line-height:1.5}
+.helplink{
+  display:block;margin-top:16px;text-align:center;background:none;border:0;
+  color:var(--muted);font-size:12.5px;text-decoration:underline;width:100%;
+}
+
 @media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
 </style>
 </head>
@@ -212,35 +254,62 @@ ol.steps .amt{font-family:var(--font-m);font-size:12.5px;color:var(--tomatillo-d
 
 <header class="top">
   <span class="mark">The <em>Pantry</em></span>
-  <button class="topbtn" id="btn-settings" onclick="go('settings')">Settings</button>
+  <button class="topbtn" id="btn-settings" onclick="openSettings()">Settings</button>
 </header>
 
 <main>
   <!-- SETTINGS -->
   <section class="view" id="v-settings">
-    <p class="eyebrow">Connection</p>
-    <h1>Settings</h1>
-    <p class="sub">Your token stays on this device. It's never sent anywhere except GitHub.</p>
+    <div class="welcome">
+      <svg class="jars" viewBox="0 0 132 84" aria-hidden="true">
+        <rect class="fill b" x="9"  y="34" width="30" height="38" rx="4"/>
+        <rect class="body"   x="9"  y="22" width="30" height="50" rx="4"/>
+        <rect class="lid"    x="12" y="14" width="24" height="8"  rx="3"/>
+        <rect class="fill"   x="51" y="26" width="30" height="46" rx="4"/>
+        <rect class="body"   x="51" y="14" width="30" height="58" rx="4"/>
+        <rect class="lid"    x="54" y="6"  width="24" height="8"  rx="3"/>
+        <rect class="fill b" x="93" y="44" width="30" height="28" rx="4"/>
+        <rect class="body"   x="93" y="28" width="30" height="44" rx="4"/>
+        <rect class="lid"    x="96" y="20" width="24" height="8"  rx="3"/>
+        <line class="body" x1="2" y1="72.7" x2="130" y2="72.7"/>
+      </svg>
 
-    <div class="field">
-      <label for="f-repo">Repository</label>
-      <input id="f-repo" placeholder="JDW818/pantry" autocapitalize="off" autocorrect="off" spellcheck="false">
-    </div>
-    <div class="field">
-      <label for="f-token">GitHub token</label>
-      <input id="f-token" type="password" placeholder="github_pat_..." autocapitalize="off" autocorrect="off" spellcheck="false">
-    </div>
-    <div class="field">
-      <label for="f-who">You are</label>
-      <select id="f-who"><option value="jess">Jess</option><option value="partner">Partner</option></select>
-    </div>
-    <button class="btn btn-p" style="width:100%" onclick="saveSettings()">Save and load</button>
+      <h1>The <em>Pantry</em></h1>
+      <p class="lede" id="lede">Everything you cook, in one place. Paste your token once and you're in.</p>
 
-    <p class="note" style="margin-top:18px">
-      The token needs <b>Contents: read and write</b> on this repo, not just Issues —
-      approving a recipe moves a file. Update it at
-      <code>github.com/settings/tokens</code> if you only granted Issues.
-    </p>
+      <div class="repochip" id="repochip"></div>
+
+      <div class="form">
+        <div class="field tokenrow">
+          <label for="f-token">GitHub token</label>
+          <input id="f-token" type="password" placeholder="github_pat_…" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="go">
+          <button class="paste" onclick="pasteToken()">Paste</button>
+        </div>
+
+        <div class="field">
+          <label>Who's cooking</label>
+          <div class="seg" id="seg-who">
+            <button data-who="jess" onclick="setWho('jess')">Jess</button>
+            <button data-who="partner" onclick="setWho('partner')">Partner</button>
+          </div>
+        </div>
+
+        <button class="btn btn-p" style="width:100%" onclick="saveSettings()">Open the pantry</button>
+
+        <div class="reassure">
+          <span class="k">◆</span>
+          <span>The token stays on this phone and only ever talks to GitHub. Nothing else sees it.</span>
+        </div>
+
+        <button class="helplink" onclick="toggleHelp()">Token not working?</button>
+        <p class="note" id="help" hidden style="margin-top:12px">
+          It needs <b>Contents: read and write</b> on this repo, not just Issues —
+          approving a recipe moves a file. Edit the existing token at
+          <code>github.com/settings/tokens</code> rather than making a new one,
+          so your Shortcut keeps working.
+        </p>
+      </div>
+    </div>
   </section>
 
   <!-- QUEUE -->
@@ -314,8 +383,17 @@ const store = {
   set(k,v){ try { localStorage.setItem(k,v); } catch { mem[k]=v; } },
 };
 
+/* The site is served from the repo's own Pages URL, so the repo name is
+   already in the address bar -- no reason to ask for it.
+   jdw818.github.io/pantry/  ->  jdw818/pantry */
+function deriveRepo(){
+  const h = location.hostname, p = location.pathname.split('/').filter(Boolean);
+  if (h.endsWith('.github.io') && p.length) return h.split('.')[0] + '/' + p[0];
+  return '';
+}
+
 let CFG = {
-  repo:  store.get('pantry.repo')  || '',
+  repo:  store.get('pantry.repo')  || deriveRepo(),
   token: store.get('pantry.token') || '',
   who:   store.get('pantry.who')   || 'jess',
 };
@@ -386,6 +464,7 @@ const DAYS = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
 /* ============================ boot ============================ */
 async function boot(){
   if (!CFG.repo || !CFG.token) { go('settings'); prefill(); return; }
+  document.body.classList.remove('locked');
   go('queue');
   document.getElementById('queue-list').innerHTML = '<div class="spin"></div>';
   try {
@@ -393,21 +472,61 @@ async function boot(){
     await loadPlan();
     render();
   } catch (e) {
-    toast(e.message, true);
+    toast(e.message.includes('401') || e.message.includes('403')
+      ? "That token didn't work — check it has Contents access."
+      : e.message, true);
     go('settings'); prefill();
   }
 }
 
 function prefill(){
-  document.getElementById('f-repo').value  = CFG.repo;
   document.getElementById('f-token').value = CFG.token;
-  document.getElementById('f-who').value   = CFG.who;
+  setWho(CFG.who);
+  paintRepo();
+  document.body.classList.add('locked');
+  if (CFG.token) document.getElementById('lede').textContent =
+    'Welcome back. Reconnect to pick up where you left off.';
+}
+
+function paintRepo(){
+  const el = document.getElementById('repochip');
+  el.innerHTML = CFG.repo
+    ? `<span>${esc(CFG.repo)}</span><button class="edit" onclick="editRepo()">change</button>`
+    : `<button class="edit" onclick="editRepo()">Set repository</button>`;
+}
+
+function editRepo(){
+  const v = prompt('Repository (owner/name)', CFG.repo);
+  if (v === null) return;
+  CFG.repo = v.trim().replace(/^https?:\/\/github\.com\//,'').replace(/\/$/,'');
+  store.set('pantry.repo', CFG.repo);
+  paintRepo();
+}
+
+function setWho(w){
+  CFG.who = w;
+  document.querySelectorAll('#seg-who button').forEach(b =>
+    b.classList.toggle('on', b.dataset.who === w));
+}
+
+async function pasteToken(){
+  try {
+    const t = await navigator.clipboard.readText();
+    if (t) { document.getElementById('f-token').value = t.trim(); toast('Pasted'); }
+    else toast('Clipboard is empty', true);
+  } catch { document.getElementById('f-token').focus(); }
+}
+
+function toggleHelp(){
+  const h = document.getElementById('help');
+  h.hidden = !h.hidden;
 }
 
 function saveSettings(){
-  CFG.repo  = document.getElementById('f-repo').value.trim().replace(/^https?:\/\/github\.com\//,'');
-  CFG.token = document.getElementById('f-token').value.trim();
-  CFG.who   = document.getElementById('f-who').value;
+  const tok = document.getElementById('f-token').value.trim();
+  if (!CFG.repo) { toast('Set the repository first', true); return; }
+  if (!tok)      { toast('Paste your token first', true); return; }
+  CFG.token = tok;
   store.set('pantry.repo', CFG.repo);
   store.set('pantry.token', CFG.token);
   store.set('pantry.who', CFG.who);
@@ -435,6 +554,7 @@ function go(v, btn){
   if (v === 'list') renderList();
 }
 function back(){ go(prevView); }
+function openSettings(){ prefill(); go('settings'); }
 
 /* ============================ render ============================ */
 function render(){

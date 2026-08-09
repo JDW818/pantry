@@ -705,16 +705,28 @@ function openSettings(){ prefill(); go('settings'); }
 /* Cheap check on load: is there anything in seed.json we don't have yet?
    Gating the import on "collection is empty" hid it the moment one recipe
    was approved -- which is exactly when it was still needed. */
+/* The .txt copy is what's practical to paste from on a phone, so accept it
+   under either name rather than making that a setup step. */
+const SEED_PATHS = ['seed.json', 'seed-json.txt', 'recipes/seed.json'];
+
+async function fetchSeed(){
+  for (const path of SEED_PATHS) {
+    try {
+      const f = await gh(`/repos/${CFG.repo}/contents/${path}`);
+      if (!f || !f.content) continue;
+      const parsed = JSON.parse(b64decode(f.content));
+      if (Array.isArray(parsed) && parsed.length) return { list: parsed, path };
+    } catch { /* wrong name or not JSON -- try the next */ }
+  }
+  return null;
+}
+
 async function checkSeed(){
   SEED_WAITING = 0;
-  try {
-    const f = await gh(`/repos/${CFG.repo}/contents/seed.json`);
-    if (!f || !f.content) return;
-    const seed = JSON.parse(b64decode(f.content));
-    if (!Array.isArray(seed)) return;
-    const have = new Set([...APPROVED, ...PENDING].map(r => r.id));
-    SEED_WAITING = seed.filter(r => r && r.id && !have.has(r.id)).length;
-  } catch { /* no seed file, or unreadable -- just don't offer it */ }
+  const found = await fetchSeed();
+  if (!found) return;
+  const have = new Set([...APPROVED, ...PENDING].map(r => r.id));
+  SEED_WAITING = found.list.filter(r => r && r.id && !have.has(r.id)).length;
 }
 
 async function loadHave(){
@@ -1391,14 +1403,9 @@ async function importSeed(){
   if (!CFG.repo || !CFG.token) return toast('Connect first', true);
   document.body.classList.remove('locked');
   toast('Loading…');
-  let seed;
-  try {
-    const f = await gh(`/repos/${CFG.repo}/contents/seed.json`);
-    if (!f || !f.content) return toast('No seed.json in the repo', true);
-    seed = JSON.parse(b64decode(f.content));
-  } catch (e) { return toast('Could not read seed.json', true); }
-
-  if (!Array.isArray(seed) || !seed.length) return toast('seed.json is empty', true);
+  const found = await fetchSeed();
+  if (!found) return toast(`No recipe file found — looked for ${SEED_PATHS.join(', ')}`, true);
+  const seed = found.list;
 
   const have = new Set([...APPROVED, ...PENDING].map(r => r.id));
   const todo = seed.filter(r => r && r.id && !have.has(r.id));

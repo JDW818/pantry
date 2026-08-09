@@ -1,7 +1,8 @@
 name: Save recipe
 
-# Fires when anyone opens an issue labelled "recipe". The phone Shortcut
-# creates that issue; everything else happens here.
+# Fires on every new issue. There is deliberately no label filter: labels
+# can't be created from the GitHub mobile app, and this repo has no other
+# use for issues. pantry.py decides whether the body is actually a recipe.
 on:
   issues:
     types: [opened]
@@ -12,7 +13,6 @@ permissions:
 
 jobs:
   extract:
-    if: contains(github.event.issue.labels.*.name, 'recipe')
     runs-on: ubuntu-latest
     timeout-minutes: 15
 
@@ -23,9 +23,10 @@ jobs:
         with:
           python-version: '3.12'
           cache: pip
+          cache-dependency-path: requirements.txt
 
       - name: Install dependencies
-        run: pip install anthropic requests yt-dlp
+        run: pip install -r requirements.txt
 
       - name: Install ffmpeg
         # Only needed when a caption is too short and we fall back to audio.

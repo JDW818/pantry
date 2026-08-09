@@ -52,6 +52,9 @@ button{font-family:inherit;color:inherit;cursor:pointer;border:0;background:none
 }
 .mark{font-family:var(--fd);font-size:19px;font-weight:600;letter-spacing:-.02em;line-height:1}
 .mark em{font-style:italic;color:var(--herb)}
+.topbar{display:flex;align-items:center;gap:2px}
+body.locked #refresh-btn{display:none}
+#refresh-btn.spinning svg{animation:sp .8s linear infinite}
 .icon-btn{
   width:34px;height:34px;border-radius:10px;display:grid;place-items:center;
   color:var(--muted);transition:background .16s,color .16s;
@@ -440,9 +443,14 @@ ol.steps .amt{font-weight:600;color:#1B1815}
 
 <header class="top">
   <span class="mark">The <em>Pantry</em></span>
+  <span class="topbar">
+  <button class="icon-btn" id="refresh-btn" onclick="refresh({quiet:false})" aria-label="Refresh">
+    <svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-2.6-6.4"/><path d="M21 3v6h-6"/></svg>
+  </button>
   <button class="icon-btn" onclick="openSettings()" aria-label="Settings">
     <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9v0a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
   </button>
+  </span>
 </header>
 
 <main>
@@ -640,19 +648,26 @@ function queueWrite(key, fn){
   return next;
 }
 
-async function saveJson(path, data, getSha, setSha){
-  for (let attempt = 0; attempt < 3; attempt++) {
+/* Two people edit the same files from different phones. Writing whatever this
+   device happens to hold would silently erase the other's change, so instead:
+   read what's there now, apply *this* change to it, write that back. `apply`
+   must be idempotent -- it may run more than once. */
+async function commitShared(path, apply, fallback){
+  for (let attempt = 0; attempt < 4; attempt++) {
+    const f = await gh(`/repos/${CFG.repo}/contents/${path}`);
+    let remote = fallback();
+    if (f && f.content) {
+      try { remote = JSON.parse(b64decode(f.content)); } catch { /* corrupt -- replace it */ }
+    }
+    const next = apply(remote);
     try {
-      const r = await putFile(path, data, getSha());
-      setSha(r.content.sha);
-      return true;
+      const r = await putFile(path, next, f?.sha);
+      return { value: next, sha: r.content.sha };
     } catch (e) {
-      if (!/\b(409|422)\b/.test(e.message)) throw e;
-      const f = await gh(`/repos/${CFG.repo}/contents/${path}`);   // someone else wrote first
-      setSha(f?.sha);
+      if (!/\b(409|422)\b/.test(e.message)) throw e;   // someone wrote between our read and write
     }
   }
-  return false;
+  return null;
 }
 
 async function putFile(path, obj, sha){
@@ -670,6 +685,7 @@ async function deleteFile(path, sha){
 /* ==================== state ==================== */
 let PENDING = [], APPROVED = [], PLAN = {}, PLAN_SHA = null;
 let HAVE = new Set(), HAVE_SHA = null, showHave = false;
+let GOT_SHA = null;   // shopping check-offs, shared so two people can split a store
 let SEED_WAITING = 0;   // recipes in seed.json not yet in the collection
 let current = null, scale = 1, checked = new Set(), got = new Set();
 let filter = 'all', pickDay = null, prevView = 'home', prevLabel = 'Kitchen';
@@ -696,7 +712,8 @@ async function boot(){
     '<div class="skel" style="height:150px"></div><div class="skel"></div><div class="skel"></div>';
   try {
     [PENDING, APPROVED] = await Promise.all([listFolder('pending'), listFolder('approved')]);
-    await Promise.all([loadPlan(), loadHave(), checkSeed()]);
+    await Promise.all([loadPlan(), loadHave(), loadGot(), checkSeed()]);
+    lastRefresh = Date.now();
     render();
   } catch (e) {
     toast(/40[13]/.test(e.message)
@@ -775,6 +792,37 @@ async function checkSeed(){
   SEED_WAITING = found.list.filter(r => r && r.id && !have.has(r.id)).length;
 }
 
+async function loadGot(){
+  const f = await gh(`/repos/${CFG.repo}/contents/list-state.json`);
+  if (f && f.content) {
+    try { got = new Set(JSON.parse(b64decode(f.content)).checked || []); } catch { got = new Set(); }
+    GOT_SHA = f.sha;
+  } else { got = new Set(); GOT_SHA = null; }
+}
+
+async function grab(key){
+  const wasGot = got.has(key);
+  wasGot ? got.delete(key) : got.add(key);
+  renderList();
+  queueWrite('list-state.json', async () => {
+    const res = await commitShared('list-state.json', raw => {
+      const set = new Set(raw?.checked || []);
+      wasGot ? set.delete(key) : set.add(key);
+      return { checked: [...set].sort() };
+    }, () => ({ checked: [] }));
+    if (!res) {
+      wasGot ? got.add(key) : got.delete(key);
+      renderList();
+      toast("Couldn't save that", true);
+      return false;
+    }
+    got = new Set(res.value.checked);
+    GOT_SHA = res.sha;
+    renderList();
+    return true;
+  });
+}
+
 async function loadHave(){
   const f = await gh(`/repos/${CFG.repo}/contents/pantry.json`);
   if (f && f.content) {
@@ -786,9 +834,18 @@ async function loadHave(){
     HAVE_SHA = null;
   }
 }
-function saveHave(){
-  return queueWrite('pantry.json', () =>
-    saveJson('pantry.json', [...HAVE].sort(), () => HAVE_SHA, sha => { HAVE_SHA = sha; }));
+function saveHave(key, add){
+  return queueWrite('pantry.json', async () => {
+    const res = await commitShared('pantry.json', raw => {
+      const set = new Set(Array.isArray(raw) ? raw : (raw?.alwaysHave || []));
+      add ? set.add(key) : set.delete(key);
+      return [...set].sort();
+    }, () => []);
+    if (!res) return false;
+    HAVE = new Set(res.value);
+    HAVE_SHA = res.sha;
+    return true;
+  });
 }
 
 /* Move it locally for immediate feedback, but put it back if the write
@@ -799,7 +856,7 @@ async function toggleHave(key){
   if (!wasHad) got.delete(key);
   renderList();
   try {
-    const ok = await saveHave();
+    const ok = await saveHave(key, !wasHad);
     if (!ok) throw new Error('conflict');
     toast(wasHad ? 'Back on the list' : 'Moved to Always have');
   } catch {
@@ -832,13 +889,70 @@ async function loadPlan(){
   if (f && f.content) { PLAN = normalizePlan(JSON.parse(b64decode(f.content))); PLAN_SHA = f.sha; }
   else { PLAN = {}; PLAN_SHA = null; }
 }
-function savePlan(){
+/* Apply locally for instant feedback, then apply the same change to whatever
+   the repo holds by the time the write lands. */
+async function commitPlan(apply){
+  apply(PLAN);
+  render();
   return queueWrite('plan.json', async () => {
-    const ok = await saveJson('plan.json', PLAN, () => PLAN_SHA, sha => { PLAN_SHA = sha; });
-    if (!ok) throw new Error("Couldn't save the plan");
-    return ok;
+    const res = await commitShared('plan.json', raw => {
+      const merged = normalizePlan(raw);
+      apply(merged);
+      return merged;
+    }, () => ({}));
+    if (!res) { toast("Couldn't save the plan — pull to refresh", true); return false; }
+    PLAN = normalizePlan(res.value);
+    PLAN_SHA = res.sha;
+    render();
+    return true;
   });
 }
+
+/* ==================== staying current ==================== */
+/* Nothing here is live; the repo is the source of truth and each phone has a
+   cached copy. So re-read whenever the app comes back to the foreground, and
+   quietly on a timer while it's open. */
+let refreshing = false, lastRefresh = 0;
+
+async function refresh({ quiet = true } = {}){
+  if (refreshing || !CFG.repo || !CFG.token) return;
+  refreshing = true;
+  document.getElementById('refresh-btn')?.classList.add('spinning');
+  try {
+    const beforePlan = JSON.stringify(PLAN);
+    const beforeQueue = PENDING.map(r => r.id).join(',');
+
+    const [pend, appr] = await Promise.all([listFolder('pending'), listFolder('approved')]);
+    PENDING = pend; APPROVED = appr;
+    await Promise.all([loadPlan(), loadHave(), loadGot(), checkSeed()]);
+    lastRefresh = Date.now();
+    render();
+    if (pane === 'list') renderList();
+
+    if (!quiet) toast('Up to date');
+    else {
+      const planChanged = JSON.stringify(PLAN) !== beforePlan;
+      const queueChanged = PENDING.map(r => r.id).join(',') !== beforeQueue;
+      if (planChanged && queueChanged) toast('Plan and queue updated');
+      else if (planChanged) toast('Plan updated');
+      else if (queueChanged) toast('New in your queue');
+    }
+    lastRefresh = Date.now();
+  } catch { /* offline or rate-limited -- keep showing the cached copy */ }
+  finally {
+    refreshing = false;
+    document.getElementById('refresh-btn')?.classList.remove('spinning');
+  }
+}
+
+/* Coming back to the app is the moment staleness actually bites. */
+document.addEventListener('visibilitychange', () => {
+  if (!document.hidden && Date.now() - lastRefresh > 10000) refresh();
+});
+window.addEventListener('focus', () => {
+  if (Date.now() - lastRefresh > 10000) refresh();
+});
+setInterval(() => { if (!document.hidden) refresh(); }, 60000);
 
 /* ==================== nav ==================== */
 function setPane(p){
@@ -1259,12 +1373,14 @@ async function removeRecipe(){
   try {
     await deleteFile(`recipes/approved/${r.id}.json`, r._sha);
     APPROVED = APPROVED.filter(x => x.id !== r.id);
-    let touched = false;
-    for (const d of Object.keys(PLAN)) {
-      const kept = PLAN[d].filter(x => x !== r.id);
-      if (kept.length !== PLAN[d].length) { touched = true; kept.length ? PLAN[d] = kept : delete PLAN[d]; }
+    if (Object.values(PLAN).some(ids => ids.includes(r.id))) {
+      await commitPlan(pl => {
+        for (const d of Object.keys(pl)) {
+          pl[d] = pl[d].filter(x => x !== r.id);
+          if (!pl[d].length) delete pl[d];
+        }
+      });
     }
-    if (touched) await savePlan();
     render(); go('coll'); toast('Removed');
   } catch (e) { toast(e.message, true); }
 }
@@ -1311,17 +1427,19 @@ function renderPick(){
     : emptyState('book','Nothing to pick from','Approve a few recipes and they show up here.');
 }
 async function setDay(id){
-  const list = PLAN[pickDay] || (PLAN[pickDay] = []);
-  if (list.includes(id)) { toast('Already on that day'); go('plan','week'); return; }
-  list.push(id);
-  render(); go('plan','week');
-  try { await savePlan(); } catch (e) { toast(e.message, true); }
+  const day = pickDay;
+  if ((PLAN[day] || []).includes(id)) { toast('Already on that day'); go('plan','week'); return; }
+  go('plan','week');
+  await commitPlan(pl => {
+    pl[day] = pl[day] || [];
+    if (!pl[day].includes(id)) pl[day].push(id);
+  });
 }
 async function removeFromDay(d, id){
-  PLAN[d] = (PLAN[d] || []).filter(x => x !== id);
-  if (!PLAN[d].length) delete PLAN[d];
-  render();
-  try { await savePlan(); } catch (e) { toast(e.message, true); }
+  await commitPlan(pl => {
+    pl[d] = (pl[d] || []).filter(x => x !== id);
+    if (!pl[d].length) delete pl[d];
+  });
 }
 
 /* ==================== shopping list ==================== */
@@ -1488,7 +1606,6 @@ function renderList(){
     : (haveBlock || '') + emptyState('cart', 'Nothing to buy yet',
         'Plan a few meals for the week and the list builds itself.');
 }
-function grab(k){ got.has(k) ? got.delete(k) : got.add(k); renderList(); }
 
 /* ==================== seeding ==================== */
 /* One-time: pull recipes/seed.json (an array) into recipes/approved/.

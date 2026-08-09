@@ -1,0 +1,926 @@
+#!/usr/bin/env python3
+"""
+Pantry -- the whole ingestion pipeline in one file.
+
+Reads a URL or pasted text from a GitHub issue, extracts a structured recipe
+with Claude, validates it, and writes it to recipes/pending/.
+
+Single file on purpose: it makes setup from a phone two files instead of eight.
+"""
+
+from __future__ import annotations
+
+import base64
+import json
+import os
+import pathlib
+import re
+import subprocess
+import sys
+import tempfile
+from dataclasses import dataclass, field
+from fractions import Fraction
+from datetime import date
+from urllib.parse import urlparse
+
+import anthropic
+import requests
+
+
+
+# ==========================================================================
+# VALIDATION
+# ==========================================================================
+
+import re
+from dataclasses import dataclass, field
+
+# ---------------------------------------------------------------- vocab
+
+VEG_STATUSES = {
+    "inherently-veg",
+    "easily-adaptable",
+    "needs-parallel-cook",
+    "not-adaptable",
+}
+RECIPE_TYPES = {"meal", "component"}
+STATUSES = {"pending", "approved", "rejected"}
+SOURCE_TYPES = {"personal", "instagram", "tiktok", "web", "text"}
+SECTIONS = {
+    "produce", "pantry", "spices", "canned",
+    "dairy", "meat", "frozen", "bakery", "other",
+}
+UNITS = {
+    "g", "kg", "oz", "lb",
+    "ml", "l", "tsp", "tbsp", "cup", "fl_oz",
+    "each", "clove", "can", "packet", "bunch", "slice", "pinch", "block",
+}
+
+# Ingredients that are commonly assumed vegetarian but are not.
+# Anything here that appears without an accompanying swap gets flagged.
+HIDDEN_ANIMAL = {
+    "worcestershire": "usually contains anchovies",
+    "fish sauce": "anchovy based",
+    "oyster sauce": "oyster extract",
+    "anchov": "fish",
+    "parmesan": "traditionally animal rennet",
+    "parmigiano": "traditionally animal rennet",
+    "pecorino": "traditionally animal rennet",
+    "gelatin": "animal collagen",
+    "lard": "pork fat",
+    "tallow": "beef fat",
+    "bone broth": "animal stock",
+    "chicken broth": "animal stock",
+    "chicken stock": "animal stock",
+    "beef broth": "animal stock",
+    "beef stock": "animal stock",
+    "duck fat": "animal fat",
+    "bacon": "pork",
+    "pancetta": "pork",
+    "caesar": "dressing usually contains anchovy",
+}
+
+# Obvious meat terms -- used to sanity-check an "inherently-veg" claim.
+MEAT_TERMS = {
+    "chicken", "beef", "pork", "lamb", "veal", "turkey", "duck", "bacon",
+    "pancetta", "prosciutto", "sausage", "chorizo", "ham", "brisket",
+    "shrimp", "prawn", "salmon", "tuna", "cod", "crab", "lobster",
+    "clam", "mussel", "scallop", "oyster", "fish", "anchov",
+}
+
+# Household standing constraints.
+BANNED_PATTERNS = [
+    (r"\bskin[- ]on\b", "household avoids skin-on cuts"),
+    (r"\blamb\b", "household does not eat lamb"),
+]
+
+# Never scale linearly with servings. Matched as whole phrases against the
+# item name only -- not prep or notes, or "garlic cloves" trips the "clove"
+# spice entry and "green chiles" trips "chile".
+NONLINEAR = {
+    "salt", "baking soda", "baking powder", "yeast", "cayenne",
+    "chili powder", "chile powder", "red pepper flakes", "pepper flakes",
+    "black pepper", "white pepper", "nutmeg", "ground cloves",
+    "cinnamon", "saffron", "vanilla extract", "msg",
+}
+
+REF_RE = re.compile(r"\{(i\d+)\}")
+
+
+# ---------------------------------------------------------------- result
+
+@dataclass
+class Result:
+    errors: list[str] = field(default_factory=list)
+    warnings: list[str] = field(default_factory=list)
+
+    @property
+    def ok(self) -> bool:
+        return not self.errors
+
+    def err(self, msg: str) -> None:
+        self.errors.append(msg)
+
+    def warn(self, msg: str) -> None:
+        self.warnings.append(msg)
+
+    def __str__(self) -> str:
+        out = []
+        for e in self.errors:
+            out.append(f"  ERROR    {e}")
+        for w in self.warnings:
+            out.append(f"  WARNING  {w}")
+        return "\n".join(out) or "  clean"
+
+
+# ---------------------------------------------------------------- helpers
+
+def _text_of(ing: dict) -> str:
+    return " ".join(
+        str(ing.get(k) or "") for k in ("item", "prep", "note")
+    ).lower()
+
+
+def _all_text(r: dict) -> str:
+    parts = [r.get("title", ""), r.get("description", "")]
+    parts += [_text_of(i) for i in r.get("ingredients", [])]
+    parts += [s.get("text", "") for s in r.get("steps", [])]
+    return " ".join(parts).lower()
+
+
+# ---------------------------------------------------------------- checks
+
+def _check_required(r: dict, res: Result) -> None:
+    for f in ("id", "title", "ingredients", "steps", "vegetarian", "rawText"):
+        if f not in r:
+            res.err(f"missing required field: {f}")
+
+    if "id" in r and not re.fullmatch(r"[a-z0-9]+(-[a-z0-9]+)*", r["id"]):
+        res.err(f"id is not a clean slug: {r['id']!r}")
+
+    if r.get("status") not in STATUSES:
+        res.err(f"status must be one of {sorted(STATUSES)}, got {r.get('status')!r}")
+
+    if r.get("recipeType", "meal") not in RECIPE_TYPES:
+        res.err(f"recipeType invalid: {r.get('recipeType')!r}")
+
+    st = (r.get("source") or {}).get("type")
+    if st not in SOURCE_TYPES:
+        res.err(f"source.type invalid: {st!r}")
+
+    if not str(r.get("rawText", "")).strip():
+        res.err("rawText is empty -- the original must always be preserved")
+
+
+def _check_ingredients(r: dict, res: Result) -> set[str]:
+    ids: set[str] = set()
+    for n, ing in enumerate(r.get("ingredients", [])):
+        iid = ing.get("id", f"<index {n}>")
+        if iid in ids:
+            res.err(f"duplicate ingredient id: {iid}")
+        ids.add(iid)
+
+        if not ing.get("item"):
+            res.err(f"{iid}: no item name")
+
+        if ing.get("section") not in SECTIONS:
+            res.warn(f"{iid}: unknown section {ing.get('section')!r} -> shopping list will bucket as 'other'")
+
+        unit = ing.get("unit")
+        if unit is not None and unit not in UNITS:
+            res.warn(f"{iid}: unrecognised unit {unit!r}")
+
+        qty, vague = ing.get("qty"), ing.get("vague", False)
+
+        # The fabrication check: a quantity that appears nowhere in the source.
+        # A non-empty note is treated as documenting the derivation -- "2 32 oz
+        # boxes" -> 64, or "2-3 tablespoons" -> 2.5. That's why the prompt
+        # requires a note whenever the number isn't lifted verbatim.
+        if qty is not None and not vague and not (ing.get("note") or "").strip():
+            if not _qty_in_source(qty, r.get("rawText", "")):
+                res.warn(
+                    f"{iid} ({ing.get('item')}): qty {qty} not found in source and no note "
+                    f"explaining it -- verify it wasn't invented"
+                )
+
+        if qty is None and not vague:
+            res.err(f"{iid}: qty is null but vague is false -- set vague true and put the phrasing in note")
+
+        if vague and not (ing.get("note") or "").strip():
+            res.err(f"{iid}: marked vague but note is empty -- the original phrasing is the value")
+
+        # Scaling sanity. A component recipe *is* the seasoning -- doubling a
+        # spice blend genuinely doubles every line -- so skip it there.
+        if r.get("recipeType", "meal") != "component":
+            name = str(ing.get("item") or "").lower()
+            if ing.get("scalable", True) and any(t in name for t in NONLINEAR):
+                res.warn(f"{iid} ({ing.get('item')}): marked scalable -- seasonings usually shouldn't scale linearly")
+
+    return ids
+
+
+def _qty_in_source(qty, raw: str) -> bool:
+    """Loose check that a number actually appears in the source."""
+    raw = raw.lower()
+    cands = set()
+    if float(qty) == int(qty):
+        cands.add(str(int(qty)))
+    cands.add(str(qty).rstrip("0").rstrip("."))
+    # common fraction spellings
+    frac = {0.25: ["1/4", ".25"], 0.5: ["1/2", ".5"], 0.75: ["3/4", ".75"],
+            0.33: ["1/3"], 0.67: ["2/3"], 1.5: ["1 1/2", "1.5"],
+            2.5: ["2 1/2", "2.5"], 4.5: ["4-5", "4 1/2"], 7: ["7-8", "6-8"],
+            2.0: ["2-3"]}
+    cands.update(frac.get(round(float(qty), 2), []))
+    return any(c in raw for c in cands if c)
+
+
+def _check_steps(r: dict, ids: set[str], res: Result) -> None:
+    steps = r.get("steps", [])
+    if not steps:
+        res.err("no steps -- even a spice blend needs one 'combine' step")
+
+    used: set[str] = set()
+    for s in steps:
+        sid = s.get("id", "<no id>")
+        if not (s.get("text") or "").strip():
+            res.err(f"{sid}: empty step text")
+        if not (s.get("title") or "").strip():
+            res.warn(f"{sid}: no title -- cooking mode shows this as the header")
+
+        arr = set(s.get("ingredientIds", []))
+        inline = set(REF_RE.findall(s.get("text", "")))
+
+        for ref in arr - ids:
+            res.err(f"{sid}: ingredientIds references unknown {ref}")
+        for ref in inline - ids:
+            res.err(f"{sid}: step text references unknown {ref}")
+        for ref in inline - arr:
+            res.err(f"{sid}: {ref} used inline but missing from ingredientIds")
+
+        used |= arr
+
+        secs = s.get("timerSeconds")
+        if secs is not None:
+            if not isinstance(secs, (int, float)) or secs <= 0:
+                res.err(f"{sid}: timerSeconds must be a positive number, got {secs!r}")
+            elif secs > 60 * 60 * 24:
+                res.warn(f"{sid}: timer over 24h -- check the units")
+
+    for orphan in sorted(ids - used):
+        res.warn(f"{orphan} appears in ingredients but is never used in a step")
+
+
+def _check_vegetarian(r: dict, ids: set[str], res: Result) -> None:
+    veg = r.get("vegetarian") or {}
+    status = veg.get("status")
+
+    if status not in VEG_STATUSES:
+        res.err(f"vegetarian.status invalid: {status!r}")
+        return
+
+    if not (veg.get("notes") or "").strip() and status != "inherently-veg":
+        res.err(f"vegetarian.notes required when status is {status} -- this is read at 5pm on a weeknight")
+
+    for sw in veg.get("swaps", []):
+        tgt = sw.get("ingredientId")
+        if tgt not in ids:
+            res.err(f"vegetarian swap points at unknown ingredient {tgt!r}")
+        if not (sw.get("with") or "").strip():
+            res.err(f"vegetarian swap for {tgt} has no replacement")
+
+    # Does the claim survive contact with the ingredient list?
+    swapped = {sw.get("ingredientId") for sw in veg.get("swaps", [])}
+    flagged: set[str] = set()
+
+    for ing in r.get("ingredients", []):
+        txt = _text_of(ing)
+        iid = ing.get("id")
+
+        for term, why in HIDDEN_ANIMAL.items():
+            if term in txt:
+                flagged.add(iid)
+                if iid in swapped:
+                    break
+                # "inherently-veg" and "easily-adaptable" both assert the dish
+                # is servable to the vegetarian. An unswapped animal product
+                # contradicts that outright.
+                if status in ("inherently-veg", "easily-adaptable"):
+                    res.err(
+                        f"{iid} ({ing.get('item')}) is {why}, status is {status}, "
+                        f"and no swap targets it -- add a swap or change the status"
+                    )
+                else:
+                    res.warn(f"{iid} ({ing.get('item')}): {why} -- no swap recorded")
+                break
+
+        if status == "inherently-veg" and iid not in swapped:
+            for m in MEAT_TERMS:
+                if m in txt:
+                    flagged.add(iid)
+                    res.err(f"{iid} ({ing.get('item')}) looks like meat but status is inherently-veg")
+                    break
+
+    # A swap aimed at something with no animal-product signal is the failure
+    # mode that reads as correct: well-formed, plausible, and pointing at the
+    # wrong line.
+    for sw in veg.get("swaps", []):
+        tgt = sw.get("ingredientId")
+        if tgt in ids and tgt not in flagged:
+            name = next((i.get("item") for i in r["ingredients"] if i.get("id") == tgt), tgt)
+            res.err(
+                f"vegetarian swap targets {tgt} ({name}), which has no animal product in it "
+                f"-- the swap is probably pointing at the wrong ingredient"
+            )
+
+
+def _check_household(r: dict, res: Result) -> None:
+    """Standing constraints: no skin-on, no lamb."""
+    blob = _all_text(r)
+    for pat, why in BANNED_PATTERNS:
+        if re.search(pat, blob):
+            res.warn(f"{why} -- found in this recipe, check sourceNotes for a substitution")
+
+
+def _check_times(r: dict, res: Result) -> None:
+    a, t = r.get("activeTimeMin"), r.get("totalTimeMin")
+    if a is not None and t is not None and a > t:
+        res.err(f"activeTimeMin ({a}) exceeds totalTimeMin ({t})")
+
+    if r.get("recipeType", "meal") == "meal" and not r.get("serves"):
+        res.warn("no serves value -- meal planner can't scale this")
+
+    total_timer = sum(
+        s.get("timerSeconds") or 0 for s in r.get("steps", [])
+    ) / 60
+    if t and total_timer > t * 1.25:
+        res.warn(f"step timers sum to {total_timer:.0f}m but totalTimeMin is {t}")
+
+
+# ---------------------------------------------------------------- entry
+
+def validate(recipe: dict) -> Result:
+    res = Result()
+    if not isinstance(recipe, dict):
+        res.err("not a JSON object")
+        return res
+
+    if "error" in recipe:
+        res.err(f"extractor returned an error: {recipe.get('reason', 'no reason given')}")
+        return res
+
+    _check_required(recipe, res)
+    ids = _check_ingredients(recipe, res)
+    _check_steps(recipe, ids, res)
+    _check_vegetarian(recipe, ids, res)
+    _check_household(recipe, res)
+    _check_times(recipe, res)
+    return res
+
+
+# ==========================================================================
+# FETCHING
+# ==========================================================================
+
+import re
+import subprocess
+import tempfile
+from dataclasses import dataclass
+from urllib.parse import urlparse
+
+import requests
+
+UA = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
+      "(KHTML, like Gecko) Chrome/122.0 Safari/537.36")
+
+# Below this, a caption almost certainly isn't a full recipe.
+CAPTION_MIN_CHARS = 220
+
+
+@dataclass
+class Fetched:
+    text: str
+    source_type: str          # instagram | tiktok | web | text
+    url: str | None
+    author: str | None
+    used_transcript: bool = False
+    note: str | None = None   # anything the reviewer should know
+
+
+def classify(url: str) -> str:
+    host = (urlparse(url).hostname or "").lower().removeprefix("www.")
+    if "instagram.com" in host:
+        return "instagram"
+    if "tiktok.com" in host:
+        return "tiktok"
+    return "web"
+
+
+def fetch(source: str, allow_transcription: bool = True) -> Fetched:
+    """`source` is a URL or a blob of pasted text."""
+    if not re.match(r"https?://", source.strip()):
+        return Fetched(text=source.strip(), source_type="text", url=None, author=None)
+
+    url = source.strip()
+    kind = classify(url)
+    return _fetch_social(url, kind, allow_transcription) if kind in ("instagram", "tiktok") \
+        else _fetch_web(url)
+
+
+# ------------------------------------------------------------------ web
+
+def _fetch_web(url: str) -> Fetched:
+    html = requests.get(url, headers={"User-Agent": UA}, timeout=25).text
+
+    # Recipe sites almost all publish JSON-LD. When present it's far cleaner
+    # than anything we'd get by stripping the page, and it skips the 2,000
+    # words about the author's trip to Tuscany.
+    ld = _jsonld_recipe(html)
+    if ld:
+        return Fetched(text=ld, source_type="web", url=url,
+                       author=urlparse(url).hostname,
+                       note="Read from the page's structured recipe data.")
+
+    return Fetched(text=_strip_html(html), source_type="web", url=url,
+                   author=urlparse(url).hostname)
+
+
+def _jsonld_recipe(html: str) -> str | None:
+    import json
+    blocks = re.findall(
+        r'<script[^>]+application/ld\+json[^>]*>(.*?)</script>',
+        html, re.S | re.I)
+    for b in blocks:
+        try:
+            data = json.loads(b.strip())
+        except Exception:
+            continue
+        for node in _walk(data):
+            t = node.get("@type")
+            types = t if isinstance(t, list) else [t]
+            if "Recipe" in types:
+                return json.dumps(node, indent=1)[:12000]
+    return None
+
+
+def _walk(node):
+    if isinstance(node, dict):
+        yield node
+        for v in node.values():
+            yield from _walk(v)
+    elif isinstance(node, list):
+        for v in node:
+            yield from _walk(v)
+
+
+def _strip_html(html: str) -> str:
+    html = re.sub(r"<(script|style|nav|footer|header|aside)[^>]*>.*?</\1>", " ", html, flags=re.S | re.I)
+    html = re.sub(r"<br\s*/?>|</p>|</li>|</h[1-6]>", "\n", html, flags=re.I)
+    text = re.sub(r"<[^>]+>", " ", html)
+    text = (text.replace("&nbsp;", " ").replace("&amp;", "&")
+                .replace("&#39;", "'").replace("&quot;", '"'))
+    text = re.sub(r"[ \t]+", " ", text)
+    text = re.sub(r"\n\s*\n+", "\n\n", text)
+    return text.strip()[:14000]
+
+
+# --------------------------------------------------------------- social
+
+def _fetch_social(url: str, kind: str, allow_transcription: bool) -> Fetched:
+    meta = _ytdlp_meta(url)
+    caption = (meta.get("description") or "").strip()
+    author = meta.get("uploader") or meta.get("channel")
+
+    if len(caption) >= CAPTION_MIN_CHARS:
+        return Fetched(text=caption, source_type=kind, url=url, author=author)
+
+    if not allow_transcription:
+        return Fetched(text=caption, source_type=kind, url=url, author=author,
+                       note="Caption was short and transcription is off -- amounts may be missing.")
+
+    try:
+        transcript = _transcribe(url)
+    except Exception as e:
+        return Fetched(text=caption, source_type=kind, url=url, author=author,
+                       note=f"Caption was short and transcription failed ({e}). Amounts may be missing.")
+
+    combined = f"CAPTION:\n{caption}\n\nSPOKEN TRANSCRIPT:\n{transcript}"
+    return Fetched(text=combined, source_type=kind, url=url, author=author,
+                   used_transcript=True,
+                   note="Reconstructed partly from spoken audio -- check amounts before cooking.")
+
+
+def _ytdlp_meta(url: str) -> dict:
+    import json
+    out = subprocess.run(
+        ["yt-dlp", "--dump-json", "--no-warnings", "--skip-download", url],
+        capture_output=True, text=True, timeout=90)
+    if out.returncode != 0:
+        raise RuntimeError(f"yt-dlp failed: {out.stderr.strip()[:200]}")
+    return json.loads(out.stdout)
+
+
+def _transcribe(url: str) -> str:
+    """Audio only -- much smaller and faster than pulling the video."""
+    with tempfile.TemporaryDirectory() as tmp:
+        subprocess.run(
+            ["yt-dlp", "-f", "bestaudio", "-x", "--audio-format", "mp3",
+             "-o", f"{tmp}/a.%(ext)s", "--no-warnings", url],
+            capture_output=True, timeout=240, check=True)
+
+        import whisper
+        model = whisper.load_model("base")
+        return model.transcribe(f"{tmp}/a.mp3")["text"].strip()
+
+
+# ==========================================================================
+# EXTRACTION
+# ==========================================================================
+
+import json
+import os
+import re
+from datetime import date
+
+import anthropic
+
+
+MODEL = "claude-sonnet-4-6"
+MAX_ATTEMPTS = 3
+
+SYSTEM = """You convert unstructured recipe content into a strict JSON schema.
+
+Output ONLY valid JSON. No markdown fences, no preamble, no commentary.
+
+## Household context
+
+A family of six in Austin: two adults, four kids (6, 9, 12, 14). One adult is
+vegetarian and the household is practiced at splitting meals. The cook is
+skilled and equipped: gas range, well-seasoned cast iron, carbon steel wok,
+Ooni, Big Green Egg.
+
+Standing constraints, applied to every recipe:
+- No skin-on cuts. Substitute the skinless version and say so in sourceNotes.
+- No lamb. Extract faithfully but set household.inRotation to false and
+  explain in sourceNotes.
+- The household stocks vegetarian Worcestershire. Don't flag it as a problem.
+
+## Rules
+
+1. NEVER invent a quantity. If the source doesn't give one, use qty: null,
+   vague: true, and put the source's own phrasing in `note`. A missing amount
+   is fine. A fabricated one is not.
+
+2. If you derive a number rather than lifting it verbatim -- "2 32oz boxes"
+   becoming 64, or "2-3 tablespoons" becoming 2.5 -- you MUST record the
+   original phrasing in `note`. A derived number with an empty note gets
+   flagged as invented.
+
+3. Preserve vague measurements. "A couple glugs", "big handful", "to taste"
+   are valid values, not problems to solve.
+
+4. rawText is mandatory and verbatim. Copy the source exactly. Never summarise.
+
+5. scalable: false for salt, leavening, chilies, and strong spices -- they
+   don't multiply linearly with servings.
+
+6. vegetarian.status is the most-used field in the whole app. Choose carefully:
+   - inherently-veg      no meat, no changes needed
+   - easily-adaptable    one swap, no extra pan (chicken stock -> vegetable)
+   - needs-parallel-cook protein must be cooked separately
+   - not-adaptable       meat is structural (brisket, birria)
+
+   Every non-vegetarian ingredient must have a matching entry in
+   vegetarian.swaps pointing at that ingredient's exact id. Watch for hidden
+   ones: fish sauce, oyster sauce, anchovy, gelatin, animal-rennet cheeses,
+   chicken or beef stock.
+
+   vegetarian.notes gets read at 5pm on a weeknight. Concrete, one or two
+   sentences, tells the cook what to actually do.
+
+7. activeTimeMin is hands-on only. totalTimeMin includes unattended time.
+   Estimate from the steps if the source gives none.
+
+8. Steps reference ingredients inline as {i01}. Every id used inline must also
+   appear in that step's ingredientIds. Set unattended: true for anything not
+   needing the cook present. Give every step a short imperative title.
+
+9. timerSeconds whenever a step has a duration. Midpoint for a range.
+
+10. status is always "pending". recipeType is "component" for something that
+    is an input to other recipes (spice blend, sauce, dough) rather than a
+    meal.
+
+11. If the content is not a recipe, output exactly:
+    {"error": "not_a_recipe", "reason": "<one line>"}
+
+12. If it is a recipe but critically incomplete, extract what exists and add
+    "extractionWarnings": ["..."] describing what's missing.
+
+Also set:
+- sourceNotes: anything the cook should know -- substitutions you applied,
+  steps the source glossed over, claims that look wrong.
+- confidence: "high" | "medium" | "low". Use "low" for anything reconstructed
+  from spoken audio alone.
+
+## Schema
+
+{SCHEMA}
+"""
+
+SCHEMA = """
+{
+  "id": "kebab-case-slug",
+  "title": str,
+  "description": str,
+  "source": {"type": "instagram|tiktok|web|text|personal", "url": str|null,
+             "author": str|null, "addedBy": str},
+  "dateAdded": "YYYY-MM-DD",
+  "status": "pending",
+  "recipeType": "meal|component",
+  "componentOf": [str],
+  "yield": str|null,
+  "cuisine": str,
+  "tags": [str],
+  "mainProtein": str,
+  "equipment": [str],
+  "activeTimeMin": int,
+  "totalTimeMin": int,
+  "serves": int|null,
+  "vegetarian": {
+    "status": "inherently-veg|easily-adaptable|needs-parallel-cook|not-adaptable",
+    "notes": str,
+    "swaps": [{"ingredientId": "iNN", "with": str}]
+  },
+  "ingredients": [{
+    "id": "iNN", "qty": number|null, "unit": str|null, "item": str,
+    "prep": str|null, "note": str|null,
+    "section": "produce|pantry|spices|canned|dairy|meat|frozen|bakery|other",
+    "vague": bool, "optional": bool, "scalable": bool
+  }],
+  "steps": [{
+    "id": "sNN", "title": str, "text": str,
+    "timerSeconds": int|null, "unattended": bool, "ingredientIds": ["iNN"]
+  }],
+  "household": {"lastCooked": null, "timesCooked": null, "ratings": {},
+                "kidNotes": null, "inRotation": true},
+  "rawText": str,
+  "sourceNotes": str|null,
+  "confidence": "high|medium|low"
+}
+"""
+
+
+class ExtractionFailed(Exception):
+    pass
+
+
+def extract(fetched: Fetched, added_by: str = "jess",
+            client: anthropic.Anthropic | None = None) -> tuple[dict, Result]:
+    client = client or anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
+
+    user = _build_user_message(fetched, added_by)
+    messages = [{"role": "user", "content": user}]
+    last: Result | None = None
+
+    for attempt in range(1, MAX_ATTEMPTS + 1):
+        raw = _call(client, messages)
+        recipe = _parse(raw)
+
+        if "error" in recipe:
+            raise ExtractionFailed(recipe.get("reason", "not a recipe"))
+
+        _stamp(recipe, fetched, added_by)
+        result = validate(recipe)
+        last = result
+
+        if result.ok:
+            return recipe, result
+
+        if attempt == MAX_ATTEMPTS:
+            break
+
+        messages += [
+            {"role": "assistant", "content": raw},
+            {"role": "user", "content":
+                "The extraction failed validation. Fix these and return the "
+                "complete corrected JSON — same rules, no commentary:\n\n"
+                + "\n".join(f"- {e}" for e in result.errors)},
+        ]
+
+    raise ExtractionFailed(
+        f"still invalid after {MAX_ATTEMPTS} attempts:\n{last}")
+
+
+def _build_user_message(f: Fetched, added_by: str) -> str:
+    head = [f"Source type: {f.source_type}"]
+    if f.url:
+        head.append(f"URL: {f.url}")
+    if f.author:
+        head.append(f"Author: {f.author}")
+    if f.used_transcript:
+        head.append("NOTE: partly reconstructed from spoken audio. "
+                    "Set confidence to low and be conservative with amounts.")
+    head.append(f"addedBy: {added_by}")
+    return "\n".join(head) + "\n\n---\n\n" + f.text
+
+
+def _call(client, messages) -> str:
+    resp = client.messages.create(
+        model=MODEL,
+        max_tokens=8000,
+        system=SYSTEM.replace("{SCHEMA}", SCHEMA),
+        messages=messages,
+    )
+    return "".join(b.text for b in resp.content if b.type == "text")
+
+
+def _parse(raw: str) -> dict:
+    cleaned = re.sub(r"^\s*```(?:json)?|```\s*$", "", raw.strip(), flags=re.M)
+    try:
+        return json.loads(cleaned)
+    except json.JSONDecodeError:
+        m = re.search(r"\{.*\}", cleaned, re.S)
+        if not m:
+            raise ExtractionFailed("model did not return JSON")
+        return json.loads(m.group(0))
+
+
+def _stamp(recipe: dict, f: Fetched, added_by: str) -> None:
+    """Fields we own, not the model."""
+    recipe["status"] = "pending"
+    recipe["dateAdded"] = date.today().isoformat()
+    recipe.setdefault("source", {})
+    recipe["source"].update({
+        "type": f.source_type, "url": f.url,
+        "author": f.author, "addedBy": added_by,
+    })
+    if f.note:
+        existing = recipe.get("sourceNotes") or ""
+        recipe["sourceNotes"] = (existing + " " + f.note).strip()
+    # rawText must be the source, not the model's echo of it.
+    recipe["rawText"] = f.text
+
+
+# ==========================================================================
+# GITHUB ISSUE RUNNER
+# ==========================================================================
+
+#!/usr/bin/env python3
+"""
+Bridge between a GitHub issue and the extraction pipeline.
+
+The Shortcut opens an issue whose body is a URL (or pasted recipe text).
+This reads it, runs the pipeline, writes the recipe to recipes/pending/,
+and leaves a readable comment on the issue either way.
+
+Nothing raises. A failure still needs to produce a comment the person can
+act on from their phone.
+"""
+
+
+
+
+# In Actions this is the checkout root. Falls back to the parent of scripts/
+# so the file still works if you run it locally.
+ROOT = pathlib.Path(
+    os.environ.get("GITHUB_WORKSPACE")
+    or pathlib.Path(__file__).resolve().parents[1]
+)
+PENDING = ROOT / "recipes" / "pending"
+COMMENT = ROOT / "comment.md"
+
+# GitHub username -> who it shows up as in the app.
+PEOPLE = {
+    # "jdw818": "jess",
+}
+
+
+def out(key: str, value: str) -> None:
+    with open(os.environ["GITHUB_OUTPUT"], "a") as f:
+        f.write(f"{key}={value}\n")
+
+
+def say(md: str) -> None:
+    COMMENT.write_text(md)
+
+
+def existing_ids() -> dict[str, str]:
+    found = {}
+    for folder in ("pending", "approved", "rejected"):
+        d = ROOT / "recipes" / folder
+        if d.exists():
+            for f in d.glob("*.json"):
+                found[f.stem] = folder
+    return found
+
+
+def main() -> int:
+    body = (os.environ.get("ISSUE_BODY") or "").strip()
+    author = os.environ.get("ISSUE_AUTHOR", "")
+    added_by = PEOPLE.get(author, author or "unknown")
+
+    if not body:
+        say("Nothing in the issue body. Send a link or paste the recipe text.")
+        out("saved", "false")
+        return 0
+
+    # The Shortcut sends a bare URL, but a person typing it might add words.
+    m = re.search(r"https?://\S+", body)
+    source = m.group(0) if m else body
+
+    try:
+        fetched = fetch(
+            source,
+            allow_transcription=os.environ.get("PANTRY_TRANSCRIBE") == "1",
+        )
+    except Exception as e:
+        say(
+            "**Couldn't read that link.**\n\n"
+            f"```\n{e}\n```\n\n"
+            "Open the page, copy the recipe text, and paste it into a new issue instead."
+        )
+        out("saved", "false")
+        return 0
+
+    if len(fetched.text.strip()) < 60:
+        say(
+            "**Not enough text there to work with.**\n\n"
+            "The page or caption came back nearly empty. Paste the recipe text directly."
+        )
+        out("saved", "false")
+        return 0
+
+    try:
+        recipe, result = extract(fetched, added_by=added_by)
+    except ExtractionFailed as e:
+        say(f"**Couldn't turn that into a recipe.**\n\n```\n{e}\n```")
+        out("saved", "false")
+        return 0
+    except Exception as e:
+        say(f"**Extraction failed.**\n\n```\n{type(e).__name__}: {e}\n```\n\nTry again.")
+        out("saved", "false")
+        return 0
+
+    seen = existing_ids()
+    if recipe["id"] in seen:
+        where = seen[recipe["id"]]
+        say(f"**{recipe['title']}** is already saved (in `{where}`). Nothing to do.")
+        out("saved", "false")
+        return 0
+
+    PENDING.mkdir(parents=True, exist_ok=True)
+    path = PENDING / f"{recipe['id']}.json"
+    path.write_text(json.dumps(recipe, indent=2, ensure_ascii=False) + "\n")
+
+    say(_report(recipe, result, fetched))
+    out("saved", "true")
+    out("title", recipe["title"].replace("\n", " "))
+    return 0
+
+
+VEG_LABEL = {
+    "inherently-veg": "Vegetarian as written",
+    "easily-adaptable": "Easily adapted",
+    "needs-parallel-cook": "Needs a parallel cook",
+    "not-adaptable": "Not adaptable",
+}
+
+
+def _report(recipe: dict, result, fetched) -> str:
+    veg = recipe["vegetarian"]
+    lines = [
+        f"### {recipe['title']}",
+        "",
+        recipe.get("description", ""),
+        "",
+        f"**{VEG_LABEL.get(veg['status'], veg['status'])}** — {veg.get('notes') or 'no notes'}",
+        "",
+        f"{recipe.get('activeTimeMin', '?')} min active · "
+        f"{recipe.get('totalTimeMin', '?')} min total · "
+        f"serves {recipe.get('serves') or '?'}",
+        "",
+        f"{len(recipe['ingredients'])} ingredients · {len(recipe['steps'])} steps · "
+        f"confidence: {recipe.get('confidence', 'unknown')}",
+    ]
+
+    if recipe.get("sourceNotes"):
+        lines += ["", f"> {recipe['sourceNotes']}"]
+
+    if fetched.used_transcript:
+        lines += ["", "Reconstructed partly from spoken audio. Check the amounts."]
+
+    if recipe.get("extractionWarnings"):
+        lines += ["", "**The source was incomplete:**"]
+        lines += [f"- {w}" for w in recipe["extractionWarnings"]]
+
+    if result.warnings:
+        lines += ["", "**Worth a look before cooking:**"]
+        lines += [f"- {w}" for w in result.warnings]
+
+    lines += ["", f"Saved to `recipes/pending/{recipe['id']}.json` — waiting for review."]
+    return "\n".join(lines)
+
+
+if __name__ == "__main__":
+    sys.exit(main())

@@ -788,8 +788,12 @@ def extract(fetched: Fetched, added_by: str = "jess",
                 + "\n".join(f"- {e}" for e in result.errors)},
         ]
 
-    raise ExtractionFailed(
-        f"still invalid after {MAX_ATTEMPTS} attempts:\n{last}")
+    # Three attempts and still failing. Hand it over anyway: it goes to the
+    # review queue, not the collection, and a human looking at a flagged
+    # recipe beats silently binning two minutes of work.
+    recipe["confidence"] = "low"
+    recipe["extractionErrors"] = [str(e) for e in (last.errors if last else [])]
+    return recipe, last
 
 
 def _build_user_message(f: Fetched, added_by: str) -> list[dict]:
@@ -895,12 +899,24 @@ PEOPLE = {
 
 
 def out(key: str, value: str) -> None:
-    with open(os.environ["GITHUB_OUTPUT"], "a") as f:
-        f.write(f"{key}={value}\n")
+    path = os.environ.get("GITHUB_OUTPUT")
+    if path:
+        with open(path, "a") as f:
+            f.write(f"{key}={value}\n")
+    print(f"::notice::{key}={value}", flush=True)
 
 
 def say(md: str) -> None:
+    """The reason goes on the issue -- and into the job log, so a run that
+    saves nothing explains itself without anyone opening the issue."""
     COMMENT.write_text(md)
+    print("\n----- what went on the issue -----", flush=True)
+    print(md, flush=True)
+    print("----------------------------------\n", flush=True)
+
+
+def trace(msg: str) -> None:
+    print(f"[pantry] {msg}", flush=True)
 
 
 def existing_ids() -> dict[str, str]:
@@ -956,9 +972,14 @@ def main() -> int:
     m = re.search(r"https?://\S+", body)
     source = m.group(0) if m else body
 
+    trace(f"issue body: {len(body)} chars, author={author!r} -> addedBy={added_by!r}")
+    trace(f"first line: {body.splitlines()[0][:120]!r}" if body.splitlines() else "empty body")
+
     # A photo pasted into the issue, or a path committed by a Shortcut.
     attached = attachment_urls(body)
     img = re.search(r"(?:^|\s)([\w./-]+\.(?:jpe?g|png|gif|webp|heic))\s*$", body, re.I)
+
+    trace(f"route: {'attachment' if attached else 'repo-image' if (img and not m) else 'url' if m else 'text'}")
 
     try:
         if attached:
@@ -991,7 +1012,8 @@ def main() -> int:
     try:
         recipe, result = extract(fetched, added_by=added_by)
     except ExtractionFailed as e:
-        say(f"**Couldn't turn that into a recipe.**\n\n```\n{e}\n```")
+        # Only raised when the source genuinely isn't a recipe.
+        say(f"**That doesn't look like a recipe.**\n\n```\n{e}\n```")
         out("saved", "false")
         return 0
     except Exception as e:
@@ -999,7 +1021,16 @@ def main() -> int:
         out("saved", "false")
         return 0
 
+    trace(f"extracted {recipe.get('id')!r} — {len(recipe.get('ingredients', []))} ingredients, "
+          f"confidence={recipe.get('confidence')}, validation={'ok' if result.ok else 'FAILED'}")
+    for e in recipe.get("extractionErrors", []):
+        trace(f"validation error (saving anyway, flagged): {e}")
+    if result.warnings:
+        for w in result.warnings:
+            trace(f"warning: {w}")
+
     seen = existing_ids()
+    trace(f"{len(seen)} recipes already on disk")
 
     # Same source URL means we really have already ingested this one.
     src_url = (recipe.get("source") or {}).get("url")
@@ -1015,10 +1046,13 @@ def main() -> int:
     original = recipe["id"]
     recipe["id"] = free_id(original, seen)
     renamed = recipe["id"] != original
+    if renamed:
+        trace(f"slug {original!r} was taken; saving as {recipe['id']!r}")
 
     PENDING.mkdir(parents=True, exist_ok=True)
     path = PENDING / f"{recipe['id']}.json"
     path.write_text(json.dumps(recipe, indent=2, ensure_ascii=False) + "\n")
+    trace(f"wrote {path.relative_to(ROOT)} ({path.stat().st_size} bytes)")
 
     report = _report(recipe, result, fetched)
     if renamed:
@@ -1060,6 +1094,11 @@ def _report(recipe: dict, result, fetched) -> str:
 
     if fetched.used_transcript:
         lines += ["", "Reconstructed partly from spoken audio. Check the amounts."]
+
+    if recipe.get("extractionErrors"):
+        lines += ["", "**This one didn't pass validation.** It's in the queue so you "
+                      "can look at it, but check these before you approve:"]
+        lines += [f"- {e}" for e in recipe["extractionErrors"]]
 
     if recipe.get("extractionWarnings"):
         lines += ["", "**The source was incomplete:**"]

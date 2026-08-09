@@ -293,6 +293,13 @@ ol.steps .amt{font-weight:600;color:#1B1815}
 .raw pre{white-space:pre-wrap;font-family:var(--fm);font-size:11.5px;line-height:1.75;color:#5C534B;margin:12px 0 0}
 
 /* ============ week ============ */
+.seg.panes{margin-bottom:18px}
+.seg.panes button{display:flex;align-items:center;justify-content:center;gap:7px}
+.seg.panes .cnt{
+  font-family:var(--fm);font-size:10px;background:var(--ink-4);color:var(--muted);
+  border-radius:9px;padding:1px 6px;line-height:15px;
+}
+.seg.panes button.on .cnt{background:rgba(22,26,8,.22);color:#161A08}
 .day{
   display:flex;width:100%;text-align:left;align-items:center;gap:13px;
   border:1px solid var(--line);border-radius:var(--r);padding:13px 15px;margin-bottom:8px;
@@ -491,30 +498,35 @@ ol.steps .amt{font-weight:600;color:#1B1815}
   <div id="detail"></div>
 </section>
 
-<!-- ============ WEEK ============ -->
-<section class="view" id="v-week">
-  <div class="head"><h1>This week</h1><p class="sub">Tap a day to pick something. You and your wife see the same plan.</p></div>
-  <div id="week"></div>
-  <button class="btn btn-p btn-w" style="margin-top:16px" onclick="go('list')">Shopping list</button>
+<!-- ============ PLAN (week + shopping) ============ -->
+<section class="view" id="v-plan">
+  <div class="head"><h1>This week</h1></div>
+  <div class="seg panes" id="panes">
+    <button data-pane="week" onclick="setPane('week')">Plan</button>
+    <button data-pane="list" onclick="setPane('list')">Shopping<span class="cnt" id="list-cnt"></span></button>
+  </div>
+
+  <div class="pane" id="pane-week">
+    <p class="sub">Tap a day to pick something. You and your wife see the same plan.</p>
+    <div id="week"></div>
+  </div>
+
+  <div class="pane" id="pane-list" hidden>
+    <p class="sub" id="list-sub"></p>
+    <div class="progress" id="prog" hidden><i style="width:0"></i></div>
+    <div id="list"></div>
+  </div>
 </section>
 
 <!-- ============ PICK ============ -->
 <section class="view" id="v-pick">
-  <button class="back" onclick="go('week')"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>This week</button>
+  <button class="back" onclick="go('plan')"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>This week</button>
   <div class="head"><h1 id="pick-h">Pick a meal</h1></div>
   <div class="search">
     <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
     <input id="pq" placeholder="Search" oninput="renderPick()" autocapitalize="off">
   </div>
   <div id="pick-list"></div>
-</section>
-
-<!-- ============ LIST ============ -->
-<section class="view" id="v-list">
-  <button class="back" onclick="go('week')"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>This week</button>
-  <div class="head"><h1>Shopping list</h1><p class="sub" id="list-sub"></p></div>
-  <div class="progress" id="prog" hidden><i style="width:0"></i></div>
-  <div id="list"></div>
 </section>
 
 </main>
@@ -528,9 +540,9 @@ ol.steps .amt{font-weight:600;color:#1B1815}
     <svg viewBox="0 0 24 24"><path d="M4 4.5A1.5 1.5 0 0 1 5.5 3H19v18H5.5A1.5 1.5 0 0 1 4 19.5z"/><path d="M8 3v18"/></svg>
     Recipes
   </button>
-  <button data-v="week" onclick="go('week')">
+  <button data-v="plan" onclick="go('plan')">
     <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>
-    Week
+    Plan
   </button>
 </nav>
 
@@ -606,6 +618,9 @@ let HAVE = new Set(), HAVE_SHA = null, showHave = false;
 let SEED_WAITING = 0;   // recipes in seed.json not yet in the collection
 let current = null, scale = 1, checked = new Set(), got = new Set();
 let filter = 'all', pickDay = null, prevView = 'home', prevLabel = 'Kitchen';
+/* Which half of Plan you were last on. At the store you want the list, not the
+   planner, and you shouldn't have to tap through the planner to reach it. */
+let pane = store.get('pantry.pane') === 'list' ? 'list' : 'week';
 
 const DAYS = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
 const todayKey = () => DAYS[(new Date().getDay() + 6) % 7];
@@ -730,13 +745,25 @@ async function savePlan(){
 }
 
 /* ==================== nav ==================== */
-function go(v){
+function setPane(p){
+  pane = p;
+  store.set('pantry.pane', p);
+  document.getElementById('pane-week').hidden = p !== 'week';
+  document.getElementById('pane-list').hidden = p !== 'list';
+  document.querySelectorAll('#panes button').forEach(b =>
+    b.classList.toggle('on', b.dataset.pane === p));
+  if (p === 'list') renderList();
+  window.scrollTo(0,0);
+}
+
+function go(v, forcePane){
+  if (forcePane) { pane = forcePane; store.set('pantry.pane', forcePane); }
   document.querySelectorAll('.view').forEach(s => s.classList.remove('on'));
   document.getElementById('v-' + v).classList.add('on');
-  const tab = v === 'queue' ? 'home' : (v === 'pick' || v === 'list') ? 'week' : v;
+  const tab = v === 'queue' ? 'home' : v === 'pick' ? 'plan' : v;
   document.querySelectorAll('nav button').forEach(b => b.classList.toggle('on', b.dataset.v === tab));
   window.scrollTo(0,0);
-  if (v === 'list') renderList();
+  if (v === 'plan') setPane(pane);
   if (v === 'pick') renderPick();
 }
 function back(){ go(prevView); }
@@ -781,6 +808,11 @@ function esc(s){
 /* ==================== render ==================== */
 function render(){
   renderHome(); renderColl(); renderWeek(); renderQueue();
+  if (pane === 'list') renderList();
+  const { shop } = buildList();
+  const n = Object.keys(shop).filter(k => !got.has(k)).length;
+  const c = document.getElementById('list-cnt');
+  if (c) { c.textContent = n || ''; c.hidden = !n; }
   const n = document.getElementById('qn');
   n.textContent = PENDING.length;
   n.hidden = !PENDING.length;
@@ -853,7 +885,7 @@ function renderHome(){
   const rest = DAYS.slice(DAYS.indexOf(today) + 1).concat(DAYS.slice(0, DAYS.indexOf(today)))
     .map(d => ({ d, r: APPROVED.find(x => x.id === PLAN[d]) })).filter(x => x.r).slice(0, 3);
   if (rest.length) {
-    h += `<div class="sec-head"><h3>Coming up</h3><button onclick="go('week')">Whole week</button></div>
+    h += `<div class="sec-head"><h3>Coming up</h3><button onclick="go('plan','week')">Whole week</button></div>
       <div class="rows">${rest.map(({d,r}) =>
         rowCard(r, `openRecipe('${r.id}','approved','home','Kitchen')`, d)).join('')}</div>`;
   }
@@ -1160,7 +1192,7 @@ function renderPick(){
 }
 async function setDay(id){
   PLAN[pickDay] = id;
-  render(); go('week');
+  render(); go('plan','week');
   try { await savePlan(); } catch (e) { toast(e.message, true); }
 }
 async function clearDay(d){
@@ -1289,6 +1321,8 @@ function renderList(){
     count ? `${count} meal${count>1?'s':''} · ${total} item${total===1?'':'s'} to buy` : 'Nothing planned yet.';
 
   const done = Object.keys(shop).filter(k => got.has(k)).length;
+  const c = document.getElementById('list-cnt');
+  if (c) { c.textContent = (total - done) || ''; c.hidden = !(total - done); }
   const prog = document.getElementById('prog');
   prog.hidden = !total;
   if (total) prog.firstElementChild.style.width = `${Math.round(done/total*100)}%`;

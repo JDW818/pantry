@@ -430,6 +430,7 @@ ol.steps .amt{font-weight:600;color:#1B1815}
         <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
         <span>The token stays on this phone and only ever talks to GitHub. Nothing else sees it.</span>
       </div>
+      <button class="btn btn-s btn-w" style="margin-top:10px" onclick="importSeed()">Import from seed.json</button>
       <button class="helplink" onclick="toggleHelp()">Token not working?</button>
       <p class="note" id="help" hidden style="margin-top:14px">
         It needs <b>Contents: read and write</b> on this repo, not just Issues —
@@ -805,13 +806,18 @@ function renderHome(){
           <span class="m">${dur(r.totalTimeMin) || (r.cuisine || '')}</span>
         </button>`;
       }).join('')}</div>`;
-  } else if (!PENDING.length) {
-    h += emptyState('book', 'Nothing here yet',
-      'Share a recipe link from your phone and it turns up in the queue within a minute.');
-    h += `<button class="btn btn-s btn-w" style="margin-top:4px" onclick="importSeed()">
-            Import your own recipes</button>
+  } else {
+    /* No approved recipes yet. Offer the import regardless of what's pending --
+       gating this behind an empty queue hid it exactly when it was needed. */
+    if (!PENDING.length) {
+      h += emptyState('book', 'Nothing here yet',
+        'Share a recipe link from your phone and it turns up in the queue within a minute.');
+    } else {
+      h += `<div class="sec-head"><h3>Your collection</h3></div>`;
+    }
+    h += `<button class="btn btn-s btn-w" onclick="importSeed()">Import your recipes</button>
           <p class="note" style="text-align:center;margin-top:10px">
-            Loads the recipes already written up in <code>seed.json</code>.</p>`;
+            Brings in the recipes written up in <code>seed.json</code>.</p>`;
   }
 
   document.getElementById('home').innerHTML = h;
@@ -854,8 +860,11 @@ function renderColl(){
 
   document.getElementById('coll-list').innerHTML = list.length
     ? `<div class="rows">${list.map(r => rowCard(r, `openRecipe('${r.id}','approved','coll','Recipes')`)).join('')}</div>`
-    : emptyState('search', q ? 'No matches' : 'Nothing here yet',
-        q ? `Nothing matching "${esc(q)}".` : 'Approve something from the queue and it lands here.');
+    : q
+      ? emptyState('search', 'No matches', `Nothing matching "${esc(q)}".`)
+      : emptyState('book', 'Nothing here yet', 'Approve something from the queue and it lands here.')
+        + (APPROVED.length ? '' :
+           `<button class="btn btn-s btn-w" onclick="importSeed()">Import your recipes</button>`);
 }
 function searchable(r){
   return [r.title, r.cuisine, ...(r.tags||[]), ...r.ingredients.map(i => i.item)].join(' ').toLowerCase();
@@ -1217,6 +1226,8 @@ function grab(k){ got.has(k) ? got.delete(k) : got.add(k); renderList(); }
 /* One-time: pull recipes/seed.json (an array) into recipes/approved/.
    Skips anything already there, so running it twice is harmless. */
 async function importSeed(){
+  if (!CFG.repo || !CFG.token) return toast('Connect first', true);
+  document.body.classList.remove('locked');
   toast('Loading…');
   let seed;
   try {

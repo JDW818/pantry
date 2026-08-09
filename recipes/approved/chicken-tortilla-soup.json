@@ -1,0 +1,437 @@
+{
+  "id": "chicken-tortilla-soup",
+  "title": "Chicken Tortilla Soup",
+  "description": "A long-simmered tortilla soup with roasted tomatoes, two kinds of beans, and a heavy hand on the spices. Corn tortillas dissolve in and thicken the whole pot.",
+  "source": {
+    "type": "personal",
+    "url": null,
+    "author": "jess",
+    "addedBy": "jess"
+  },
+  "dateAdded": "2026-08-08",
+  "status": "approved",
+  "cuisine": "tex-mex",
+  "tags": [
+    "soup",
+    "make-ahead",
+    "crowd-pleaser",
+    "freezer-friendly",
+    "weekend-simmer"
+  ],
+  "mainProtein": "beans",
+  "equipment": [
+    "dutch-oven"
+  ],
+  "activeTimeMin": 25,
+  "totalTimeMin": 180,
+  "serves": 8,
+  "vegetarian": {
+    "status": "inherently-veg",
+    "notes": "Despite the name there's no chicken in it — the base is entirely vegetable and bean. Just use vegetable broth. If anyone wants chicken, shred some in at the bowl rather than the pot.",
+    "swaps": [
+      {
+        "ingredientId": "i20",
+        "with": "vegetable broth (choose this by default)"
+      }
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "i01",
+      "qty": 0.5,
+      "unit": "each",
+      "item": "onion",
+      "prep": "chopped",
+      "note": "a good sized one",
+      "section": "produce",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i02",
+      "qty": 1,
+      "unit": "each",
+      "item": "bell pepper",
+      "prep": "chopped",
+      "note": "red, orange, yellow, green — in order of preference",
+      "section": "produce",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i03",
+      "qty": 0.75,
+      "unit": "cup",
+      "item": "carrots",
+      "prep": "chopped",
+      "note": null,
+      "section": "produce",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i04",
+      "qty": 1,
+      "unit": "each",
+      "item": "zucchini",
+      "prep": "chopped",
+      "note": "medium",
+      "section": "produce",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i05",
+      "qty": 7,
+      "unit": "clove",
+      "item": "garlic",
+      "prep": "minced",
+      "note": "6-8 cloves",
+      "section": "produce",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i06",
+      "qty": 4,
+      "unit": "oz",
+      "item": "chopped green chiles",
+      "prep": null,
+      "note": "one can",
+      "section": "canned",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i07",
+      "qty": 3,
+      "unit": "tsp",
+      "item": "chili powder",
+      "prep": null,
+      "note": null,
+      "section": "spices",
+      "vague": false,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i08",
+      "qty": 2,
+      "unit": "tsp",
+      "item": "dried oregano",
+      "prep": null,
+      "note": null,
+      "section": "spices",
+      "vague": false,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i09",
+      "qty": 1,
+      "unit": "tsp",
+      "item": "cumin",
+      "prep": null,
+      "note": null,
+      "section": "spices",
+      "vague": false,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i10",
+      "qty": 4,
+      "unit": "tsp",
+      "item": "salt",
+      "prep": null,
+      "note": null,
+      "section": "spices",
+      "vague": false,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i11",
+      "qty": 0.5,
+      "unit": "tsp",
+      "item": "seasoning salt",
+      "prep": null,
+      "note": null,
+      "section": "spices",
+      "vague": false,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i12",
+      "qty": 0.25,
+      "unit": "tsp",
+      "item": "thyme",
+      "prep": null,
+      "note": null,
+      "section": "spices",
+      "vague": false,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i13",
+      "qty": 0.25,
+      "unit": "tsp",
+      "item": "paprika",
+      "prep": null,
+      "note": null,
+      "section": "spices",
+      "vague": false,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i14",
+      "qty": 1,
+      "unit": "tsp",
+      "item": "black pepper",
+      "prep": null,
+      "note": null,
+      "section": "spices",
+      "vague": false,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i15",
+      "qty": 1,
+      "unit": "packet",
+      "item": "Sazón (tomato/cilantro)",
+      "prep": null,
+      "note": null,
+      "section": "spices",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i16",
+      "qty": null,
+      "unit": null,
+      "item": "cayenne",
+      "prep": null,
+      "note": "dash",
+      "section": "spices",
+      "vague": true,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i17",
+      "qty": null,
+      "unit": null,
+      "item": "Cholula",
+      "prep": null,
+      "note": "shake the shit out of the bottle for like 5 seconds",
+      "section": "pantry",
+      "vague": true,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i18",
+      "qty": 3,
+      "unit": "each",
+      "item": "corn tortillas",
+      "prep": null,
+      "note": "they dissolve in and thicken the soup",
+      "section": "pantry",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i19",
+      "qty": 15,
+      "unit": "oz",
+      "item": "crushed or diced roasted tomatoes",
+      "prep": null,
+      "note": "one can",
+      "section": "canned",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i20",
+      "qty": 64,
+      "unit": "fl_oz",
+      "item": "vegetable or chicken broth",
+      "prep": null,
+      "note": "two 32 oz boxes",
+      "section": "pantry",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i21",
+      "qty": 1,
+      "unit": "cup",
+      "item": "water",
+      "prep": null,
+      "note": null,
+      "section": "other",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i22",
+      "qty": 1,
+      "unit": "can",
+      "item": "black beans",
+      "prep": "drained",
+      "note": null,
+      "section": "canned",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i23",
+      "qty": 1,
+      "unit": "can",
+      "item": "great northern beans",
+      "prep": "drained",
+      "note": null,
+      "section": "canned",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i24",
+      "qty": 0.5,
+      "unit": "cup",
+      "item": "frozen corn",
+      "prep": null,
+      "note": "1/2ish cup",
+      "section": "frozen",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i25",
+      "qty": null,
+      "unit": null,
+      "item": "cilantro",
+      "prep": "chopped",
+      "note": "real big handful",
+      "section": "produce",
+      "vague": true,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i26",
+      "qty": 2,
+      "unit": "each",
+      "item": "limes",
+      "prep": "juiced",
+      "note": null,
+      "section": "produce",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i27",
+      "qty": null,
+      "unit": null,
+      "item": "olive oil",
+      "prep": null,
+      "note": "couple glugs",
+      "section": "pantry",
+      "vague": true,
+      "optional": false,
+      "scalable": false
+    }
+  ],
+  "steps": [
+    {
+      "id": "s01",
+      "title": "Sauté the vegetables",
+      "text": "Sauté {i01}, {i02}, {i03}, {i04}, and {i05} with a little salt and cumin in {i27} over medium-high.",
+      "timerSeconds": null,
+      "unattended": false,
+      "ingredientIds": [
+        "i01",
+        "i02",
+        "i03",
+        "i04",
+        "i05",
+        "i27"
+      ]
+    },
+    {
+      "id": "s02",
+      "title": "Add everything else",
+      "text": "Add everything except the beans and lime — {i06}, all the spices, {i17}, {i18}, {i19}, {i20}, {i21}, {i24}, {i25}.",
+      "timerSeconds": null,
+      "unattended": false,
+      "ingredientIds": [
+        "i06",
+        "i07",
+        "i08",
+        "i09",
+        "i10",
+        "i11",
+        "i12",
+        "i13",
+        "i14",
+        "i15",
+        "i16",
+        "i17",
+        "i18",
+        "i19",
+        "i20",
+        "i21",
+        "i24",
+        "i25"
+      ]
+    },
+    {
+      "id": "s03",
+      "title": "Simmer",
+      "text": "Simmer covered for a few hours.",
+      "timerSeconds": 7200,
+      "unattended": true,
+      "ingredientIds": []
+    },
+    {
+      "id": "s04",
+      "title": "Finish with beans and lime",
+      "text": "Add {i22}, {i23}, and the juice of {i26}.",
+      "timerSeconds": null,
+      "unattended": false,
+      "ingredientIds": [
+        "i22",
+        "i23",
+        "i26"
+      ]
+    }
+  ],
+  "household": {
+    "lastCooked": null,
+    "timesCooked": null,
+    "ratings": {},
+    "kidNotes": null,
+    "inRotation": true
+  },
+  "rawText": "Chicken Tortilla Soup\n\n1/2 a good sized onion\n1 bell pepper (red, orange, yellow, green - in order of preference)\n3/4 cup carrots\n1 medium zucchini\n6-8 cloves garlic\n1 (4 ounce) can chopped green chiles\n\n3 teaspoons chili powder\n2 teaspoons dried oregano\n1 teaspoon cumin\n4 teaspoons salt\n1/2 teaspoon seasoning salt\n1/4 teaspoon thyme\n1/4 teaspoon paprika\n1 teaspoon black pepper\n1 sazon tomato/cilantro packet\nDash cayenne\nShake the shit out of the Cholula bottle for like 5 seconds\n\n3 corn tortillas\n\n1 15 ounce can crushed or diced roasted tomatoes\n2 32 oz. boxes vegetable or chicken broth\n1 cup water\n1 can black beans\n1 can great northern beans\n1/2ish cup frozen corn\nReal big handful cilantro\nJuice of 2 limes\n\nSauté the veggies + a little salt/cumin in a couple glugs of olive oil over medium high. Add everything except beans and lime. Simmer covered for a few hours. Add beans and lime.",
+  "recipeType": "meal"
+}

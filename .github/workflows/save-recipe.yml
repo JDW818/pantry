@@ -18,6 +18,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # rebase needs history when the app has pushed meanwhile
 
       - uses: actions/setup-python@v5
         with:
@@ -48,14 +50,34 @@ jobs:
           PANTRY_TRANSCRIBE: ${{ vars.PANTRY_TRANSCRIBE }}
         run: python scripts/pantry.py
 
+      # The web app writes plan.json and list-state.json straight to main, so
+      # the remote often moves while extraction is running. Rebase and retry
+      # rather than losing the recipe we just paid to extract.
       - name: Commit the recipe
+        id: commit
         if: steps.extract.outputs.saved == 'true'
+        env:
+          TITLE: ${{ steps.extract.outputs.title }}
         run: |
+          set -e
           git config user.name  "pantry"
           git config user.email "pantry@users.noreply.github.com"
           git add recipes/
-          git commit -m "add: ${{ steps.extract.outputs.title }}"
-          git push
+          git commit -m "add: $TITLE"
+
+          for attempt in 1 2 3 4 5; do
+            if git push origin HEAD:main; then
+              echo "pushed on attempt $attempt"
+              exit 0
+            fi
+            echo "push rejected — someone else wrote first, rebasing (attempt $attempt)"
+            git fetch origin main
+            git rebase origin/main
+            sleep $(( (RANDOM % 4) + 1 ))
+          done
+
+          echo "::error::could not push after 5 attempts"
+          exit 1
 
       - name: Report back and close
         if: always()
@@ -63,9 +85,15 @@ jobs:
         with:
           script: |
             const fs = require('fs');
-            const body = fs.existsSync('comment.md')
+            let body = fs.existsSync('comment.md')
               ? fs.readFileSync('comment.md', 'utf8')
               : 'Something went wrong and no report was written. Check the run log.';
+            if ('${{ steps.extract.outputs.saved }}' === 'true'
+                && '${{ steps.commit.outcome }}' !== 'success') {
+              body += "\n\n---\n\n**The recipe was extracted but couldn't be saved to the "
+                    + "repository.** Someone else wrote to it at the same time and the retries "
+                    + "ran out. Re-open or re-send this link to try again.";
+            }
             await github.rest.issues.createComment({
               ...context.repo,
               issue_number: context.issue.number,
@@ -74,8 +102,11 @@ jobs:
             // Only close when a recipe actually landed. An issue left open is
             // the signal that something needs looking at -- a job that goes
             // green while quietly saving nothing is worse than a failure.
-            const saved = '${{ steps.extract.outputs.saved }}' === 'true';
-            if (!saved) return;
+            // Saved AND pushed. A commit that never landed leaves the issue
+            // open, because the recipe isn't really in the repo.
+            const saved  = '${{ steps.extract.outputs.saved }}' === 'true';
+            const pushed = '${{ steps.commit.outcome }}' === 'success';
+            if (!saved || !pushed) return;
             await github.rest.issues.update({
               ...context.repo,
               issue_number: context.issue.number,

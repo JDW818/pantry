@@ -1,0 +1,197 @@
+{
+  "id": "guac",
+  "title": "Guac",
+  "description": "A simple, classic guacamole with fresh tomato, red onion, cilantro, and lime.",
+  "source": {
+    "type": "text",
+    "url": null,
+    "author": null,
+    "addedBy": "JDW818"
+  },
+  "dateAdded": "2026-08-09",
+  "status": "pending",
+  "recipeType": "component",
+  "componentOf": [],
+  "yield": "~2 cups",
+  "cuisine": "Mexican",
+  "tags": [
+    "dip",
+    "guacamole",
+    "avocado",
+    "quick",
+    "no-cook"
+  ],
+  "mainProtein": "none",
+  "equipment": [
+    "knife",
+    "cutting board",
+    "mixing bowl",
+    "fork or potato masher"
+  ],
+  "activeTimeMin": 10,
+  "totalTimeMin": 10,
+  "serves": 6,
+  "vegetarian": {
+    "status": "inherently-veg",
+    "notes": null,
+    "swaps": []
+  },
+  "ingredients": [
+    {
+      "id": "i01",
+      "qty": 2,
+      "unit": null,
+      "item": "avocados",
+      "prep": null,
+      "note": null,
+      "section": "produce",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i02",
+      "qty": 1,
+      "unit": null,
+      "item": "Roma tomato",
+      "prep": "diced",
+      "note": null,
+      "section": "produce",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i03",
+      "qty": 0.5,
+      "unit": "tsp",
+      "item": "garlic powder",
+      "prep": null,
+      "note": "1/2 tsp.",
+      "section": "spices",
+      "vague": false,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i04",
+      "qty": 0.5,
+      "unit": "tsp",
+      "item": "salt",
+      "prep": null,
+      "note": "1/2 tsp.",
+      "section": "spices",
+      "vague": false,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i05",
+      "qty": 0.25,
+      "unit": "tsp",
+      "item": "cumin",
+      "prep": null,
+      "note": "1/4 tsp.",
+      "section": "spices",
+      "vague": false,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i06",
+      "qty": 0.25,
+      "unit": "tsp",
+      "item": "cayenne",
+      "prep": null,
+      "note": "1/4 tsp.",
+      "section": "spices",
+      "vague": false,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i07",
+      "qty": 1,
+      "unit": null,
+      "item": "lime",
+      "prep": "juiced",
+      "note": null,
+      "section": "produce",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i08",
+      "qty": 0.25,
+      "unit": null,
+      "item": "small red onion",
+      "prep": "diced",
+      "note": "1/4 small red onion",
+      "section": "produce",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i09",
+      "qty": 0.5,
+      "unit": "cup",
+      "item": "cilantro",
+      "prep": "roughly chopped",
+      "note": null,
+      "section": "produce",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    }
+  ],
+  "steps": [
+    {
+      "id": "s01",
+      "title": "Mash avocados",
+      "text": "Halve and pit {i01}. Scoop flesh into a mixing bowl and mash to your preferred texture with a fork or potato masher.",
+      "timerSeconds": null,
+      "unattended": false,
+      "ingredientIds": [
+        "i01"
+      ]
+    },
+    {
+      "id": "s02",
+      "title": "Add aromatics and produce",
+      "text": "Add {i02}, {i08}, and {i09} to the bowl and stir to combine.",
+      "timerSeconds": null,
+      "unattended": false,
+      "ingredientIds": [
+        "i02",
+        "i08",
+        "i09"
+      ]
+    },
+    {
+      "id": "s03",
+      "title": "Season and finish",
+      "text": "Add {i03}, {i04}, {i05}, and {i06}. Squeeze in {i07}. Stir well and taste, adjusting seasoning as needed.",
+      "timerSeconds": null,
+      "unattended": false,
+      "ingredientIds": [
+        "i03",
+        "i04",
+        "i05",
+        "i06",
+        "i07"
+      ]
+    }
+  ],
+  "household": {
+    "lastCooked": null,
+    "timesCooked": null,
+    "ratings": {},
+    "kidNotes": null,
+    "inRotation": true
+  },
+  "rawText": "Guac\n\n2 avocados\n1 diced Roma tomato\n1/2 tsp. garlic powder \n1/2 tsp. salt\n1/4 tsp. cumin\n1/4 tsp. cayenne\n1 lime \n1/4 small red onion\n1/2 cup cilantro",
+  "sourceNotes": "No preparation method was provided. Steps inferred from standard guacamole technique. Lime is listed as a whole fruit with no instruction; juicing assumed.",
+  "confidence": "medium"
+}

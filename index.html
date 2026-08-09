@@ -140,20 +140,28 @@ h1{font-family:var(--fd);font-weight:600;font-size:26px;line-height:1.12;letter-
 .banner .txt small{display:block;color:var(--muted);font-size:12px;margin-top:2px}
 .banner .arw{color:var(--herb);font-size:17px}
 
-.strip{display:flex;gap:9px;overflow-x:auto;scrollbar-width:none;margin:0 -20px;padding:2px 20px 2px;align-items:stretch}
+.strip{
+  display:flex;gap:9px;overflow-x:auto;scrollbar-width:none;
+  margin:0 -20px;padding:2px 20px;align-items:flex-start;
+  scroll-snap-type:x proximity;
+}
+.strip .tile{scroll-snap-align:start}
 .strip::-webkit-scrollbar{display:none}
 .tile{
-  flex-shrink:0;width:158px;min-height:104px;text-align:left;background:var(--ink-2);
-  border:1px solid var(--line);border-radius:var(--r);padding:14px;
-  display:flex;flex-direction:column;transition:border-color .18s;
+  flex-shrink:0;width:170px;text-align:left;background:var(--ink-2);
+  border:1px solid var(--line);border-radius:var(--r);padding:13px 14px 14px;
+  transition:border-color .18s;
 }
 .tile h4{
   display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;
-  overflow:hidden;margin-bottom:0;
+  overflow:hidden;margin:0 0 5px;font-size:15px;line-height:1.25;
 }
-.tile .m{margin-top:auto;padding-top:10px}
+.tile .m{margin:0}
 .tile:active{border-color:var(--line-2)}
-.tile .dot{width:6px;height:6px;border-radius:50%;background:var(--herb);margin-bottom:9px}
+.tile .dot{
+  width:6px;height:6px;border-radius:50%;background:var(--herb);
+  display:inline-block;vertical-align:middle;margin-right:7px;
+}
 .tile .dot.warn{background:var(--ochre)} .tile .dot.no{background:var(--chile)}
 .tile h4{font-family:var(--fd);font-size:15px;font-weight:600;line-height:1.2;margin:0 0 6px;letter-spacing:-.01em}
 .tile .m{font-size:11.5px;color:var(--muted-2)}
@@ -1165,10 +1173,10 @@ function renderHome(){
     h += `<div class="sec-head"><h3>In your collection</h3><button onclick="go('coll')">See all ${meals.length}</button></div>
       <div class="strip">${recent.map(r => {
         const tone = (VEG[r.vegetarian?.status] || [])[1] || '';
+        const meta = [dur(r.totalTimeMin), r.cuisine].filter(Boolean)[0] || '';
         return `<button class="tile" onclick="openRecipe('${r.id}','approved','home','Kitchen')">
-          <span class="dot ${tone}"></span>
           <h4>${esc(r.title)}</h4>
-          <span class="m">${dur(r.totalTimeMin) || (r.cuisine || '')}</span>
+          <span class="m"><span class="dot ${tone}"></span>${esc(meta)}</span>
         </button>`;
       }).join('')}</div>`;
   } else if (!PENDING.length && !SEED_WAITING) {

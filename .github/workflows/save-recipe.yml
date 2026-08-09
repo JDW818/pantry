@@ -22,11 +22,17 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-          cache: pip
-          cache-dependency-path: requirements.txt
 
+      # No pip cache on purpose: it needs a dependency file to hash, and the
+      # install takes about seven seconds. Not worth a required file that
+      # breaks the whole run when it's missing.
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: |
+          if [ -f requirements.txt ]; then
+            pip install -r requirements.txt
+          else
+            pip install anthropic requests yt-dlp
+          fi
 
       - name: Install ffmpeg
         # Only needed when a caption is too short and we fall back to audio.

@@ -1,0 +1,237 @@
+{
+  "id": "deluxe-tomatillo",
+  "title": "Deluxe Tomatillo Sauce",
+  "description": "Tomatillos, serranos, and green onion blended with sour cream and thickened just enough to coat. For enchiladas or tacos.",
+  "source": {
+    "type": "personal",
+    "url": null,
+    "author": "jess",
+    "addedBy": "jess"
+  },
+  "dateAdded": "2026-08-09",
+  "status": "approved",
+  "recipeType": "component",
+  "cuisine": "tex-mex",
+  "tags": [
+    "sauce",
+    "component",
+    "spicy",
+    "make-ahead"
+  ],
+  "mainProtein": "none",
+  "equipment": [
+    "blender"
+  ],
+  "activeTimeMin": 15,
+  "totalTimeMin": 30,
+  "serves": 6,
+  "vegetarian": {
+    "status": "inherently-veg",
+    "notes": "Nothing to change — use vegetable broth for the slurry.",
+    "swaps": []
+  },
+  "ingredients": [
+    {
+      "id": "i01",
+      "qty": 1,
+      "unit": "lb",
+      "item": "tomatillos",
+      "prep": null,
+      "note": null,
+      "section": "produce",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i02",
+      "qty": 2,
+      "unit": "each",
+      "item": "green onions",
+      "prep": null,
+      "note": "2 full stalks",
+      "section": "produce",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i03",
+      "qty": 0.5,
+      "unit": "each",
+      "item": "lime",
+      "prep": null,
+      "note": null,
+      "section": "produce",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i04",
+      "qty": 2,
+      "unit": "each",
+      "item": "serranos",
+      "prep": null,
+      "note": null,
+      "section": "produce",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i05",
+      "qty": 3,
+      "unit": "clove",
+      "item": "garlic",
+      "prep": null,
+      "note": null,
+      "section": "produce",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i06",
+      "qty": null,
+      "unit": null,
+      "item": "cilantro",
+      "prep": "chopped",
+      "note": "handful",
+      "section": "produce",
+      "vague": true,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i07",
+      "qty": 1,
+      "unit": "tsp",
+      "item": "salt",
+      "prep": null,
+      "note": null,
+      "section": "spices",
+      "vague": false,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i08",
+      "qty": 1.5,
+      "unit": "tsp",
+      "item": "sugar",
+      "prep": null,
+      "note": null,
+      "section": "pantry",
+      "vague": false,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i09",
+      "qty": 1.5,
+      "unit": "tsp",
+      "item": "black pepper",
+      "prep": null,
+      "note": null,
+      "section": "spices",
+      "vague": false,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i10",
+      "qty": null,
+      "unit": null,
+      "item": "cumin",
+      "prep": null,
+      "note": "dash",
+      "section": "spices",
+      "vague": true,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i11",
+      "qty": 0.5,
+      "unit": "cup",
+      "item": "sour cream",
+      "prep": null,
+      "note": "little over 1/2 cup",
+      "section": "dairy",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i12",
+      "qty": 1,
+      "unit": "tbsp",
+      "item": "flour",
+      "prep": "dissolved in 2 tbsp vegetable broth or water",
+      "note": null,
+      "section": "pantry",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i13",
+      "qty": null,
+      "unit": null,
+      "item": "whole milk",
+      "prep": null,
+      "note": "splash",
+      "section": "dairy",
+      "vague": true,
+      "optional": false,
+      "scalable": true
+    }
+  ],
+  "steps": [
+    {
+      "id": "s01",
+      "title": "Blend the base",
+      "text": "Blend {i01}, {i02}, {i03}, {i04}, {i05}, {i06}, {i07}, {i08}, {i09}, and {i10}.",
+      "timerSeconds": null,
+      "unattended": false,
+      "ingredientIds": [
+        "i01",
+        "i02",
+        "i03",
+        "i04",
+        "i05",
+        "i06",
+        "i07",
+        "i08",
+        "i09",
+        "i10"
+      ]
+    },
+    {
+      "id": "s02",
+      "title": "Finish it",
+      "text": "Stir in {i11}, {i12}, and {i13}. Warm it through until it thickens enough to coat.",
+      "timerSeconds": 600,
+      "unattended": false,
+      "ingredientIds": [
+        "i11",
+        "i12",
+        "i13"
+      ]
+    }
+  ],
+  "household": {
+    "lastCooked": null,
+    "timesCooked": null,
+    "ratings": {},
+    "kidNotes": null,
+    "inRotation": true
+  },
+  "rawText": "Deluxe tomatillo\n1 lb. tomatillos\n2 full stalks green onions\n1/2 lime\n2 serranos\n3 cloves garlic\nHandful chopped cilantro\n1 tsp. salt\n1.5 tsp. sugar\n1.5 tsp. black pepper\nDash of cumin\nLittle over 1/2 cup sour cream\n1 tbsp. flour dissolved in 2 tbsp. vegetable broth (or water)\nSplash of whole milk\n\nFor enchiladas or tacos",
+  "componentOf": [
+    "enchiladas",
+    "tacos"
+  ],
+  "yield": "about 2 cups"
+}

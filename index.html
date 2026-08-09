@@ -232,6 +232,17 @@ label{display:block;font-family:var(--fm);font-size:10px;letter-spacing:.12em;te
 .sheet .pill.warn{background:rgba(217,154,43,.16);border-color:rgba(217,154,43,.32);color:#8A5E0F}
 .sheet .pill.no{background:rgba(196,84,58,.13);border-color:rgba(196,84,58,.3);color:#9A3A24}
 
+.crumb{
+  font-size:12.5px;color:#8A8079;margin:-8px 0 16px;
+  text-transform:capitalize;letter-spacing:.01em;
+}
+.badge-veg{
+  display:inline-flex;align-items:center;gap:7px;margin:0 0 18px;
+  font-size:12.5px;color:#4E6618;background:rgba(110,140,36,.1);
+  border-radius:8px;padding:8px 12px;line-height:1.45;
+}
+.badge-veg::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--herb-deep);flex-shrink:0}
+.notes{font-size:13.5px;line-height:1.62;color:#5C534B;margin:0}
 .veg{border-left:3px solid var(--herb-deep);background:rgba(110,140,36,.09);border-radius:0 10px 10px 0;padding:13px 15px;margin-bottom:18px}
 .veg.warn{border-color:var(--ochre);background:rgba(217,154,43,.11)}
 .veg.no{border-color:var(--chile);background:rgba(196,84,58,.09)}
@@ -252,7 +263,7 @@ ul.ing li{display:flex;gap:11px;padding:8px 0;font-size:14px;line-height:1.4;bor
 ul.ing li:last-child{border-bottom:0}
 ul.ing li.got{opacity:.35}
 ul.ing li.got .nm{text-decoration:line-through}
-.q{font-family:var(--fm);font-size:12.5px;color:#4E6618;flex-shrink:0;width:80px;padding-top:1.5px;font-weight:500}
+.q{font-family:var(--fm);font-size:12px;color:#4E6618;flex-shrink:0;width:72px;padding-top:1.5px;font-weight:500}
 .q.vague{color:#8A8079;font-style:italic;font-size:11.5px;font-weight:400}
 .ing .nm{color:#2E2823;flex:1}
 .ing .nt{display:block;font-size:12px;color:#8A8079;margin-top:2px}
@@ -264,7 +275,7 @@ ol.steps li:last-child{border-bottom:0}
 ol.steps h4{font-family:var(--fd);font-size:15.5px;font-weight:600;margin:0 0 6px;display:flex;align-items:baseline;gap:9px}
 ol.steps h4::before{counter-increment:s;content:counter(s,decimal-leading-zero);font-family:var(--fm);font-size:11px;color:#4E6618;font-weight:400}
 ol.steps p{margin:0;font-size:14px;line-height:1.62;color:#3C352F}
-ol.steps .amt{font-family:var(--fm);font-size:13px;color:#4E6618}
+ol.steps .amt{font-weight:600;color:#1B1815}
 .timer{
   margin-top:10px;background:#1B1815;color:var(--paper);border-radius:9px;
   padding:8px 14px;font-family:var(--fm);font-size:12.5px;display:inline-flex;align-items:center;gap:7px;
@@ -682,10 +693,22 @@ function num(x){
     if (Math.abs(f - v) < 0.06) return (w ? w + ' ' : '') + g;
   return x.toFixed(2).replace(/0$/,'');
 }
+/* Sources write "teaspoon"; a column of those wraps and reads long. */
+const UNIT_SHORT = {
+  teaspoon:'tsp', teaspoons:'tsp', tablespoon:'tbsp', tablespoons:'tbsp',
+  ounce:'oz', ounces:'oz', pound:'lb', pounds:'lb',
+  gram:'g', grams:'g', kilogram:'kg', kilograms:'kg',
+  milliliter:'ml', milliliters:'ml', millilitre:'ml',
+  liter:'l', liters:'l', litre:'l',
+  cups:'cup', fl_oz:'fl oz', fluid_ounce:'fl oz',
+  quarts:'quart', gallons:'gallon', pinches:'pinch',
+};
 function unitLabel(u, q){
+  if (!u) return '';
+  const short = UNIT_SHORT[u] || u;
   const plural = ['clove','can','packet','bunch','slice','block','head','ear','sprig'];
-  if (plural.includes(u) && q !== 1) return u + 's';
-  return u === 'fl_oz' ? 'fl oz' : u;
+  if (plural.includes(short) && q !== 1) return short + 's';
+  return short;
 }
 function esc(s){
   return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -785,6 +808,10 @@ function renderHome(){
   } else if (!PENDING.length) {
     h += emptyState('book', 'Nothing here yet',
       'Share a recipe link from your phone and it turns up in the queue within a minute.');
+    h += `<button class="btn btn-s btn-w" style="margin-top:4px" onclick="importSeed()">
+            Import your own recipes</button>
+          <p class="note" style="text-align:center;margin-top:10px">
+            Loads the recipes already written up in <code>seed.json</code>.</p>`;
   }
 
   document.getElementById('home').innerHTML = h;
@@ -841,6 +868,17 @@ function matches(r){
 }
 function setFilter(f){ filter = f; renderColl(); }
 
+/* The block only earns its space when it tells the cook to do something.
+   "Vegetarian as written, no swaps needed" is a badge, not a note -- so it
+   renders as a one-line badge instead of a paragraph. */
+function vegNote(r, tone, label){
+  const note = (r.vegetarian?.notes || '').trim();
+  const trivial = r.vegetarian?.status === 'inherently-veg' &&
+    (!note || note.length < 90);
+  if (trivial) return `<p class="badge-veg">${esc(label)}${note ? ` — ${esc(note)}` : ''}</p>`;
+  return `<div class="veg ${tone}"><span class="st">${esc(label)}</span><p>${esc(note || 'No notes.')}</p></div>`;
+}
+
 /* ---------- detail ---------- */
 function openRecipe(id, folder, from, label){
   current = (folder === 'pending' ? PENDING : APPROVED).find(r => r.id === id);
@@ -886,17 +924,16 @@ function renderDetail(){
       <h2>${esc(r.title)}</h2>
       ${r.description ? `<p class="desc">${esc(r.description)}</p>` : ''}
       <div class="facts">
-        <span class="pill ${tone || 'veg'}">${esc(label)}</span>
         ${at ? `<span class="pill">${at} hands-on</span>` : ''}
         ${tt && tt !== at ? `<span class="pill">${tt} total</span>` : ''}
-        ${r.cuisine ? `<span class="pill">${esc(r.cuisine)}</span>` : ''}
-        ${(r.equipment||[]).slice(0,2).map(e => `<span class="pill">${esc(e.replace(/-/g,' '))}</span>`).join('')}
+        ${r.serves && r.recipeType !== 'component' ? `<span class="pill">serves ${r.serves}</span>` : ''}
+        ${r.yield ? `<span class="pill">${esc(r.yield)}</span>` : ''}
       </div>
-      <div class="veg ${tone}">
-        <span class="st">${esc(label)}</span>
-        <p>${esc(r.vegetarian?.notes || 'No notes.')}</p>
-      </div>
-      ${r.serves ? `<div class="scaler">
+      ${[r.cuisine, ...(r.equipment||[]).slice(0,2)].filter(Boolean).length
+        ? `<p class="crumb">${[r.cuisine, ...(r.equipment||[]).slice(0,2)]
+            .filter(Boolean).map(x => esc(x.replace(/-/g,' '))).join(' · ')}</p>` : ''}
+      ${vegNote(r, tone, label)}
+      ${r.serves > 1 && r.recipeType !== 'component' ? `<div class="scaler">
         <span class="lab">Scale</span>
         <button class="sb" onclick="rescale(-1)" ${scale<=0.5?'disabled':''}>−</button>
         <span class="n">${num(scale)}×</span>
@@ -906,8 +943,8 @@ function renderDetail(){
       ${ing}
       <p class="sec">Method</p>
       <ol class="steps">${steps}</ol>
-      ${r.sourceNotes ? `<p class="sec">Worth knowing</p>
-        <p style="font-size:13.5px;line-height:1.62;color:#5C534B;margin:0">${esc(r.sourceNotes)}</p>` : ''}
+      ${cleanNotes(r.sourceNotes) ? `<p class="sec">Worth knowing</p>
+        <p class="notes">${esc(cleanNotes(r.sourceNotes))}</p>` : ''}
       ${r.rawText ? `<details class="raw"><summary>Original as written</summary><pre>${esc(r.rawText)}</pre></details>` : ''}
     </div>
     ${pending
@@ -916,6 +953,22 @@ function renderDetail(){
       : `<div class="pair"><button class="btn btn-s" onclick="planIt()">Add to week</button>
          <button class="btn btn-s" onclick="removeRecipe()">Remove</button></div>`}
   `;
+}
+
+/* Early extractions narrated the household rules even when nothing was
+   substituted ("No skin-on meat, lamb, or Worcestershire involved").
+   The prompt no longer does this; drop it from anything already saved. */
+const BOILERPLATE = [
+  /[^.]*\b(no|not?)\b[^.]*\b(skin[- ]on|lamb|worcestershire)\b[^.]*\.\s*/gi,
+  /[^.]*standing (household )?constraints?[^.]*\.\s*/gi,
+  /[^.]*read from the page's structured recipe data\.\s*/gi,
+  /[^.]*no meat present[^.]*\.\s*/gi,
+];
+function cleanNotes(txt){
+  if (!txt) return '';
+  let out = txt;
+  for (const re of BOILERPLATE) out = out.replace(re, '');
+  return out.replace(/\s{2,}/g,' ').trim();
 }
 
 function amount(i){
@@ -1159,6 +1212,45 @@ function renderList(){
     : emptyState('cart','Nothing to buy yet','Plan a few meals for the week and the list builds itself.');
 }
 function grab(k){ got.has(k) ? got.delete(k) : got.add(k); renderList(); }
+
+/* ==================== seeding ==================== */
+/* One-time: pull recipes/seed.json (an array) into recipes/approved/.
+   Skips anything already there, so running it twice is harmless. */
+async function importSeed(){
+  toast('Loading…');
+  let seed;
+  try {
+    const f = await gh(`/repos/${CFG.repo}/contents/seed.json`);
+    if (!f || !f.content) return toast('No seed.json in the repo', true);
+    seed = JSON.parse(b64decode(f.content));
+  } catch (e) { return toast('Could not read seed.json', true); }
+
+  if (!Array.isArray(seed) || !seed.length) return toast('seed.json is empty', true);
+
+  const have = new Set([...APPROVED, ...PENDING].map(r => r.id));
+  const todo = seed.filter(r => r && r.id && !have.has(r.id));
+  if (!todo.length) return toast('Everything in seed.json is already here');
+
+  let done = 0;
+  for (const r of todo) {
+    try {
+      const clean = { ...r, status:'approved' };
+      delete clean._sha; delete clean._folder;
+      await putFile(`recipes/approved/${r.id}.json`, clean);
+      clean._folder = 'approved';
+      APPROVED.push(clean);
+      done++;
+      toast(`Importing… ${done}/${todo.length}`);
+    } catch (e) { /* keep going -- one bad record shouldn't stop the rest */ }
+  }
+  APPROVED.sort((a,b) => a.title.localeCompare(b.title));
+  render();
+  go(done ? 'coll' : 'home');
+  toast(done === todo.length
+    ? `Imported ${done} recipe${done===1?'':'s'}`
+    : `Imported ${done} of ${todo.length} — check the repo for the rest`,
+    done !== todo.length);
+}
 
 /* ==================== bits ==================== */
 const ICONS = {

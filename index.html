@@ -326,6 +326,23 @@ ol.steps .amt{font-weight:600;color:#1B1815}
 .li .nm{flex:1;font-size:14.5px;line-height:1.35}
 .li .qq{font-family:var(--fm);font-size:12.5px;color:var(--herb);flex-shrink:0;padding-top:2px}
 .li .fr{display:block;font-size:11.5px;color:var(--muted-2);margin-top:3px}
+.have{
+  flex-shrink:0;width:30px;height:30px;border-radius:8px;display:grid;place-items:center;
+  color:var(--ink-5);margin:-4px -6px -4px 0;transition:color .16s,background .16s;
+}
+.have:active{background:var(--ink-3);color:var(--herb)}
+.have svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.have.on{width:auto;padding:6px 11px;font-size:12px;color:var(--muted);border:1px solid var(--line);border-radius:8px}
+.have-sec{margin-top:28px;border-top:1px solid var(--line);padding-top:16px}
+.have-head{
+  display:flex;width:100%;align-items:center;justify-content:space-between;
+  font-family:var(--fm);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted-2);padding:4px 0;
+}
+.have-head .caret{font-size:15px;transition:transform .2s;display:inline-block}
+.have-head .caret.open{transform:rotate(90deg)}
+.muted-row{color:var(--muted-2)}
+.muted-row .nm{font-size:13.5px}
 .progress{
   height:3px;background:var(--ink-3);border-radius:2px;overflow:hidden;margin-bottom:22px;
 }
@@ -582,6 +599,7 @@ async function deleteFile(path, sha){
 
 /* ==================== state ==================== */
 let PENDING = [], APPROVED = [], PLAN = {}, PLAN_SHA = null;
+let HAVE = new Set(), HAVE_SHA = null, showHave = false;
 let current = null, scale = 1, checked = new Set(), got = new Set();
 let filter = 'all', pickDay = null, prevView = 'home', prevLabel = 'Kitchen';
 
@@ -604,7 +622,7 @@ async function boot(){
     '<div class="skel" style="height:150px"></div><div class="skel"></div><div class="skel"></div>';
   try {
     [PENDING, APPROVED] = await Promise.all([listFolder('pending'), listFolder('approved')]);
-    await loadPlan();
+    await Promise.all([loadPlan(), loadHave()]);
     render();
   } catch (e) {
     toast(/40[13]/.test(e.message)
@@ -655,6 +673,32 @@ function saveSettings(){
   boot();
 }
 function openSettings(){ prefill(); go('settings'); }
+
+/* Things the household always has. Lives in the repo so both phones agree. */
+async function loadHave(){
+  const f = await gh(`/repos/${CFG.repo}/contents/pantry.json`);
+  if (f && f.content) {
+    const j = JSON.parse(b64decode(f.content));
+    HAVE = new Set(Array.isArray(j) ? j : (j.alwaysHave || []));
+    HAVE_SHA = f.sha;
+  } else {
+    HAVE = new Set(STAPLES);   // sensible starting point, editable
+    HAVE_SHA = null;
+  }
+}
+async function saveHave(){
+  try {
+    const r = await putFile('pantry.json', [...HAVE].sort(), HAVE_SHA);
+    HAVE_SHA = r.content.sha;
+  } catch (e) { toast("Couldn't save that", true); }
+}
+async function toggleHave(key){
+  if (HAVE.has(key)) { HAVE.delete(key); toast('Back on the list'); }
+  else { HAVE.add(key); got.delete(key); toast('Marked as always have'); }
+  renderList();
+  saveHave();
+}
+function toggleHaveSection(){ showHave = !showHave; renderList(); }
 
 async function loadPlan(){
   const f = await gh(`/repos/${CFG.repo}/contents/plan.json`);
@@ -1116,6 +1160,10 @@ const PROTECTED = new Set(['green onion','spring onion','scallion','sweet potato
   'green chile','red pepper flake','crushed red pepper flake','white wine','red wine',
   'red wine vinegar','white miso','red miso','dark soy sauce','brown rice','brown sugar',
   'powdered sugar','smoked paprika','hot sauce','white onion','red onion']);
+/* Trailing measure-words are packaging, not identity: a recipe saying
+   "garlic cloves" and one saying "garlic" belong on the same line. */
+const UNIT_WORDS = new Set(['clove','sprig','stalk','head','bunch','can','slice',
+  'packet','block','ear','stick','strip','fillet','breast','thigh']);
 const ALIAS = { scallion:'green onion','spring onion':'green onion',capsicum:'bell pepper',
   courgette:'zucchini','garbanzo bean':'chickpea','kosher salt':'salt','sea salt':'salt',
   'cayenne pepper':'cayenne','chile powder':'chili powder' };
@@ -1142,18 +1190,22 @@ function normItem(name){
   const bare = depl(s);
   if (PROTECTED.has(bare)) return ALIAS[bare] || bare;
   if (ALIAS[s]) return ALIAS[s];
-  const words = s.split(' ').filter(w => !NOISE.has(w));
+  let words = s.split(' ').filter(w => !NOISE.has(w));
+  while (words.length > 1 && UNIT_WORDS.has(depl(words[words.length-1]))) words.pop();
   s = words.join(' ') || bare;
   s = ALIAS[s] || s;
   const sing = depl(s);
   return ALIAS[sing] || sing;
 }
+/* 236ml is a cup, but floating point made it 15.96 tbsp -- allow a little
+   slack at the boundary, and round to something you can actually measure. */
 function fmtQty(line){
   const out = [];
   for (const [fam, base] of Object.entries(line.amounts)) {
     const table = fam === 'volume' ? VOL_OUT : WT_OUT;
-    const hit = table.find(([,size]) => base >= size) || table[table.length-1];
-    out.push(num(base / hit[1]) + ' ' + (hit[0] === 'fl_oz' ? 'fl oz' : hit[0]));
+    const hit = table.find(([,size]) => base >= size * 0.96) || table[table.length-1];
+    const q = Math.round((base / hit[1]) * 4) / 4;
+    out.push(num(q) + ' ' + (hit[0] === 'fl_oz' ? 'fl oz' : hit[0]));
   }
   for (const [u,q] of Object.entries(line.counts))
     out.push(u === 'each' ? num(q) : `${num(q)} ${unitLabel(u,q)}`);
@@ -1161,6 +1213,31 @@ function fmtQty(line){
   if (!out.length) return vague.join('; ') || '—';
   return out.join(' + ') + (vague.length ? ' + ' + vague.join('; ') : '');
 }
+/* A recipe measurement is not a shopping measurement. You buy a jar of cumin,
+   not 1/4 tsp of it, and you buy an onion, not 4 tbsp of one. Suppress the
+   number wherever it can't be acted on in a store. */
+const BUY_WHOLE = new Set(['onion','shallot','garlic','ginger','green chile','green chili',
+  'green onion','carrot','celery','bell pepper','jalapeno','serrano','lime','lemon',
+  'cilantro','coriander','parsley','basil','dill','mint','curry leaf','tomato',
+  'potato','zucchini','cucumber','avocado','apple','chile','chili','pepper']);
+
+function shoppingQty(v, key){
+  /* Spices: you're buying a container. The amount is in the recipe. */
+  if (v.section === 'spices') return '';
+
+  const vol = v.amounts.volume || 0, wt = v.amounts.weight || 0;
+  const counts = Object.keys(v.counts).length;
+
+  /* Fresh things measured out in spoons -- buy the thing, not the spoonful. */
+  const wholeish = [...BUY_WHOLE].some(w => key === w || key.endsWith(' ' + w));
+  if (wholeish && !wt && !counts && vol && vol < 120) return '';   // under ~1/2 cup
+
+  /* Anything else tiny enough that the number won't change what you grab. */
+  if (!wt && !counts && vol && vol < 30) return '';                // under ~2 tbsp
+
+  return fmtQty(v);
+}
+
 function buildList(){
   const recipes = DAYS.map(d => PLAN[d]).filter(Boolean)
     .map(id => APPROVED.find(r => r.id === id)).filter(Boolean);
@@ -1180,45 +1257,59 @@ function buildList(){
            L.counts[u] = (L.counts[u]||0) + q; }
   }
   const shop = {}, staple = {};
-  for (const [k,v] of Object.entries(lines)) (STAPLES.has(k) ? staple : shop)[k] = v;
+  for (const [k,v] of Object.entries(lines)) (HAVE.has(k) ? staple : shop)[k] = v;
   return { shop, staple, count: recipes.length };
 }
 function renderList(){
   const { shop, staple, count } = buildList();
   const total = Object.keys(shop).length;
   document.getElementById('list-sub').textContent =
-    count ? `${count} meal${count>1?'s':''} · ${total} item${total===1?'':'s'}` : 'Nothing planned yet.';
+    count ? `${count} meal${count>1?'s':''} · ${total} item${total===1?'':'s'} to buy` : 'Nothing planned yet.';
 
   const done = Object.keys(shop).filter(k => got.has(k)).length;
   const prog = document.getElementById('prog');
   prog.hidden = !total;
   if (total) prog.firstElementChild.style.width = `${Math.round(done/total*100)}%`;
 
-  const group = obj => SEC_ORDER.map(sec => {
-    const items = Object.entries(obj).filter(([,v]) => v.section === sec)
+  const line = (k, v) => {
+    const qty = shoppingQty(v, k);
+    const from = v.recipes.length > 1 ? v.recipes.join(' · ') : '';
+    return `<div class="li ${got.has(k)?'got':''}">
+      <span class="box" onclick="grab('${esc(k)}')"></span>
+      <span class="nm" onclick="grab('${esc(k)}')">${esc(v.item)}${
+        v.optional?'<span class="opt">optional</span>':''}
+        ${from ? `<span class="fr">${esc(from)}</span>` : ''}</span>
+      ${qty ? `<span class="qq">${esc(qty)}</span>` : ''}
+      <button class="have" onclick="toggleHave('${esc(k)}')" aria-label="Always have ${esc(v.item)}">
+        <svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></button>
+    </div>`;
+  };
+
+  const groups = SEC_ORDER.map(sec => {
+    const items = Object.entries(shop).filter(([,v]) => v.section === sec)
       .sort((a,b) => a[1].item.localeCompare(b[1].item));
     if (!items.length) return '';
-    return `<div class="lsec"><h3>${sec}</h3>${items.map(([k,v]) => `
-      <div class="li ${got.has(k)?'got':''}" onclick="grab('${k}')">
-        <span class="box"></span>
-        <span class="nm">${esc(v.item)}${v.optional?'<span class="opt">optional</span>':''}
-          ${v.recipes.length>1?`<span class="fr">${esc(v.recipes.join(' · '))}</span>`:''}</span>
-        <span class="qq">${esc(fmtQty(v))}</span>
-      </div>`).join('')}</div>`;
+    return `<div class="lsec"><h3>${sec}</h3>${items.map(([k,v]) => line(k,v)).join('')}</div>`;
   }).join('');
 
-  const body = group(shop);
-  const stapleItems = Object.entries(staple)
-    .sort((a,b) => a[1].item.localeCompare(b[1].item));
-  document.getElementById('list').innerHTML = body
-    ? body + (stapleItems.length ? `<div class="lsec"><h3>Check you have</h3>${
-        stapleItems.map(([k,v]) => `
-        <div class="li ${got.has(k)?'got':''}" onclick="grab('${k}')">
-          <span class="box"></span>
+  const haveItems = Object.entries(staple).sort((a,b) => a[1].item.localeCompare(b[1].item));
+  const haveBlock = haveItems.length ? `
+    <div class="lsec have-sec">
+      <button class="have-head" onclick="toggleHaveSection()">
+        <span>Already have · ${haveItems.length}</span>
+        <span class="caret ${showHave?'open':''}">›</span>
+      </button>
+      ${showHave ? haveItems.map(([k,v]) => `
+        <div class="li muted-row">
           <span class="nm">${esc(v.item)}</span>
-          <span class="qq">${esc(fmtQty(v))}</span>
-        </div>`).join('')}</div>` : '')
-    : emptyState('cart','Nothing to buy yet','Plan a few meals for the week and the list builds itself.');
+          <button class="have on" onclick="toggleHave('${esc(k)}')">Add back</button>
+        </div>`).join('') : ''}
+    </div>` : '';
+
+  document.getElementById('list').innerHTML = groups
+    ? groups + haveBlock
+    : (haveBlock || '') + emptyState('cart', 'Nothing to buy yet',
+        'Plan a few meals for the week and the list builds itself.');
 }
 function grab(k){ got.has(k) ? got.delete(k) : got.add(k); renderList(); }
 

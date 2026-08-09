@@ -1,0 +1,175 @@
+{
+  "id": "cornbread",
+  "title": "Cornbread",
+  "description": "Sweet, buttery skillet cornbread. Butter melts in the hot pan before the batter goes in, so the edges crisp.",
+  "source": {
+    "type": "personal",
+    "url": null,
+    "author": "jess",
+    "addedBy": "jess"
+  },
+  "dateAdded": "2026-08-09",
+  "status": "approved",
+  "recipeType": "meal",
+  "cuisine": "american",
+  "tags": [
+    "bread",
+    "side",
+    "skillet",
+    "quick"
+  ],
+  "mainProtein": "none",
+  "equipment": [
+    "cast-iron"
+  ],
+  "activeTimeMin": 10,
+  "totalTimeMin": 40,
+  "serves": 8,
+  "vegetarian": {
+    "status": "inherently-veg",
+    "notes": "Nothing to change.",
+    "swaps": []
+  },
+  "ingredients": [
+    {
+      "id": "i01",
+      "qty": 1.5,
+      "unit": "cup",
+      "item": "flour",
+      "prep": null,
+      "note": null,
+      "section": "pantry",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i02",
+      "qty": 1.5,
+      "unit": "cup",
+      "item": "medium cornmeal",
+      "prep": null,
+      "note": null,
+      "section": "pantry",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i03",
+      "qty": 1,
+      "unit": "cup",
+      "item": "sugar",
+      "prep": null,
+      "note": null,
+      "section": "pantry",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i04",
+      "qty": 1,
+      "unit": "tsp",
+      "item": "baking soda",
+      "prep": null,
+      "note": null,
+      "section": "pantry",
+      "vague": false,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i05",
+      "qty": 0.5,
+      "unit": "tsp",
+      "item": "salt",
+      "prep": null,
+      "note": null,
+      "section": "spices",
+      "vague": false,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i06",
+      "qty": 0.75,
+      "unit": "cup",
+      "item": "butter",
+      "prep": null,
+      "note": "1.5 sticks",
+      "section": "dairy",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i07",
+      "qty": 3,
+      "unit": "each",
+      "item": "eggs",
+      "prep": null,
+      "note": null,
+      "section": "dairy",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i08",
+      "qty": 1.5,
+      "unit": "cup",
+      "item": "buttermilk",
+      "prep": null,
+      "note": null,
+      "section": "dairy",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    }
+  ],
+  "steps": [
+    {
+      "id": "s01",
+      "title": "Heat the skillet",
+      "text": "Melt {i06} in a skillet at 375°F. Take it out and set aside — the pan stays hot.",
+      "timerSeconds": null,
+      "unattended": false,
+      "ingredientIds": [
+        "i06"
+      ]
+    },
+    {
+      "id": "s02",
+      "title": "Mix the batter",
+      "text": "Combine {i01}, {i02}, {i03}, {i04}, {i05}, {i07}, {i08}, and the melted butter.",
+      "timerSeconds": null,
+      "unattended": false,
+      "ingredientIds": [
+        "i01",
+        "i02",
+        "i03",
+        "i04",
+        "i05",
+        "i07",
+        "i08"
+      ]
+    },
+    {
+      "id": "s03",
+      "title": "Bake",
+      "text": "Pour the batter into the hot skillet and bake 25-30 minutes.",
+      "timerSeconds": 1650,
+      "unattended": true,
+      "ingredientIds": []
+    }
+  ],
+  "household": {
+    "lastCooked": null,
+    "timesCooked": null,
+    "ratings": {},
+    "kidNotes": null,
+    "inRotation": true
+  },
+  "rawText": "Cornbread\n- 1.5 cups flour\n- 1.5 cups medium cornmeal\n- 1 cup sugar\n- 1 tsp baking soda\n- 1/2 tsp salt\n- 3/4 cup butter (1.5 sticks)\n- 3 eggs\n- 1.5 cups buttermilk\n\nMelt butter in skillet at 375. Take out and pour in batter. Cook 25-30 min."
+}

@@ -1,0 +1,2587 @@
+[
+ {
+  "id": "chicken-tortilla-soup",
+  "title": "Chicken Tortilla Soup",
+  "description": "A long-simmered tortilla soup with roasted tomatoes, two kinds of beans, and a heavy hand on the spices. Corn tortillas dissolve in and thicken the whole pot.",
+  "source": {
+   "type": "personal",
+   "url": null,
+   "author": "jess",
+   "addedBy": "jess"
+  },
+  "dateAdded": "2026-08-08",
+  "status": "approved",
+  "cuisine": "tex-mex",
+  "tags": [
+   "soup",
+   "make-ahead",
+   "crowd-pleaser",
+   "freezer-friendly",
+   "weekend-simmer"
+  ],
+  "mainProtein": "beans",
+  "equipment": [
+   "dutch-oven"
+  ],
+  "activeTimeMin": 25,
+  "totalTimeMin": 180,
+  "serves": 8,
+  "vegetarian": {
+   "status": "inherently-veg",
+   "notes": "Despite the name there's no chicken in it — the base is entirely vegetable and bean. Just use vegetable broth. If anyone wants chicken, shred some in at the bowl rather than the pot.",
+   "swaps": [
+    {
+     "ingredientId": "i20",
+     "with": "vegetable broth (choose this by default)"
+    }
+   ]
+  },
+  "ingredients": [
+   {
+    "id": "i01",
+    "qty": 0.5,
+    "unit": "each",
+    "item": "onion",
+    "prep": "chopped",
+    "note": "a good sized one",
+    "section": "produce",
+    "vague": false,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i02",
+    "qty": 1,
+    "unit": "each",
+    "item": "bell pepper",
+    "prep": "chopped",
+    "note": "red, orange, yellow, green — in order of preference",
+    "section": "produce",
+    "vague": false,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i03",
+    "qty": 0.75,
+    "unit": "cup",
+    "item": "carrots",
+    "prep": "chopped",
+    "note": null,
+    "section": "produce",
+    "vague": false,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i04",
+    "qty": 1,
+    "unit": "each",
+    "item": "zucchini",
+    "prep": "chopped",
+    "note": "medium",
+    "section": "produce",
+    "vague": false,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i05",
+    "qty": 7,
+    "unit": "clove",
+    "item": "garlic",
+    "prep": "minced",
+    "note": "6-8 cloves",
+    "section": "produce",
+    "vague": false,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i06",
+    "qty": 4,
+    "unit": "oz",
+    "item": "chopped green chiles",
+    "prep": null,
+    "note": "one can",
+    "section": "canned",
+    "vague": false,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i07",
+    "qty": 3,
+    "unit": "tsp",
+    "item": "chili powder",
+    "prep": null,
+    "note": null,
+    "section": "spices",
+    "vague": false,
+    "optional": false,
+    "scalable": false
+   },
+   {
+    "id": "i08",
+    "qty": 2,
+    "unit": "tsp",
+    "item": "dried oregano",
+    "prep": null,
+    "note": null,
+    "section": "spices",
+    "vague": false,
+    "optional": false,
+    "scalable": false
+   },
+   {
+    "id": "i09",
+    "qty": 1,
+    "unit": "tsp",
+    "item": "cumin",
+    "prep": null,
+    "note": null,
+    "section": "spices",
+    "vague": false,
+    "optional": false,
+    "scalable": false
+   },
+   {
+    "id": "i10",
+    "qty": 4,
+    "unit": "tsp",
+    "item": "salt",
+    "prep": null,
+    "note": null,
+    "section": "spices",
+    "vague": false,
+    "optional": false,
+    "scalable": false
+   },
+   {
+    "id": "i11",
+    "qty": 0.5,
+    "unit": "tsp",
+    "item": "seasoning salt",
+    "prep": null,
+    "note": null,
+    "section": "spices",
+    "vague": false,
+    "optional": false,
+    "scalable": false
+   },
+   {
+    "id": "i12",
+    "qty": 0.25,
+    "unit": "tsp",
+    "item": "thyme",
+    "prep": null,
+    "note": null,
+    "section": "spices",
+    "vague": false,
+    "optional": false,
+    "scalable": false
+   },
+   {
+    "id": "i13",
+    "qty": 0.25,
+    "unit": "tsp",
+    "item": "paprika",
+    "prep": null,
+    "note": null,
+    "section": "spices",
+    "vague": false,
+    "optional": false,
+    "scalable": false
+   },
+   {
+    "id": "i14",
+    "qty": 1,
+    "unit": "tsp",
+    "item": "black pepper",
+    "prep": null,
+    "note": null,
+    "section": "spices",
+    "vague": false,
+    "optional": false,
+    "scalable": false
+   },
+   {
+    "id": "i15",
+    "qty": 1,
+    "unit": "packet",
+    "item": "Sazón (tomato/cilantro)",
+    "prep": null,
+    "note": null,
+    "section": "spices",
+    "vague": false,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i16",
+    "qty": null,
+    "unit": null,
+    "item": "cayenne",
+    "prep": null,
+    "note": "dash",
+    "section": "spices",
+    "vague": true,
+    "optional": false,
+    "scalable": false
+   },
+   {
+    "id": "i17",
+    "qty": null,
+    "unit": null,
+    "item": "Cholula",
+    "prep": null,
+    "note": "shake the shit out of the bottle for like 5 seconds",
+    "section": "pantry",
+    "vague": true,
+    "optional": false,
+    "scalable": false
+   },
+   {
+    "id": "i18",
+    "qty": 3,
+    "unit": "each",
+    "item": "corn tortillas",
+    "prep": null,
+    "note": "they dissolve in and thicken the soup",
+    "section": "pantry",
+    "vague": false,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i19",
+    "qty": 15,
+    "unit": "oz",
+    "item": "crushed or diced roasted tomatoes",
+    "prep": null,
+    "note": "one can",
+    "section": "canned",
+    "vague": false,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i20",
+    "qty": 64,
+    "unit": "fl_oz",
+    "item": "vegetable or chicken broth",
+    "prep": null,
+    "note": "two 32 oz boxes",
+    "section": "pantry",
+    "vague": false,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i21",
+    "qty": 1,
+    "unit": "cup",
+    "item": "water",
+    "prep": null,
+    "note": null,
+    "section": "other",
+    "vague": false,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i22",
+    "qty": 1,
+    "unit": "can",
+    "item": "black beans",
+    "prep": "drained",
+    "note": null,
+    "section": "canned",
+    "vague": false,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i23",
+    "qty": 1,
+    "unit": "can",
+    "item": "great northern beans",
+    "prep": "drained",
+    "note": null,
+    "section": "canned",
+    "vague": false,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i24",
+    "qty": 0.5,
+    "unit": "cup",
+    "item": "frozen corn",
+    "prep": null,
+    "note": "1/2ish cup",
+    "section": "frozen",
+    "vague": false,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i25",
+    "qty": null,
+    "unit": null,
+    "item": "cilantro",
+    "prep": "chopped",
+    "note": "real big handful",
+    "section": "produce",
+    "vague": true,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i26",
+    "qty": 2,
+    "unit": "each",
+    "item": "limes",
+    "prep": "juiced",
+    "note": null,
+    "section": "produce",
+    "vague": false,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i27",
+    "qty": null,
+    "unit": null,
+    "item": "olive oil",
+    "prep": null,
+    "note": "couple glugs",
+    "section": "pantry",
+    "vague": true,
+    "optional": false,
+    "scalable": false
+   }
+  ],
+  "steps": [
+   {
+    "id": "s01",
+    "title": "Sauté the vegetables",
+    "text": "Sauté {i01}, {i02}, {i03}, {i04}, and {i05} with a little salt and cumin in {i27} over medium-high.",
+    "timerSeconds": null,
+    "unattended": false,
+    "ingredientIds": [
+     "i01",
+     "i02",
+     "i03",
+     "i04",
+     "i05",
+     "i27"
+    ]
+   },
+   {
+    "id": "s02",
+    "title": "Add everything else",
+    "text": "Add everything except the beans and lime — {i06}, all the spices, {i17}, {i18}, {i19}, {i20}, {i21}, {i24}, {i25}.",
+    "timerSeconds": null,
+    "unattended": false,
+    "ingredientIds": [
+     "i06",
+     "i07",
+     "i08",
+     "i09",
+     "i10",
+     "i11",
+     "i12",
+     "i13",
+     "i14",
+     "i15",
+     "i16",
+     "i17",
+     "i18",
+     "i19",
+     "i20",
+     "i21",
+     "i24",
+     "i25"
+    ]
+   },
+   {
+    "id": "s03",
+    "title": "Simmer",
+    "text": "Simmer covered for a few hours.",
+    "timerSeconds": 7200,
+    "unattended": true,
+    "ingredientIds": []
+   },
+   {
+    "id": "s04",
+    "title": "Finish with beans and lime",
+    "text": "Add {i22}, {i23}, and the juice of {i26}.",
+    "timerSeconds": null,
+    "unattended": false,
+    "ingredientIds": [
+     "i22",
+     "i23",
+     "i26"
+    ]
+   }
+  ],
+  "household": {
+   "lastCooked": null,
+   "timesCooked": null,
+   "ratings": {},
+   "kidNotes": null,
+   "inRotation": true
+  },
+  "rawText": "Chicken Tortilla Soup\n\n1/2 a good sized onion\n1 bell pepper (red, orange, yellow, green - in order of preference)\n3/4 cup carrots\n1 medium zucchini\n6-8 cloves garlic\n1 (4 ounce) can chopped green chiles\n\n3 teaspoons chili powder\n2 teaspoons dried oregano\n1 teaspoon cumin\n4 teaspoons salt\n1/2 teaspoon seasoning salt\n1/4 teaspoon thyme\n1/4 teaspoon paprika\n1 teaspoon black pepper\n1 sazon tomato/cilantro packet\nDash cayenne\nShake the shit out of the Cholula bottle for like 5 seconds\n\n3 corn tortillas\n\n1 15 ounce can crushed or diced roasted tomatoes\n2 32 oz. boxes vegetable or chicken broth\n1 cup water\n1 can black beans\n1 can great northern beans\n1/2ish cup frozen corn\nReal big handful cilantro\nJuice of 2 limes\n\nSauté the veggies + a little salt/cumin in a couple glugs of olive oil over medium high. Add everything except beans and lime. Simmer covered for a few hours. Add beans and lime.",
+  "recipeType": "meal"
+ },
+ {
+  "id": "cornbread",
+  "title": "Cornbread",
+  "description": "Sweet, buttery skillet cornbread. Butter melts in the hot pan before the batter goes in, so the edges crisp.",
+  "source": {
+   "type": "personal",
+   "url": null,
+   "author": "jess",
+   "addedBy": "jess"
+  },
+  "dateAdded": "2026-08-09",
+  "status": "approved",
+  "recipeType": "meal",
+  "cuisine": "american",
+  "tags": [
+   "bread",
+   "side",
+   "skillet",
+   "quick"
+  ],
+  "mainProtein": "none",
+  "equipment": [
+   "cast-iron"
+  ],
+  "activeTimeMin": 10,
+  "totalTimeMin": 40,
+  "serves": 8,
+  "vegetarian": {
+   "status": "inherently-veg",
+   "notes": "Nothing to change.",
+   "swaps": []
+  },
+  "ingredients": [
+   {
+    "id": "i01",
+    "qty": 1.5,
+    "unit": "cup",
+    "item": "flour",
+    "prep": null,
+    "note": null,
+    "section": "pantry",
+    "vague": false,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i02",
+    "qty": 1.5,
+    "unit": "cup",
+    "item": "medium cornmeal",
+    "prep": null,
+    "note": null,
+    "section": "pantry",
+    "vague": false,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i03",
+    "qty": 1,
+    "unit": "cup",
+    "item": "sugar",
+    "prep": null,
+    "note": null,
+    "section": "pantry",
+    "vague": false,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i04",
+    "qty": 1,
+    "unit": "tsp",
+    "item": "baking soda",
+    "prep": null,
+    "note": null,
+    "section": "pantry",
+    "vague": false,
+    "optional": false,
+    "scalable": false
+   },
+   {
+    "id": "i05",
+    "qty": 0.5,
+    "unit": "tsp",
+    "item": "salt",
+    "prep": null,
+    "note": null,
+    "section": "spices",
+    "vague": false,
+    "optional": false,
+    "scalable": false
+   },
+   {
+    "id": "i06",
+    "qty": 0.75,
+    "unit": "cup",
+    "item": "butter",
+    "prep": null,
+    "note": "1.5 sticks",
+    "section": "dairy",
+    "vague": false,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i07",
+    "qty": 3,
+    "unit": "each",
+    "item": "eggs",
+    "prep": null,
+    "note": null,
+    "section": "dairy",
+    "vague": false,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i08",
+    "qty": 1.5,
+    "unit": "cup",
+    "item": "buttermilk",
+    "prep": null,
+    "note": null,
+    "section": "dairy",
+    "vague": false,
+    "optional": false,
+    "scalable": true
+   }
+  ],
+  "steps": [
+   {
+    "id": "s01",
+    "title": "Heat the skillet",
+    "text": "Melt {i06} in a skillet at 375°F. Take it out and set aside — the pan stays hot.",
+    "timerSeconds": null,
+    "unattended": false,
+    "ingredientIds": [
+     "i06"
+    ]
+   },
+   {
+    "id": "s02",
+    "title": "Mix the batter",
+    "text": "Combine {i01}, {i02}, {i03}, {i04}, {i05}, {i07}, {i08}, and the melted butter.",
+    "timerSeconds": null,
+    "unattended": false,
+    "ingredientIds": [
+     "i01",
+     "i02",
+     "i03",
+     "i04",
+     "i05",
+     "i07",
+     "i08"
+    ]
+   },
+   {
+    "id": "s03",
+    "title": "Bake",
+    "text": "Pour the batter into the hot skillet and bake 25-30 minutes.",
+    "timerSeconds": 1650,
+    "unattended": true,
+    "ingredientIds": []
+   }
+  ],
+  "household": {
+   "lastCooked": null,
+   "timesCooked": null,
+   "ratings": {},
+   "kidNotes": null,
+   "inRotation": true
+  },
+  "rawText": "Cornbread\n- 1.5 cups flour\n- 1.5 cups medium cornmeal\n- 1 cup sugar\n- 1 tsp baking soda\n- 1/2 tsp salt\n- 3/4 cup butter (1.5 sticks)\n- 3 eggs\n- 1.5 cups buttermilk\n\nMelt butter in skillet at 375. Take out and pour in batter. Cook 25-30 min."
+ },
+ {
+  "id": "deluxe-tomatillo",
+  "title": "Deluxe Tomatillo Sauce",
+  "description": "Tomatillos, serranos, and green onion blended with sour cream and thickened just enough to coat. For enchiladas or tacos.",
+  "source": {
+   "type": "personal",
+   "url": null,
+   "author": "jess",
+   "addedBy": "jess"
+  },
+  "dateAdded": "2026-08-09",
+  "status": "approved",
+  "recipeType": "component",
+  "cuisine": "tex-mex",
+  "tags": [
+   "sauce",
+   "component",
+   "spicy",
+   "make-ahead"
+  ],
+  "mainProtein": "none",
+  "equipment": [
+   "blender"
+  ],
+  "activeTimeMin": 15,
+  "totalTimeMin": 30,
+  "serves": 6,
+  "vegetarian": {
+   "status": "inherently-veg",
+   "notes": "Nothing to change — use vegetable broth for the slurry.",
+   "swaps": []
+  },
+  "ingredients": [
+   {
+    "id": "i01",
+    "qty": 1,
+    "unit": "lb",
+    "item": "tomatillos",
+    "prep": null,
+    "note": null,
+    "section": "produce",
+    "vague": false,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i02",
+    "qty": 2,
+    "unit": "each",
+    "item": "green onions",
+    "prep": null,
+    "note": "2 full stalks",
+    "section": "produce",
+    "vague": false,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i03",
+    "qty": 0.5,
+    "unit": "each",
+    "item": "lime",
+    "prep": null,
+    "note": null,
+    "section": "produce",
+    "vague": false,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i04",
+    "qty": 2,
+    "unit": "each",
+    "item": "serranos",
+    "prep": null,
+    "note": null,
+    "section": "produce",
+    "vague": false,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i05",
+    "qty": 3,
+    "unit": "clove",
+    "item": "garlic",
+    "prep": null,
+    "note": null,
+    "section": "produce",
+    "vague": false,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i06",
+    "qty": null,
+    "unit": null,
+    "item": "cilantro",
+    "prep": "chopped",
+    "note": "handful",
+    "section": "produce",
+    "vague": true,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i07",
+    "qty": 1,
+    "unit": "tsp",
+    "item": "salt",
+    "prep": null,
+    "note": null,
+    "section": "spices",
+    "vague": false,
+    "optional": false,
+    "scalable": false
+   },
+   {
+    "id": "i08",
+    "qty": 1.5,
+    "unit": "tsp",
+    "item": "sugar",
+    "prep": null,
+    "note": null,
+    "section": "pantry",
+    "vague": false,
+    "optional": false,
+    "scalable": false
+   },
+   {
+    "id": "i09",
+    "qty": 1.5,
+    "unit": "tsp",
+    "item": "black pepper",
+    "prep": null,
+    "note": null,
+    "section": "spices",
+    "vague": false,
+    "optional": false,
+    "scalable": false
+   },
+   {
+    "id": "i10",
+    "qty": null,
+    "unit": null,
+    "item": "cumin",
+    "prep": null,
+    "note": "dash",
+    "section": "spices",
+    "vague": true,
+    "optional": false,
+    "scalable": false
+   },
+   {
+    "id": "i11",
+    "qty": 0.5,
+    "unit": "cup",
+    "item": "sour cream",
+    "prep": null,
+    "note": "little over 1/2 cup",
+    "section": "dairy",
+    "vague": false,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i12",
+    "qty": 1,
+    "unit": "tbsp",
+    "item": "flour",
+    "prep": "dissolved in 2 tbsp vegetable broth or water",
+    "note": null,
+    "section": "pantry",
+    "vague": false,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i13",
+    "qty": null,
+    "unit": null,
+    "item": "whole milk",
+    "prep": null,
+    "note": "splash",
+    "section": "dairy",
+    "vague": true,
+    "optional": false,
+    "scalable": true
+   }
+  ],
+  "steps": [
+   {
+    "id": "s01",
+    "title": "Blend the base",
+    "text": "Blend {i01}, {i02}, {i03}, {i04}, {i05}, {i06}, {i07}, {i08}, {i09}, and {i10}.",
+    "timerSeconds": null,
+    "unattended": false,
+    "ingredientIds": [
+     "i01",
+     "i02",
+     "i03",
+     "i04",
+     "i05",
+     "i06",
+     "i07",
+     "i08",
+     "i09",
+     "i10"
+    ]
+   },
+   {
+    "id": "s02",
+    "title": "Finish it",
+    "text": "Stir in {i11}, {i12}, and {i13}. Warm it through until it thickens enough to coat.",
+    "timerSeconds": 600,
+    "unattended": false,
+    "ingredientIds": [
+     "i11",
+     "i12",
+     "i13"
+    ]
+   }
+  ],
+  "household": {
+   "lastCooked": null,
+   "timesCooked": null,
+   "ratings": {},
+   "kidNotes": null,
+   "inRotation": true
+  },
+  "rawText": "Deluxe tomatillo\n1 lb. tomatillos\n2 full stalks green onions\n1/2 lime\n2 serranos\n3 cloves garlic\nHandful chopped cilantro\n1 tsp. salt\n1.5 tsp. sugar\n1.5 tsp. black pepper\nDash of cumin\nLittle over 1/2 cup sour cream\n1 tbsp. flour dissolved in 2 tbsp. vegetable broth (or water)\nSplash of whole milk\n\nFor enchiladas or tacos",
+  "componentOf": [
+   "enchiladas",
+   "tacos"
+  ],
+  "yield": "about 2 cups"
+ },
+ {
+  "id": "elite-grilled-cheese",
+  "title": "Elite Grilled Cheese",
+  "description": "Gouda and sharp cheddar with red wine vinegar caramelized onions, pepperoncinis, and sriracha on sourdough. Built for the tomato soup.",
+  "source": {
+   "type": "personal",
+   "url": null,
+   "author": "jess",
+   "addedBy": "jess"
+  },
+  "dateAdded": "2026-08-09",
+  "status": "approved",
+  "recipeType": "meal",
+  "cuisine": "american",
+  "tags": [
+   "sandwich",
+   "quick",
+   "comfort",
+   "cast-iron",
+   "kid-friendly"
+  ],
+  "mainProtein": "none",
+  "equipment": [
+   "cast-iron"
+  ],
+  "activeTimeMin": 25,
+  "totalTimeMin": 45,
+  "serves": 4,
+  "vegetarian": {
+   "status": "inherently-veg",
+   "notes": "Nothing to change.",
+   "swaps": []
+  },
+  "ingredients": [
+   {
+    "id": "i01",
+    "qty": null,
+    "unit": null,
+    "item": "sourdough bread",
+    "prep": null,
+    "note": "two slices per sandwich",
+    "section": "bakery",
+    "vague": true,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i02",
+    "qty": null,
+    "unit": null,
+    "item": "Gouda",
+    "prep": null,
+    "note": "to taste",
+    "section": "dairy",
+    "vague": true,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i03",
+    "qty": null,
+    "unit": null,
+    "item": "sharp cheddar",
+    "prep": null,
+    "note": "to taste",
+    "section": "dairy",
+    "vague": true,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i04",
+    "qty": null,
+    "unit": null,
+    "item": "sriracha",
+    "prep": null,
+    "note": "to taste",
+    "section": "pantry",
+    "vague": true,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i05",
+    "qty": null,
+    "unit": null,
+    "item": "onions",
+    "prep": "sliced",
+    "note": "enough to caramelize down",
+    "section": "produce",
+    "vague": true,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i06",
+    "qty": null,
+    "unit": null,
+    "item": "red wine vinegar",
+    "prep": null,
+    "note": "for the onions",
+    "section": "pantry",
+    "vague": true,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i07",
+    "qty": null,
+    "unit": null,
+    "item": "pepperoncinis",
+    "prep": null,
+    "note": "to taste",
+    "section": "canned",
+    "vague": true,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i08",
+    "qty": null,
+    "unit": null,
+    "item": "butter",
+    "prep": null,
+    "note": "for the pan",
+    "section": "dairy",
+    "vague": true,
+    "optional": false,
+    "scalable": false
+   }
+  ],
+  "steps": [
+   {
+    "id": "s01",
+    "title": "Caramelize the onions",
+    "text": "Cook {i05} low and slow until deeply browned, deglazing with {i06} as they go.",
+    "timerSeconds": 1800,
+    "unattended": false,
+    "ingredientIds": [
+     "i05",
+     "i06"
+    ]
+   },
+   {
+    "id": "s02",
+    "title": "Build",
+    "text": "Layer {i02}, {i03}, {i04}, the onions, and {i07} between slices of {i01}.",
+    "timerSeconds": null,
+    "unattended": false,
+    "ingredientIds": [
+     "i01",
+     "i02",
+     "i03",
+     "i04",
+     "i07"
+    ]
+   },
+   {
+    "id": "s03",
+    "title": "Griddle",
+    "text": "Butter the outsides with {i08} and cook in cast iron over medium until deeply golden and the cheese has gone.",
+    "timerSeconds": 480,
+    "unattended": false,
+    "ingredientIds": [
+     "i08"
+    ]
+   }
+  ],
+  "household": {
+   "lastCooked": null,
+   "timesCooked": null,
+   "ratings": {},
+   "kidNotes": null,
+   "inRotation": true
+  },
+  "rawText": "Elite grilled cheese — usually Gouda, sharp cheddar, sriracha, red wine vinegar caramelized onions, pepperoncinis, sourdough. Goes with the tomato soup."
+ },
+ {
+  "id": "lemon-basil-pesto",
+  "title": "Lemon Basil Pesto",
+  "description": "Spinach stretches the basil and keeps it green. Toasted nuts, plenty of parm, lemon to lift it.",
+  "source": {
+   "type": "personal",
+   "url": null,
+   "author": "jess",
+   "addedBy": "jess"
+  },
+  "dateAdded": "2026-08-09",
+  "status": "approved",
+  "recipeType": "component",
+  "cuisine": "italian",
+  "tags": [
+   "sauce",
+   "component",
+   "quick",
+   "no-cook",
+   "make-ahead"
+  ],
+  "mainProtein": "none",
+  "equipment": [
+   "food-processor"
+  ],
+  "activeTimeMin": 12,
+  "totalTimeMin": 12,
+  "serves": 6,
+  "vegetarian": {
+   "status": "easily-adaptable",
+   "notes": "Parmesan is the only catch — most is made with animal rennet. Use a vegetarian hard cheese and it's fine.",
+   "swaps": [
+    {
+     "ingredientId": "i04",
+     "with": "vegetarian hard cheese (or a rennet-free parmesan)"
+    }
+   ]
+  },
+  "ingredients": [
+   {
+    "id": "i01",
+    "qty": 2,
+    "unit": "cup",
+    "item": "raw spinach",
+    "prep": null,
+    "note": "2 cups / big handfuls",
+    "section": "produce",
+    "vague": false,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i02",
+    "qty": 0.75,
+    "unit": "cup",
+    "item": "basil",
+    "prep": null,
+    "note": "1 small bunch",
+    "section": "produce",
+    "vague": false,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i03",
+    "qty": 2,
+    "unit": "clove",
+    "item": "garlic",
+    "prep": null,
+    "note": null,
+    "section": "produce",
+    "vague": false,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i04",
+    "qty": 0.5,
+    "unit": "cup",
+    "item": "Parmesan",
+    "prep": null,
+    "note": null,
+    "section": "dairy",
+    "vague": false,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i05",
+    "qty": 0.5,
+    "unit": "cup",
+    "item": "toasted walnuts or pine nuts",
+    "prep": null,
+    "note": null,
+    "section": "pantry",
+    "vague": false,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i06",
+    "qty": 1,
+    "unit": "tbsp",
+    "item": "lemon juice",
+    "prep": null,
+    "note": "plus some zest, optional",
+    "section": "produce",
+    "vague": false,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i07",
+    "qty": 0.5,
+    "unit": "tsp",
+    "item": "salt",
+    "prep": null,
+    "note": null,
+    "section": "spices",
+    "vague": false,
+    "optional": false,
+    "scalable": false
+   },
+   {
+    "id": "i08",
+    "qty": 0.25,
+    "unit": "tsp",
+    "item": "black pepper",
+    "prep": null,
+    "note": null,
+    "section": "spices",
+    "vague": false,
+    "optional": false,
+    "scalable": false
+   },
+   {
+    "id": "i09",
+    "qty": 0.5,
+    "unit": "cup",
+    "item": "olive oil",
+    "prep": null,
+    "note": null,
+    "section": "pantry",
+    "vague": false,
+    "optional": false,
+    "scalable": true
+   }
+  ],
+  "steps": [
+   {
+    "id": "s01",
+    "title": "Blend it",
+    "text": "Blend {i01}, {i02}, {i03}, {i04}, {i05}, {i06}, {i07}, and {i08}, streaming in {i09} until it comes together.",
+    "timerSeconds": null,
+    "unattended": false,
+    "ingredientIds": [
+     "i01",
+     "i02",
+     "i03",
+     "i04",
+     "i05",
+     "i06",
+     "i07",
+     "i08",
+     "i09"
+    ]
+   },
+   {
+    "id": "s02",
+    "title": "Save the pasta water",
+    "text": "Always retain pasta water — a splash loosens the pesto and makes it cling.",
+    "timerSeconds": null,
+    "unattended": false,
+    "ingredientIds": []
+   }
+  ],
+  "household": {
+   "lastCooked": null,
+   "timesCooked": null,
+   "ratings": {},
+   "kidNotes": null,
+   "inRotation": true
+  },
+  "rawText": "Lemon Basil Pesto\n- 2 cups/big handfuls raw spinach\n- 1 small bunch basil (3/4 cup)\n- 2 garlic cloves\n- 1/2 cup Parmesan\n- 1/2 cup toasted walnuts/pine nuts\n- 1 tablespoon lemon juice + some zest (optional)\n- 1/2 teaspoon salt\n- 1/4 teaspoon black pepper\n- 1/2 cup olive oil\n\nAlways retain pasta water",
+  "componentOf": [
+   "pasta"
+  ],
+  "yield": "about 1 1/2 cups"
+ },
+ {
+  "id": "pinto-beans",
+  "title": "Pinto Beans",
+  "description": "Dried pintos with onion sautéed in toasted cumin and chili powder. A side that works with everything Tex-Mex.",
+  "source": {
+   "type": "personal",
+   "url": null,
+   "author": "jess",
+   "addedBy": "jess"
+  },
+  "dateAdded": "2026-08-09",
+  "status": "approved",
+  "recipeType": "meal",
+  "cuisine": "tex-mex",
+  "tags": [
+   "side",
+   "beans",
+   "make-ahead",
+   "freezer-friendly",
+   "budget"
+  ],
+  "mainProtein": "beans",
+  "equipment": [
+   "dutch-oven"
+  ],
+  "activeTimeMin": 15,
+  "totalTimeMin": 150,
+  "serves": 8,
+  "vegetarian": {
+   "status": "inherently-veg",
+   "notes": "Nothing to change.",
+   "swaps": []
+  },
+  "ingredients": [
+   {
+    "id": "i01",
+    "qty": 2,
+    "unit": "cup",
+    "item": "dried pinto beans",
+    "prep": null,
+    "note": null,
+    "section": "pantry",
+    "vague": false,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i02",
+    "qty": 0.5,
+    "unit": "each",
+    "item": "onion",
+    "prep": "sautéed",
+    "note": null,
+    "section": "produce",
+    "vague": false,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i03",
+    "qty": 1.5,
+    "unit": "tsp",
+    "item": "cumin",
+    "prep": null,
+    "note": null,
+    "section": "spices",
+    "vague": false,
+    "optional": false,
+    "scalable": false
+   },
+   {
+    "id": "i04",
+    "qty": 1,
+    "unit": "tsp",
+    "item": "chili powder",
+    "prep": null,
+    "note": null,
+    "section": "spices",
+    "vague": false,
+    "optional": false,
+    "scalable": false
+   },
+   {
+    "id": "i05",
+    "qty": 0.5,
+    "unit": "tsp",
+    "item": "chipotle powder",
+    "prep": null,
+    "note": null,
+    "section": "spices",
+    "vague": false,
+    "optional": false,
+    "scalable": false
+   },
+   {
+    "id": "i06",
+    "qty": 0.5,
+    "unit": "tsp",
+    "item": "coriander",
+    "prep": null,
+    "note": null,
+    "section": "spices",
+    "vague": false,
+    "optional": false,
+    "scalable": false
+   },
+   {
+    "id": "i07",
+    "qty": 1,
+    "unit": "tsp",
+    "item": "garlic powder",
+    "prep": null,
+    "note": null,
+    "section": "spices",
+    "vague": false,
+    "optional": false,
+    "scalable": false
+   },
+   {
+    "id": "i08",
+    "qty": null,
+    "unit": null,
+    "item": "cayenne",
+    "prep": null,
+    "note": "dash",
+    "section": "spices",
+    "vague": true,
+    "optional": false,
+    "scalable": false
+   },
+   {
+    "id": "i09",
+    "qty": 2,
+    "unit": "tsp",
+    "item": "oregano",
+    "prep": null,
+    "note": null,
+    "section": "spices",
+    "vague": false,
+    "optional": false,
+    "scalable": false
+   },
+   {
+    "id": "i10",
+    "qty": 2,
+    "unit": "tsp",
+    "item": "salt",
+    "prep": null,
+    "note": null,
+    "section": "spices",
+    "vague": false,
+    "optional": false,
+    "scalable": false
+   },
+   {
+    "id": "i11",
+    "qty": 1,
+    "unit": "tsp",
+    "item": "black pepper",
+    "prep": null,
+    "note": null,
+    "section": "spices",
+    "vague": false,
+    "optional": false,
+    "scalable": false
+   },
+   {
+    "id": "i12",
+    "qty": null,
+    "unit": null,
+    "item": "cilantro",
+    "prep": null,
+    "note": "handful",
+    "section": "produce",
+    "vague": true,
+    "optional": false,
+    "scalable": true
+   }
+  ],
+  "steps": [
+   {
+    "id": "s01",
+    "title": "Toast the aromatics",
+    "text": "Sauté {i02} with {i03} and {i04} until fragrant.",
+    "timerSeconds": 300,
+    "unattended": false,
+    "ingredientIds": [
+     "i02",
+     "i03",
+     "i04"
+    ]
+   },
+   {
+    "id": "s02",
+    "title": "Cook the beans",
+    "text": "Add {i01} and cover with water. Add {i05}, {i06}, {i07}, {i08}, {i09}, {i10}, and {i11}. Simmer until tender.",
+    "timerSeconds": 7200,
+    "unattended": true,
+    "ingredientIds": [
+     "i01",
+     "i05",
+     "i06",
+     "i07",
+     "i08",
+     "i09",
+     "i10",
+     "i11"
+    ]
+   },
+   {
+    "id": "s03",
+    "title": "Finish",
+    "text": "Stir in {i12}.",
+    "timerSeconds": null,
+    "unattended": false,
+    "ingredientIds": [
+     "i12"
+    ]
+   }
+  ],
+  "household": {
+   "lastCooked": null,
+   "timesCooked": null,
+   "ratings": {},
+   "kidNotes": null,
+   "inRotation": true
+  },
+  "rawText": "Pinto Beans\n- 2 cups dried beans\n- 1/2 onion sautéed with toasted cumin and chili powder\n- 1.5 tsp cumin\n- 1 tsp chili powder\n- .5 tsp chipotle powder\n- .5 tsp coriander\n- 1 tsp garlic powder\n- Dash cayenne\n- 2 tsp oregano\n- 2 tsp salt\n- 1 tsp black pepper\n- handful cilantro"
+ },
+ {
+  "id": "potato-soup",
+  "title": "Potato Soup",
+  "description": "A rich, herb-heavy potato soup built on a roux with white wine, three dairies, and a lot of fresh dill and parsley. Truffle salt at the end.",
+  "source": {
+   "type": "personal",
+   "url": null,
+   "author": "jess",
+   "addedBy": "jess"
+  },
+  "dateAdded": "2026-08-08",
+  "status": "approved",
+  "cuisine": "american",
+  "tags": [
+   "soup",
+   "comfort",
+   "make-ahead",
+   "cold-weather",
+   "crowd-pleaser"
+  ],
+  "mainProtein": "none",
+  "equipment": [
+   "dutch-oven"
+  ],
+  "activeTimeMin": 35,
+  "totalTimeMin": 85,
+  "serves": 8,
+  "vegetarian": {
+   "status": "easily-adaptable",
+   "notes": "Broth is already vegetable. The only catch is Worcestershire — most brands (Lea & Perrins included) contain anchovies. Use a vegetarian Worcestershire, or sub 1 tsp soy sauce plus a splash of red wine vinegar for a close match.",
+   "swaps": [
+    {
+     "ingredientId": "i16",
+     "with": "vegetarian Worcestershire, or 1 tsp soy sauce + splash red wine vinegar"
+    }
+   ]
+  },
+  "ingredients": [
+   {
+    "id": "i01",
+    "qty": 2,
+    "unit": "tbsp",
+    "item": "butter",
+    "prep": null,
+    "note": null,
+    "section": "dairy",
+    "vague": false,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i02",
+    "qty": null,
+    "unit": null,
+    "item": "olive oil",
+    "prep": null,
+    "note": "couple glugs",
+    "section": "pantry",
+    "vague": true,
+    "optional": false,
+    "scalable": false
+   },
+   {
+    "id": "i03",
+    "qty": 1,
+    "unit": "cup",
+    "item": "onion",
+    "prep": "chopped",
+    "note": null,
+    "section": "produce",
+    "vague": false,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i04",
+    "qty": 1,
+    "unit": "cup",
+    "item": "celery",
+    "prep": "chopped",
+    "note": null,
+    "section": "produce",
+    "vague": false,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i05",
+    "qty": 1,
+    "unit": "cup",
+    "item": "carrots",
+    "prep": "chopped",
+    "note": null,
+    "section": "produce",
+    "vague": false,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i06",
+    "qty": 7,
+    "unit": "clove",
+    "item": "garlic",
+    "prep": "minced",
+    "note": "7-8 cloves",
+    "section": "produce",
+    "vague": false,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i07",
+    "qty": 1,
+    "unit": "each",
+    "item": "shallot",
+    "prep": "minced",
+    "note": "big one",
+    "section": "produce",
+    "vague": false,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i08",
+    "qty": 2.5,
+    "unit": "tbsp",
+    "item": "all-purpose flour",
+    "prep": null,
+    "note": "2-3 tablespoons",
+    "section": "pantry",
+    "vague": false,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i09",
+    "qty": 4.5,
+    "unit": "each",
+    "item": "potatoes",
+    "prep": "quartered",
+    "note": "4-5 potatoes — parboiled separately, see step 1",
+    "section": "produce",
+    "vague": false,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i10",
+    "qty": null,
+    "unit": null,
+    "item": "dry white wine",
+    "prep": null,
+    "note": "couple glugs — Sauvignon Blanc",
+    "section": "pantry",
+    "vague": true,
+    "optional": false,
+    "scalable": false
+   },
+   {
+    "id": "i11",
+    "qty": 32,
+    "unit": "fl_oz",
+    "item": "vegetable broth",
+    "prep": null,
+    "note": "plus more if it gets too thick",
+    "section": "pantry",
+    "vague": false,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i12",
+    "qty": 1.5,
+    "unit": "cup",
+    "item": "whole milk",
+    "prep": null,
+    "note": "can sub up to 1/2 cup with heavy cream if you're feeling spicy",
+    "section": "dairy",
+    "vague": false,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i13",
+    "qty": 12,
+    "unit": "oz",
+    "item": "evaporated milk",
+    "prep": null,
+    "note": "one can",
+    "section": "canned",
+    "vague": false,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i14",
+    "qty": null,
+    "unit": null,
+    "item": "fresh parsley",
+    "prep": "chopped",
+    "note": "handful",
+    "section": "produce",
+    "vague": true,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i15",
+    "qty": null,
+    "unit": null,
+    "item": "fresh dill",
+    "prep": "chopped",
+    "note": "handful",
+    "section": "produce",
+    "vague": true,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i16",
+    "qty": 2,
+    "unit": "tsp",
+    "item": "Worcestershire sauce",
+    "prep": null,
+    "note": "see vegetarian notes — most brands contain anchovies",
+    "section": "pantry",
+    "vague": false,
+    "optional": false,
+    "scalable": false
+   },
+   {
+    "id": "i17",
+    "qty": 1.5,
+    "unit": "tsp",
+    "item": "mustard powder",
+    "prep": null,
+    "note": null,
+    "section": "spices",
+    "vague": false,
+    "optional": false,
+    "scalable": false
+   },
+   {
+    "id": "i18",
+    "qty": null,
+    "unit": null,
+    "item": "ground allspice",
+    "prep": null,
+    "note": "one pinch",
+    "section": "spices",
+    "vague": true,
+    "optional": false,
+    "scalable": false
+   },
+   {
+    "id": "i19",
+    "qty": 1,
+    "unit": "tsp",
+    "item": "celery seed",
+    "prep": null,
+    "note": null,
+    "section": "spices",
+    "vague": false,
+    "optional": false,
+    "scalable": false
+   },
+   {
+    "id": "i20",
+    "qty": 0.5,
+    "unit": "tsp",
+    "item": "dried thyme",
+    "prep": null,
+    "note": null,
+    "section": "spices",
+    "vague": false,
+    "optional": false,
+    "scalable": false
+   },
+   {
+    "id": "i21",
+    "qty": 1,
+    "unit": "tsp",
+    "item": "seasoning salt",
+    "prep": null,
+    "note": null,
+    "section": "spices",
+    "vague": false,
+    "optional": false,
+    "scalable": false
+   },
+   {
+    "id": "i22",
+    "qty": 0.5,
+    "unit": "tsp",
+    "item": "sea salt",
+    "prep": null,
+    "note": "plus more to taste",
+    "section": "spices",
+    "vague": false,
+    "optional": false,
+    "scalable": false
+   },
+   {
+    "id": "i23",
+    "qty": 1,
+    "unit": "tsp",
+    "item": "black pepper",
+    "prep": null,
+    "note": null,
+    "section": "spices",
+    "vague": false,
+    "optional": false,
+    "scalable": false
+   },
+   {
+    "id": "i24",
+    "qty": null,
+    "unit": null,
+    "item": "cayenne pepper",
+    "prep": null,
+    "note": "dash",
+    "section": "spices",
+    "vague": true,
+    "optional": false,
+    "scalable": false
+   },
+   {
+    "id": "i25",
+    "qty": null,
+    "unit": null,
+    "item": "truffle sea salt",
+    "prep": null,
+    "note": "couple good pinches — optional but so good",
+    "section": "spices",
+    "vague": true,
+    "optional": true,
+    "scalable": false
+   }
+  ],
+  "steps": [
+   {
+    "id": "s01",
+    "title": "Parboil the potatoes",
+    "text": "Put {i09} in a big pot. Cover with water. Salt it good. Cover and bring to a boil, then reduce and simmer ~15 min. Strain and set aside.",
+    "timerSeconds": 900,
+    "unattended": true,
+    "ingredientIds": [
+     "i09"
+    ]
+   },
+   {
+    "id": "s02",
+    "title": "Sweat the aromatics",
+    "text": "Heat {i01} and {i02} in the same big pot over medium-high. Add {i06}, {i07}, and {i03} and let them go for a few minutes.",
+    "timerSeconds": 240,
+    "unattended": false,
+    "ingredientIds": [
+     "i01",
+     "i02",
+     "i03",
+     "i06",
+     "i07"
+    ]
+   },
+   {
+    "id": "s03",
+    "title": "Add celery and carrots",
+    "text": "Add {i04} and {i05} for a few more minutes.",
+    "timerSeconds": 240,
+    "unattended": false,
+    "ingredientIds": [
+     "i04",
+     "i05"
+    ]
+   },
+   {
+    "id": "s04",
+    "title": "Make the roux",
+    "text": "Add {i08} and stir it up real good.",
+    "timerSeconds": null,
+    "unattended": false,
+    "ingredientIds": [
+     "i08"
+    ]
+   },
+   {
+    "id": "s05",
+    "title": "Build the soup",
+    "text": "Add the parboiled potatoes, then {i10}, {i11}, {i12}, and {i13}. Then everything else — {i14}, {i15}, {i16}, {i17}, {i18}, {i19}, {i20}, {i21}, {i22}, {i23}, {i24}, {i25}.",
+    "timerSeconds": null,
+    "unattended": false,
+    "ingredientIds": [
+     "i09",
+     "i10",
+     "i11",
+     "i12",
+     "i13",
+     "i14",
+     "i15",
+     "i16",
+     "i17",
+     "i18",
+     "i19",
+     "i20",
+     "i21",
+     "i22",
+     "i23",
+     "i24",
+     "i25"
+    ]
+   },
+   {
+    "id": "s06",
+    "title": "Simmer low",
+    "text": "Simmer on super low for at least half an hour — any higher and it will burn to the bottom of the pot.",
+    "timerSeconds": 1800,
+    "unattended": true,
+    "ingredientIds": []
+   },
+   {
+    "id": "s07",
+    "title": "Mash and adjust",
+    "text": "Mash the potatoes as much as you want. Add more {i11} if it's too thick.",
+    "timerSeconds": null,
+    "unattended": false,
+    "ingredientIds": [
+     "i11"
+    ]
+   }
+  ],
+  "household": {
+   "lastCooked": null,
+   "timesCooked": null,
+   "ratings": {},
+   "kidNotes": null,
+   "inRotation": true
+  },
+  "rawText": "Potato Soup\n\n2 tablespoons butter\nCouple glugs olive oil\n\n1 cup chopped onion\n1 cup chopped celery\n1 cup chopped carrots\n7-8 cloves garlic, minced\nBig shallot, minced\n2-3 tablespoons all-purpose flour\n\n4-5 potatoes, quartered (see below)\n\nCouple glugs dry white wine (Sauvignon Blanc)\n\n32 oz. vegetable broth\n1 1/2 cups whole milk (can sub up to 1/2 cup with heavy cream if you're feeling spicy)\n12 oz. can evaporated milk\n\nHandful chopped fresh parsley\nHandful chopped fresh dill\n\n2 teaspoons Worcestershire sauce\n1 1/2 teaspoons mustard powder\n1 pinch ground allspice\n1 teaspoon celery seed\n1/2 teaspoon dried thyme\n1 teaspoon seasoning salt\n1/2 teaspoon sea salt (+ more to taste)\n1 teaspoon black pepper\nDash cayenne pepper\nCouple good pinches of truffle sea salt (optional but so good)\n\nCook potatoes\n- Put quartered potatoes in big pot. Cover with water. Salt it good. Cover and bring to a boil. Reduce and simmer for ~15 min. Strain. Set aside.\n\nHeat butter and oil in same big pot over medium high. Add garlic, shallot, onions and let them go for a few minutes. Add celery and carrots for a few more. Add flour and stir it up real good. Add potatoes, then the wine, broth, and milks, then everything else.\nLet it simmer on super low (or else it will burn to the bottom of the pot) for at least half an hour. Mash the potatoes as much as you want. Add more broth if it's too thick.",
+  "recipeType": "meal"
+ },
+ {
+  "id": "taco-seasoning",
+  "title": "Taco Seasoning",
+  "description": "House taco seasoning. Makes enough for about 1 lb of ground meat or beans.",
+  "source": {
+   "type": "personal",
+   "url": null,
+   "author": "jess",
+   "addedBy": "jess"
+  },
+  "dateAdded": "2026-08-08",
+  "status": "approved",
+  "recipeType": "component",
+  "componentOf": [
+   "ground-beef-tacos"
+  ],
+  "yield": "about 2 tbsp — seasons 1 lb",
+  "cuisine": "tex-mex",
+  "tags": [
+   "spice-blend",
+   "component",
+   "pantry-staple",
+   "make-ahead",
+   "batchable"
+  ],
+  "mainProtein": "none",
+  "equipment": [],
+  "activeTimeMin": 3,
+  "totalTimeMin": 3,
+  "serves": null,
+  "vegetarian": {
+   "status": "inherently-veg",
+   "notes": "Spice blend only — works on ground beef, beans, tofu, roasted vegetables, whatever it's going on.",
+   "swaps": []
+  },
+  "ingredients": [
+   {
+    "id": "i01",
+    "qty": 1.5,
+    "unit": "tsp",
+    "item": "chili powder",
+    "prep": null,
+    "note": null,
+    "section": "spices",
+    "vague": false,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i02",
+    "qty": 0.5,
+    "unit": "tsp",
+    "item": "garlic powder",
+    "prep": null,
+    "note": null,
+    "section": "spices",
+    "vague": false,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i03",
+    "qty": 0.5,
+    "unit": "tsp",
+    "item": "onion powder",
+    "prep": null,
+    "note": null,
+    "section": "spices",
+    "vague": false,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i04",
+    "qty": 0.5,
+    "unit": "tsp",
+    "item": "crushed red pepper flakes",
+    "prep": null,
+    "note": null,
+    "section": "spices",
+    "vague": false,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i05",
+    "qty": 0.5,
+    "unit": "tsp",
+    "item": "dried oregano",
+    "prep": null,
+    "note": null,
+    "section": "spices",
+    "vague": false,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i06",
+    "qty": 0.5,
+    "unit": "tsp",
+    "item": "paprika",
+    "prep": null,
+    "note": null,
+    "section": "spices",
+    "vague": false,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i07",
+    "qty": 1,
+    "unit": "tsp",
+    "item": "ground cumin",
+    "prep": null,
+    "note": null,
+    "section": "spices",
+    "vague": false,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i08",
+    "qty": 1,
+    "unit": "tsp",
+    "item": "sea salt",
+    "prep": null,
+    "note": null,
+    "section": "spices",
+    "vague": false,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i09",
+    "qty": 1,
+    "unit": "tsp",
+    "item": "black pepper",
+    "prep": null,
+    "note": null,
+    "section": "spices",
+    "vague": false,
+    "optional": false,
+    "scalable": true
+   }
+  ],
+  "steps": [
+   {
+    "id": "s01",
+    "title": "Mix",
+    "text": "Combine {i01}, {i02}, {i03}, {i04}, {i05}, {i06}, {i07}, {i08}, and {i09}.",
+    "timerSeconds": null,
+    "unattended": false,
+    "ingredientIds": [
+     "i01",
+     "i02",
+     "i03",
+     "i04",
+     "i05",
+     "i06",
+     "i07",
+     "i08",
+     "i09"
+    ]
+   }
+  ],
+  "household": {
+   "lastCooked": null,
+   "timesCooked": null,
+   "ratings": {},
+   "kidNotes": null,
+   "inRotation": true
+  },
+  "rawText": "Taco Seasoning\n\n- 1 1/2 teaspoons chili powder\n- 1/2 teaspoon garlic powder\n- 1/2 teaspoon onion powder\n- 1/2 teaspoon crushed red pepper flakes\n- 1/2 teaspoon dried oregano\n- 1/2 teaspoon paprika\n- 1 teaspoon ground cumin\n- 1 teaspoon sea salt\n- 1 teaspoon black pepper"
+ },
+ {
+  "id": "tomato-sauce",
+  "title": "Tomato Sauce",
+  "description": "San Marzanos with garlic and basil bloomed slowly in olive oil first, simmered until the oil goes orange, then blended smooth.",
+  "source": {
+   "type": "personal",
+   "url": null,
+   "author": "jess",
+   "addedBy": "jess"
+  },
+  "dateAdded": "2026-08-09",
+  "status": "approved",
+  "recipeType": "component",
+  "cuisine": "italian",
+  "tags": [
+   "sauce",
+   "component",
+   "make-ahead",
+   "freezer-friendly",
+   "base"
+  ],
+  "mainProtein": "none",
+  "equipment": [
+   "dutch-oven",
+   "immersion-blender"
+  ],
+  "activeTimeMin": 10,
+  "totalTimeMin": 45,
+  "serves": 6,
+  "vegetarian": {
+   "status": "inherently-veg",
+   "notes": "Nothing to change. This is the base for both pizza and pasta nights.",
+   "swaps": []
+  },
+  "ingredients": [
+   {
+    "id": "i01",
+    "qty": 7,
+    "unit": "clove",
+    "item": "garlic",
+    "prep": null,
+    "note": "6-8 cloves",
+    "section": "produce",
+    "vague": false,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i02",
+    "qty": null,
+    "unit": null,
+    "item": "fresh basil leaves",
+    "prep": null,
+    "note": "handful",
+    "section": "produce",
+    "vague": true,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i03",
+    "qty": null,
+    "unit": null,
+    "item": "red pepper flakes",
+    "prep": null,
+    "note": "couple good shakes",
+    "section": "spices",
+    "vague": true,
+    "optional": false,
+    "scalable": false
+   },
+   {
+    "id": "i04",
+    "qty": null,
+    "unit": null,
+    "item": "good olive oil",
+    "prep": null,
+    "note": "a bunch of glugs — enough to cover",
+    "section": "pantry",
+    "vague": true,
+    "optional": false,
+    "scalable": false
+   },
+   {
+    "id": "i05",
+    "qty": 28,
+    "unit": "oz",
+    "item": "whole peeled San Marzano tomatoes",
+    "prep": null,
+    "note": "one can",
+    "section": "canned",
+    "vague": false,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i06",
+    "qty": 1,
+    "unit": "tbsp",
+    "item": "dried oregano",
+    "prep": null,
+    "note": null,
+    "section": "spices",
+    "vague": false,
+    "optional": false,
+    "scalable": false
+   },
+   {
+    "id": "i07",
+    "qty": 2,
+    "unit": "tsp",
+    "item": "salt",
+    "prep": null,
+    "note": null,
+    "section": "spices",
+    "vague": false,
+    "optional": false,
+    "scalable": false
+   },
+   {
+    "id": "i08",
+    "qty": null,
+    "unit": null,
+    "item": "sugar",
+    "prep": null,
+    "note": "two big pinches",
+    "section": "pantry",
+    "vague": true,
+    "optional": false,
+    "scalable": false
+   }
+  ],
+  "steps": [
+   {
+    "id": "s01",
+    "title": "Bloom the aromatics",
+    "text": "Heat {i04}, {i01}, {i02}, and {i03} in a heavy pot on low. Tilt the pot so everything is submerged. Let it go 10-15 minutes, just until it's bubbling and the basil and garlic are barely crispy.",
+    "timerSeconds": 750,
+    "unattended": false,
+    "ingredientIds": [
+     "i01",
+     "i02",
+     "i03",
+     "i04"
+    ]
+   },
+   {
+    "id": "s02",
+    "title": "Add everything else",
+    "text": "Add {i05}, {i06}, {i07}, and {i08}. Simmer on medium-low with the lid off until the oil looks nice and orangey on top.",
+    "timerSeconds": 1800,
+    "unattended": true,
+    "ingredientIds": [
+     "i05",
+     "i06",
+     "i07",
+     "i08"
+    ]
+   },
+   {
+    "id": "s03",
+    "title": "Blend",
+    "text": "Blend it up with an immersion blender.",
+    "timerSeconds": null,
+    "unattended": false,
+    "ingredientIds": []
+   }
+  ],
+  "household": {
+   "lastCooked": null,
+   "timesCooked": null,
+   "ratings": {},
+   "kidNotes": null,
+   "inRotation": true
+  },
+  "rawText": "Tomato Sauce\n- 6-8 garlic cloves\n- Handful fresh basil leaves\n- Couple good shakes of red pepper flakes\n- A bunch of glugs of good olive oil (enough to cover, more in instructions)\n- 1 28 oz. cans whole peeled San Marzano tomatoes\n- 1 tbsp. dried oregano\n- 2 tsp. salt\n- two big pinches sugar\n\nHeat up olive oil, garlic, basil, and red pepper leaves in heavy pot on low. Tilt pot so that everything is submerged. Let it cook for 10-15 minutes, just until it's bubbling and the basil and garlic are barely crispy. Add everything else and let it simmer on medium low with the lid off until the oil looks nice and orangey on top. Blend it up with an immersion blender.\n\nI make pasta and homemade pizza with that one",
+  "componentOf": [
+   "pizza",
+   "pasta"
+  ],
+  "yield": "about 3 cups"
+ },
+ {
+  "id": "tomato-soup",
+  "title": "Tomato Soup",
+  "description": "Blended smooth with sourdough for body, three dairies, and a lot of fresh dill. Goes with the sharp cheddar and gouda grilled cheese.",
+  "source": {
+   "type": "personal",
+   "url": null,
+   "author": "jess",
+   "addedBy": "jess"
+  },
+  "dateAdded": "2026-08-09",
+  "status": "approved",
+  "recipeType": "meal",
+  "cuisine": "american",
+  "tags": [
+   "soup",
+   "comfort",
+   "make-ahead",
+   "crowd-pleaser",
+   "blender"
+  ],
+  "mainProtein": "none",
+  "equipment": [
+   "dutch-oven",
+   "immersion-blender"
+  ],
+  "activeTimeMin": 15,
+  "totalTimeMin": 60,
+  "serves": 8,
+  "vegetarian": {
+   "status": "inherently-veg",
+   "notes": "Vegetable broth throughout — nothing to change.",
+   "swaps": []
+  },
+  "ingredients": [
+   {
+    "id": "i01",
+    "qty": 2,
+    "unit": "can",
+    "item": "28 oz crushed tomatoes",
+    "prep": null,
+    "note": "2 28 oz. cans",
+    "section": "canned",
+    "vague": false,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i02",
+    "qty": null,
+    "unit": null,
+    "item": "garlic",
+    "prep": null,
+    "note": "shit ton",
+    "section": "produce",
+    "vague": true,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i03",
+    "qty": 2,
+    "unit": "cup",
+    "item": "vegetable broth",
+    "prep": null,
+    "note": null,
+    "section": "pantry",
+    "vague": false,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i04",
+    "qty": 2,
+    "unit": "cup",
+    "item": "tomato juice",
+    "prep": null,
+    "note": null,
+    "section": "canned",
+    "vague": false,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i05",
+    "qty": 3.5,
+    "unit": "slice",
+    "item": "sourdough bread",
+    "prep": null,
+    "note": "3-4 slices",
+    "section": "bakery",
+    "vague": false,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i06",
+    "qty": 0.5,
+    "unit": "cup",
+    "item": "milk",
+    "prep": null,
+    "note": null,
+    "section": "dairy",
+    "vague": false,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i07",
+    "qty": 0.5,
+    "unit": "cup",
+    "item": "plain full-fat Greek yogurt",
+    "prep": null,
+    "note": null,
+    "section": "dairy",
+    "vague": false,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i08",
+    "qty": 0.5,
+    "unit": "cup",
+    "item": "heavy cream",
+    "prep": null,
+    "note": null,
+    "section": "dairy",
+    "vague": false,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i09",
+    "qty": null,
+    "unit": null,
+    "item": "fresh basil leaves",
+    "prep": null,
+    "note": "big handful",
+    "section": "produce",
+    "vague": true,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i10",
+    "qty": null,
+    "unit": null,
+    "item": "fresh dill",
+    "prep": null,
+    "note": "whole thing",
+    "section": "produce",
+    "vague": true,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i11",
+    "qty": null,
+    "unit": null,
+    "item": "lemon juice",
+    "prep": null,
+    "note": "good squeeze, plus zest",
+    "section": "produce",
+    "vague": true,
+    "optional": false,
+    "scalable": true
+   },
+   {
+    "id": "i12",
+    "qty": 0.5,
+    "unit": "tsp",
+    "item": "black pepper",
+    "prep": null,
+    "note": "estimates — use your hands and make them heaping",
+    "section": "spices",
+    "vague": false,
+    "optional": false,
+    "scalable": false
+   },
+   {
+    "id": "i13",
+    "qty": 2,
+    "unit": "tsp",
+    "item": "salt",
+    "prep": null,
+    "note": null,
+    "section": "spices",
+    "vague": false,
+    "optional": false,
+    "scalable": false
+   },
+   {
+    "id": "i14",
+    "qty": 0.5,
+    "unit": "tsp",
+    "item": "paprika",
+    "prep": null,
+    "note": null,
+    "section": "spices",
+    "vague": false,
+    "optional": false,
+    "scalable": false
+   },
+   {
+    "id": "i15",
+    "qty": 0.5,
+    "unit": "tsp",
+    "item": "onion powder",
+    "prep": null,
+    "note": null,
+    "section": "spices",
+    "vague": false,
+    "optional": false,
+    "scalable": false
+   },
+   {
+    "id": "i16",
+    "qty": 0.5,
+    "unit": "tsp",
+    "item": "dried dill",
+    "prep": null,
+    "note": null,
+    "section": "spices",
+    "vague": false,
+    "optional": false,
+    "scalable": false
+   },
+   {
+    "id": "i17",
+    "qty": 0.5,
+    "unit": "tsp",
+    "item": "seasoning salt",
+    "prep": null,
+    "note": null,
+    "section": "spices",
+    "vague": false,
+    "optional": false,
+    "scalable": false
+   },
+   {
+    "id": "i18",
+    "qty": 0.5,
+    "unit": "tsp",
+    "item": "thyme",
+    "prep": null,
+    "note": null,
+    "section": "spices",
+    "vague": false,
+    "optional": false,
+    "scalable": false
+   },
+   {
+    "id": "i19",
+    "qty": 1,
+    "unit": "tsp",
+    "item": "crushed red pepper",
+    "prep": null,
+    "note": null,
+    "section": "spices",
+    "vague": false,
+    "optional": false,
+    "scalable": false
+   },
+   {
+    "id": "i20",
+    "qty": 1,
+    "unit": "tbsp",
+    "item": "oregano",
+    "prep": null,
+    "note": null,
+    "section": "spices",
+    "vague": false,
+    "optional": false,
+    "scalable": false
+   },
+   {
+    "id": "i21",
+    "qty": null,
+    "unit": null,
+    "item": "sugar",
+    "prep": null,
+    "note": "pinch",
+    "section": "pantry",
+    "vague": true,
+    "optional": false,
+    "scalable": false
+   }
+  ],
+  "steps": [
+   {
+    "id": "s01",
+    "title": "Everything in the pot",
+    "text": "Throw {i01}, {i02}, {i03}, {i04}, {i05}, {i06}, {i07}, {i08}, {i09}, {i10}, {i11}, {i12}, {i13}, {i14}, {i15}, {i16}, {i17}, {i18}, {i19}, {i20}, and {i21} in a pot. Simmer on medium-low for a bit.",
+    "timerSeconds": 900,
+    "unattended": false,
+    "ingredientIds": [
+     "i01",
+     "i02",
+     "i03",
+     "i04",
+     "i05",
+     "i06",
+     "i07",
+     "i08",
+     "i09",
+     "i10",
+     "i11",
+     "i12",
+     "i13",
+     "i14",
+     "i15",
+     "i16",
+     "i17",
+     "i18",
+     "i19",
+     "i20",
+     "i21"
+    ]
+   },
+   {
+    "id": "s02",
+    "title": "Blend smooth",
+    "text": "Blend it up with an immersion blender until it's extremely smooth.",
+    "timerSeconds": null,
+    "unattended": false,
+    "ingredientIds": []
+   },
+   {
+    "id": "s03",
+    "title": "Simmer",
+    "text": "Simmer on low with the lid on. 20-30 minutes is good — longer the better.",
+    "timerSeconds": 1500,
+    "unattended": true,
+    "ingredientIds": []
+   }
+  ],
+  "household": {
+   "lastCooked": null,
+   "timesCooked": null,
+   "ratings": {},
+   "kidNotes": null,
+   "inRotation": true
+  },
+  "rawText": "Tomato Soup\n- 2 28 oz. cans crushed tomatoes\n- shit ton of garlic\n- 2 cups vegetable broth\n- 2 cups tomato juice\n- 3-4 slices sourdough bread\n- 1/2 cup milk\n- 1/2 cup plain full-fat Greek yogurt\n- 1/2 cup heavy cream\n- big handful of fresh basil leaves\n- whole thing of fresh dill\n- good squeeze of lemon juice\n- lemon zest\n(following are estimates use your hands and make them heaping)\n- 1/2 tsp. black pepper\n- 2 tsp. salt\n- 1/2 tsp. paprika\n- 1/2 tsp. onion powder\n- 1/2 tsp. dill\n- 1/2 tsp. seasoning salt\n- 1/2 tsp. thyme\n- 1 tsp. crushed red pepper\n- 1 tbsp. oregano\n- pinch of sugar\n\nThrow it in a pot. Simmer it on medium-low for a bit. Blend it up with an immersion blender until it's extremely smooth. Simmer on low with the lid on. 20-30 min is good. Longer the better.\n\nI make elite grilled cheese with that. Usually Gouda, sharp cheddar, sriracha, red wine vinegar caramelized onions, pepperoncinis, sourdough"
+ }
+]

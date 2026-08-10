@@ -30,9 +30,13 @@ html{
   background:var(--ink);
   -webkit-text-size-adjust:100%;      /* landscape shouldn't reflow the type */
 }
+/* A fixed shell rather than a scrolling page. Sticky positioning puts the nav
+   at the bottom of the layout viewport, which on iOS sits behind Safari's
+   toolbar -- so the tabs get clipped. Here the body never scrolls and the nav
+   is simply the last row of a full-height column. */
 body{
   margin:0;font-family:var(--fb);color:var(--text);background:var(--ink);
-  min-height:100dvh;display:flex;flex-direction:column;
+  height:100dvh;overflow:hidden;display:flex;flex-direction:column;
   -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
   overscroll-behavior-y:contain;      /* no rubber-band past the app */
 }
@@ -48,7 +52,7 @@ button{font-family:inherit;color:inherit;cursor:pointer;border:0;background:none
 
 /* ============ chrome ============ */
 .top{
-  position:sticky;top:0;z-index:30;
+  flex:0 0 auto;z-index:30;
   background:rgba(18,16,14,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
   border-bottom:1px solid var(--line);
   padding:calc(8px + env(safe-area-inset-top)) 14px 9px 20px;
@@ -66,13 +70,17 @@ body.locked #refresh-btn{display:none}
 .icon-btn:hover,.icon-btn:active{background:var(--ink-3);color:var(--text)}
 .icon-btn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 
-main{flex:1;width:100%;max-width:680px;margin:0 auto;padding:22px 20px 44px;position:relative;z-index:1}
+main{
+  flex:1 1 auto;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;
+  overscroll-behavior-y:contain;width:100%;position:relative;z-index:1;
+}
+.inner{max-width:680px;margin:0 auto;padding:22px 20px 32px}
 .view{display:none}
 .view.on{display:block;animation:in .3s cubic-bezier(.2,.7,.3,1) both}
 @keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 
 nav{
-  position:sticky;bottom:0;z-index:30;display:flex;
+  flex:0 0 auto;z-index:30;display:flex;
   background:rgba(26,23,21,.9);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
   border-top:1px solid var(--line);
 }
@@ -329,9 +337,11 @@ ol.steps .amt{font-weight:600;color:#1B1815}
 }
 .day.today{border-color:rgba(163,194,74,.4);background:linear-gradient(180deg,rgba(163,194,74,.07),transparent)}
 .day .dn{
-  font-family:var(--fm);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;
-  color:var(--muted-2);width:34px;flex-shrink:0;
+  font-family:var(--fm);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted-2);width:74px;flex-shrink:0;line-height:1.3;
 }
+.day .dn small{display:block;font-size:10px;letter-spacing:.04em;color:var(--dim);text-transform:none;margin-top:2px}
+.day.today .dn small{color:rgba(163,194,74,.65)}
 .day.today .dn{color:var(--herb)}
 .day{align-items:flex-start}
 .day .dn{padding-top:3px}
@@ -500,6 +510,7 @@ textarea.ed:focus{border-color:var(--herb);outline:none}
 </header>
 
 <main>
+<div class="inner">
 
 <!-- ============ WELCOME ============ -->
 <section class="view" id="v-settings">
@@ -581,7 +592,7 @@ textarea.ed:focus{border-color:var(--herb);outline:none}
 <!-- ============ EDIT ============ -->
 <section class="view" id="v-edit">
   <button class="back" onclick="cancelEdit()"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>Cancel</button>
-  <div class="head"><h1>Edit recipe</h1><p class="sub">Saved to the repo, so everyone sees the change.</p></div>
+  <div class="head"><h1>Edit recipe</h1></div>
   <div id="edit"></div>
   <div class="pair" style="margin-top:20px">
     <button class="btn btn-s" onclick="cancelEdit()">Cancel</button>
@@ -598,7 +609,6 @@ textarea.ed:focus{border-color:var(--herb);outline:none}
   </div>
 
   <div class="pane" id="pane-week">
-    <p class="sub">Tap a day to pick something. Everyone on this repo sees the same plan.</p>
     <div id="week"></div>
   </div>
 
@@ -620,6 +630,7 @@ textarea.ed:focus{border-color:var(--herb);outline:none}
   <div id="pick-list"></div>
 </section>
 
+</div>
 </main>
 
 <nav>
@@ -753,7 +764,30 @@ let filter = 'all', pickDay = null, prevView = 'home', prevLabel = 'Kitchen';
 let pane = store.get('pantry.pane') === 'list' ? 'list' : 'week';
 
 const DAYS = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
-const todayKey = () => DAYS[(new Date().getDay() + 6) % 7];
+
+/* The plan is keyed by actual date. Weekday names have no past -- "Monday"
+   is always both three days ago and four days away -- so a plan keyed that
+   way can't tell you what's still coming or what to shop for. */
+const iso = dt => `${dt.getFullYear()}-${String(dt.getMonth()+1).padStart(2,'0')}-${String(dt.getDate()).padStart(2,'0')}`;
+const today = () => iso(new Date());
+const addDays = (d, n) => { const x = new Date(d + 'T12:00:00'); x.setDate(x.getDate() + n); return iso(x); };
+
+/* Today plus the next six days. */
+function weekDates(){
+  const t = today();
+  return Array.from({length: 7}, (_, i) => addDays(t, i));
+}
+function dayLabel(key){
+  const t = today();
+  if (key === t) return 'Today';
+  if (key === addDays(t, 1)) return 'Tomorrow';
+  const dt = new Date(key + 'T12:00:00');
+  return DAYS[(dt.getDay() + 6) % 7];
+}
+function dateLabel(key){
+  const dt = new Date(key + 'T12:00:00');
+  return dt.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+}
 
 /* Only surface this when there's something to do about it. A dish that's
    already vegetarian needs no badge -- you know how you cook. */
@@ -962,17 +996,29 @@ function paintHaveCount(){
    sides can share a night. Older plans stored a bare string -- lift those. */
 function normalizePlan(raw){
   const out = {};
-  for (const d of DAYS) {
-    const v = raw?.[d];
+  const upcoming = weekDates();
+  const t = today();
+
+  for (const [key, v] of Object.entries(raw || {})) {
     if (!v) continue;
-    out[d] = (Array.isArray(v) ? v : [v]).filter(Boolean);
-    if (!out[d].length) delete out[d];
+    const ids = (Array.isArray(v) ? v : [v]).filter(Boolean);
+    if (!ids.length) continue;
+
+    let k = key;
+    if (DAYS.includes(key)) {
+      /* An older plan keyed by weekday: attach it to that weekday's next
+         occurrence, counting today as today. */
+      k = upcoming.find(d => DAYS[(new Date(d + 'T12:00:00').getDay() + 6) % 7] === key) || t;
+    }
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(k)) continue;
+    if (k < t) continue;               // days already gone
+    out[k] = [...(out[k] || []), ...ids];
   }
   return out;
 }
 /* Ids planned for a day, dropping any recipe that has since been deleted. */
-function dayItems(d){
-  return (PLAN[d] || []).map(id => APPROVED.find(r => r.id === id)).filter(Boolean);
+function dayItems(key){
+  return (PLAN[key] || []).map(id => APPROVED.find(r => r.id === id)).filter(Boolean);
 }
 
 async function loadPlan(){
@@ -984,6 +1030,7 @@ async function loadPlan(){
    the repo holds by the time the write lands. */
 async function commitPlan(apply){
   apply(PLAN);
+  pruneChecked();
   render();
   return queueWrite('plan.json', async () => {
     const res = await commitShared('plan.json', raw => {
@@ -1004,6 +1051,7 @@ async function commitPlan(apply){
    cached copy. So re-read whenever the app comes back to the foreground, and
    quietly on a timer while it's open. */
 let refreshing = false, lastRefresh = 0;
+
 
 async function refresh({ quiet = true } = {}){
   if (refreshing || !CFG.repo || !CFG.token) return;
@@ -1046,6 +1094,12 @@ window.addEventListener('focus', () => {
 setInterval(() => { if (!document.hidden) refresh(); }, 60000);
 
 /* ==================== nav ==================== */
+/* <main> is the scroll container now, not the window. */
+function scrollTop(){
+  const m = document.querySelector('main');
+  if (m) m.scrollTop = 0;
+}
+
 function setPane(p){
   pane = p;
   store.set('pantry.pane', p);
@@ -1054,7 +1108,7 @@ function setPane(p){
   document.querySelectorAll('#panes button').forEach(b =>
     b.classList.toggle('on', b.dataset.pane === p));
   if (p === 'list') renderList();
-  window.scrollTo(0,0);
+  scrollTop();
 }
 
 function go(v, forcePane){
@@ -1063,7 +1117,7 @@ function go(v, forcePane){
   document.getElementById('v-' + v).classList.add('on');
   const tab = v === 'queue' ? 'home' : v === 'pick' ? 'plan' : v;
   document.querySelectorAll('nav button').forEach(b => b.classList.toggle('on', b.dataset.v === tab));
-  window.scrollTo(0,0);
+  scrollTop();
   if (v === 'plan') setPane(pane);
   if (v === 'pick') renderPick();
 }
@@ -1109,7 +1163,7 @@ function esc(s){
 /* ==================== render ==================== */
 function render(){
   renderHome(); renderColl(); renderWeek(); renderQueue();
-  if (pane === 'list') renderList();
+  if (pane === 'list' && document.getElementById('v-plan').classList.contains('on')) renderList();
 
   const queueBadge = document.getElementById('qn');
   if (queueBadge) {
@@ -1153,8 +1207,7 @@ function rowCard(r, click, flag){
 
 /* ---------- kitchen ---------- */
 function renderHome(){
-  const today = todayKey();
-  const tonightAll = dayItems(today);
+  const tonightAll = dayItems(today());
   const tonight = tonightAll[0];
   const alongside = tonightAll.slice(1);
   const meals = APPROVED.filter(r => r.recipeType !== 'component');
@@ -1206,12 +1259,11 @@ function renderHome(){
   }
 
   /* rest of the week */
-  const rest = DAYS.slice(DAYS.indexOf(today) + 1).concat(DAYS.slice(0, DAYS.indexOf(today)))
-    .flatMap(d => dayItems(d).map(r => ({ d, r }))).slice(0, 3);
+  const rest = weekDates().slice(1).flatMap(d => dayItems(d).map(r => ({ d, r }))).slice(0, 3);
   if (rest.length) {
     h += `<div class="sec-head"><h3>Coming up</h3><button onclick="go('plan','week')">Whole week</button></div>
       <div class="rows">${rest.map(({d,r}) =>
-        rowCard(r, `openRecipe('${r.id}','approved','home','Kitchen')`, d)).join('')}</div>`;
+        rowCard(r, `openRecipe('${r.id}','approved','home','Kitchen')`, dayLabel(d))).join('')}</div>`;
   }
 
   /* Your collection. A vertical list rather than a sideways strip: it shows
@@ -1493,20 +1545,20 @@ async function removeRecipe(){
   } catch (e) { toast(e.message, true); }
 }
 function planIt(){
-  const already = DAYS.find(d => (PLAN[d] || []).includes(current.id));
-  if (already) return toast(`Already planned for ${already}`);
-  pickDay = DAYS.find(d => !(PLAN[d] || []).length) || todayKey();
+  const already = weekDates().find(d => (PLAN[d] || []).includes(current.id));
+  if (already) return toast(`Already planned for ${dayLabel(already)}`);
+  pickDay = weekDates().find(d => !(PLAN[d] || []).length) || today();
   const day = pickDay;
-  setDay(current.id).then(() => toast(`Added to ${day}`));
+  setDay(current.id).then(() => toast(`Added to ${dayLabel(day)}`));
 }
 
 /* ---------- week ---------- */
 function renderWeek(){
-  const today = todayKey();
-  document.getElementById('week').innerHTML = DAYS.map(d => {
+  const t = today();
+  document.getElementById('week').innerHTML = weekDates().map(d => {
     const items = dayItems(d);
-    return `<div class="day ${d===today?'today':''} ${items.length?'filled':''}">
-      <span class="dn">${d}</span>
+    return `<div class="day ${d===t?'today':''} ${items.length?'filled':''}">
+      <span class="dn">${dayLabel(d)}<small>${dateLabel(d)}</small></span>
       <span class="dbody">
         ${items.length
           ? items.map(r => `<span class="dline">
@@ -1523,7 +1575,7 @@ function renderWeek(){
 
 function pick(day){
   pickDay = day;
-  document.getElementById('pick-h').textContent = `What's for ${day}?`;
+  document.getElementById('pick-h').textContent = `What's for ${dayLabel(day)}?`;
   go('pick');
 }
 function renderPick(){
@@ -1558,6 +1610,24 @@ async function removeFromDay(d, id){
   await commitPlan(pl => {
     pl[d] = (pl[d] || []).filter(x => x !== id);
     if (!pl[d].length) delete pl[d];
+  });
+}
+
+/* A ticked-off item should not stay ticked once the meal that needed it is
+   gone -- otherwise next week's list arrives half crossed out. */
+function pruneChecked(){
+  if (!got.size) return;
+  const live = new Set(Object.keys(buildList().shop).concat(Object.keys(buildList().staple)));
+  const stale = [...got].filter(k => !live.has(k));
+  if (!stale.length) return;
+  stale.forEach(k => got.delete(k));
+  queueWrite('list-state.json', async () => {
+    const res = await commitShared('list-state.json', raw => {
+      const set = new Set(raw?.checked || []);
+      stale.forEach(k => set.delete(k));
+      return { checked: [...set].sort() };
+    }, () => ({ checked: [] }));
+    if (res) { got = new Set(res.value.checked); GOT_SHA = res.sha; }
   });
 }
 
@@ -1653,7 +1723,7 @@ function shoppingQty(v, key){
 }
 
 function buildList(){
-  const recipes = DAYS.flatMap(d => dayItems(d));
+  const recipes = weekDates().flatMap(d => dayItems(d));
   const lines = {};
   for (const r of recipes) for (const i of r.ingredients) {
     const key = normItem(i.item);

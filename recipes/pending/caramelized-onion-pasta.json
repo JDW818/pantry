@@ -1,0 +1,56 @@
+{
+  "id": "caramelized-onion-pasta",
+  "title": "Caramelized Onion Pasta",
+  "description": "A pasta dish built around deeply caramelized onions. Full written recipe available on the author's Substack.",
+  "source": {
+    "type": "instagram",
+    "url": "https://www.instagram.com/reel/DZxOE-eRPG6/",
+    "author": "Seafood Network🦞🦐🦀🦑🐙🍤",
+    "addedBy": "JDW818"
+  },
+  "dateAdded": "2026-08-10",
+  "status": "pending",
+  "recipeType": "meal",
+  "componentOf": [],
+  "yield": null,
+  "cuisine": "Italian-inspired",
+  "tags": [
+    "pasta",
+    "caramelized onion",
+    "vegetarian-friendly"
+  ],
+  "mainProtein": "none",
+  "equipment": [],
+  "activeTimeMin": null,
+  "totalTimeMin": null,
+  "serves": null,
+  "vegetarian": {
+    "status": "inherently-veg",
+    "notes": null,
+    "swaps": []
+  },
+  "ingredients": [],
+  "steps": [
+    {
+      "id": "s01",
+      "title": "Retrieve Full Recipe",
+      "text": "The caption provides only the dish title. Visit the author's Substack (link in bio on Instagram) to retrieve the complete ingredient list and method before cooking.",
+      "timerSeconds": null,
+      "unattended": false,
+      "ingredientIds": []
+    }
+  ],
+  "household": {
+    "lastCooked": null,
+    "timesCooked": null,
+    "ratings": {},
+    "kidNotes": null,
+    "inRotation": true
+  },
+  "rawText": "Caramelized Onion Pasta 🍝🔥\n\nFull written recipe is now live on Substack! Link in bio ⬆️🫶🏽💕",
+  "sourceNotes": "Caption was short and transcription is off -- amounts may be missing.",
+  "confidence": "low",
+  "extractionWarnings": [
+    "The Instagram reel caption contains only the dish title and a pointer to an external Substack post. No ingredients, quantities, steps, times, or yield information were present in the provided content. The full recipe must be retrieved from the author's Substack before this record can be completed."
+  ]
+}

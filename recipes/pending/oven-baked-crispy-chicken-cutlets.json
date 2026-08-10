@@ -1,0 +1,254 @@
+{
+  "id": "oven-baked-crispy-chicken-cutlets",
+  "title": "20-Minute Oven Baked Crispy Chicken Cutlets",
+  "description": "No egg or flour needed — chicken cutlets are coated in mayo or Greek yogurt, pressed into a seasoned panko-parmesan crust, and baked at high heat for a fast weeknight dinner with genuine crunch.",
+  "source": {
+    "type": "instagram",
+    "url": "https://www.instagram.com/reel/DY7XjJWubWV/",
+    "author": "Recipes With SG",
+    "addedBy": "JDW818"
+  },
+  "dateAdded": "2026-08-10",
+  "status": "pending",
+  "recipeType": "meal",
+  "componentOf": [],
+  "yield": "8 cutlets",
+  "cuisine": "American",
+  "tags": [
+    "chicken",
+    "baked",
+    "crispy",
+    "quick",
+    "weeknight",
+    "kid-friendly",
+    "panko"
+  ],
+  "mainProtein": "chicken",
+  "equipment": [
+    "sheet pan",
+    "oven",
+    "mixing bowl"
+  ],
+  "activeTimeMin": 10,
+  "totalTimeMin": 30,
+  "serves": 6,
+  "vegetarian": {
+    "status": "needs-parallel-cook",
+    "notes": "Make a separate batch using thick slices of halloumi or portobello mushrooms in place of the chicken. Coat and bake the same way at 425°F for about 10 minutes, flipping once — they can share the other half of the sheet pan.",
+    "swaps": []
+  },
+  "ingredients": [
+    {
+      "id": "i01",
+      "qty": 4,
+      "unit": null,
+      "item": "chicken breasts",
+      "prep": "sliced thin horizontally into 8 cutlets",
+      "note": null,
+      "section": "meat",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i02",
+      "qty": 2,
+      "unit": "cups",
+      "item": "panko breadcrumbs",
+      "prep": null,
+      "note": null,
+      "section": "pantry",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i03",
+      "qty": 0.75,
+      "unit": "cup",
+      "item": "parmesan",
+      "prep": "grated",
+      "note": "¾ cup",
+      "section": "dairy",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i04",
+      "qty": 3.5,
+      "unit": "tbsp",
+      "item": "mayo or plain Greek yogurt",
+      "prep": null,
+      "note": "3–4 tbsp",
+      "section": "other",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i05",
+      "qty": 1.5,
+      "unit": "tsp",
+      "item": "garlic powder",
+      "prep": null,
+      "note": "1½ tsp",
+      "section": "spices",
+      "vague": false,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i06",
+      "qty": 1,
+      "unit": "tsp",
+      "item": "paprika",
+      "prep": null,
+      "note": null,
+      "section": "spices",
+      "vague": false,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i07",
+      "qty": 1,
+      "unit": "tsp",
+      "item": "salt",
+      "prep": null,
+      "note": null,
+      "section": "spices",
+      "vague": false,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i08",
+      "qty": 0.5,
+      "unit": "tsp",
+      "item": "black pepper",
+      "prep": null,
+      "note": "½ tsp",
+      "section": "spices",
+      "vague": false,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i09",
+      "qty": null,
+      "unit": null,
+      "item": "olive oil spray or drizzle",
+      "prep": null,
+      "note": "spray or drizzle over tops before baking",
+      "section": "pantry",
+      "vague": true,
+      "optional": false,
+      "scalable": true
+    }
+  ],
+  "steps": [
+    {
+      "id": "s01",
+      "title": "Preheat Oven",
+      "text": "Preheat oven to 425°F.",
+      "timerSeconds": null,
+      "unattended": true,
+      "ingredientIds": []
+    },
+    {
+      "id": "s02",
+      "title": "Slice Cutlets",
+      "text": "Slice each {i01} in half horizontally to make 8 thin cutlets.",
+      "timerSeconds": null,
+      "unattended": false,
+      "ingredientIds": [
+        "i01"
+      ]
+    },
+    {
+      "id": "s03",
+      "title": "Mix Breadcrumb Coating",
+      "text": "In a bowl mix {i02}, {i03}, {i05}, {i06}, {i07}, and {i08} together.",
+      "timerSeconds": null,
+      "unattended": false,
+      "ingredientIds": [
+        "i02",
+        "i03",
+        "i05",
+        "i06",
+        "i07",
+        "i08"
+      ]
+    },
+    {
+      "id": "s04",
+      "title": "Coat Chicken",
+      "text": "Pat {i01} dry and lightly coat each piece with {i04} — not too thick. Press each cutlet firmly into the breadcrumb mixture to coat well.",
+      "timerSeconds": null,
+      "unattended": false,
+      "ingredientIds": [
+        "i01",
+        "i04",
+        "i02",
+        "i03",
+        "i05",
+        "i06",
+        "i07",
+        "i08"
+      ]
+    },
+    {
+      "id": "s05",
+      "title": "Arrange and Oil",
+      "text": "Place coated cutlets on a parchment-lined sheet pan and spray or drizzle tops with {i09}.",
+      "timerSeconds": null,
+      "unattended": false,
+      "ingredientIds": [
+        "i09"
+      ]
+    },
+    {
+      "id": "s06",
+      "title": "First Bake",
+      "text": "Bake at 425°F for 12–15 minutes. Thin cutlets cook fast — don't overbake.",
+      "timerSeconds": 810,
+      "unattended": true,
+      "ingredientIds": []
+    },
+    {
+      "id": "s07",
+      "title": "Flip Cutlets",
+      "text": "Remove pan from oven and flip each cutlet.",
+      "timerSeconds": null,
+      "unattended": false,
+      "ingredientIds": []
+    },
+    {
+      "id": "s08",
+      "title": "Second Bake",
+      "text": "Return pan to oven and bake another 5–8 minutes.",
+      "timerSeconds": 390,
+      "unattended": true,
+      "ingredientIds": []
+    },
+    {
+      "id": "s09",
+      "title": "Broil for Crispiness",
+      "text": "Broil for 1–2 minutes at the end for extra crispiness. Watch closely.",
+      "timerSeconds": 90,
+      "unattended": false,
+      "ingredientIds": []
+    }
+  ],
+  "household": {
+    "lastCooked": null,
+    "timesCooked": null,
+    "ratings": {},
+    "kidNotes": null,
+    "inRotation": true
+  },
+  "rawText": "20 minute oven baked crispy chicken cutlets, no egg or flour needed!\n\nIngredients:\n4 chicken breasts, sliced thin into 8 cutlets\n2 cups panko breadcrumbs\n¾ cup grated parmesan\n3–4 tbsp mayo or plain Greek yogurt\n1½ tsp garlic powder\n1 tsp paprika\n1 tsp salt\n½ tsp pepper\nOlive oil spray or drizzle\n\nInstructions:\nPreheat oven to 425°F.\nSlice each chicken breast in half horizontally to make 8 thin cutlets.\nPat chicken dry and lightly coat each piece with mayo or yogurt - not too thick.\nIn a bowl mix:\npanko\nparmesan\ngarlic powder\npaprika\nsalt + pepper\nPress chicken into breadcrumb mixture really well.\nPlace on a parchment-lined sheet pan and spray/drizzle tops with olive oil.\nBake:\n12–15 minutes\nflip\nbake another 5–8 minutes\nBroil 1–2 minutes at the end for extra crispiness.\n\nThin cutlets cook fast, so don’t overbake them!",
+  "sourceNotes": "The recipe title says 20 minutes but the bake time alone is 17–23 minutes plus broil; totalTimeMin set to 30 to include prep.",
+  "confidence": "high"
+}

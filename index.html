@@ -1577,13 +1577,28 @@ function timer(id, secs){
 async function approve(){
   const r = current;
   toast('Saving…');
+  const path = `recipes/approved/${r.id}.json`;
   try {
     const clean = { ...r, status:'approved' };
     delete clean._sha; delete clean._folder;
-    await putFile(`recipes/approved/${r.id}.json`, clean);
-    await deleteFile(`recipes/pending/${r.id}.json`, r._sha);
+
+    /* A bare PUT is rejected when the file already exists -- which happens
+       whenever a recipe with this id was approved before, or a previous
+       approval half-finished. Read the current sha, then write. */
+    const res = await commitShared(path, () => clean, () => clean);
+    if (!res) throw new Error('Could not write the recipe');
+
+    /* Only drop the pending copy once the approved one is really there. */
+    if (r._sha) {
+      try { await deleteFile(`recipes/pending/${r.id}.json`, r._sha); }
+      catch { /* already gone, or someone else cleared it */ }
+    }
+
     PENDING = PENDING.filter(x => x.id !== r.id);
-    clean._folder = 'approved'; APPROVED.unshift(clean);
+    const saved = { ...clean, _folder:'approved', _sha:res.sha };
+    const idx = APPROVED.findIndex(x => x.id === r.id);
+    idx >= 0 ? APPROVED[idx] = saved : APPROVED.unshift(saved);
+    await checkSeed();
     render(); go('coll'); toast(`${r.title} saved`);
   } catch (e) { toast(e.message, true); }
 }

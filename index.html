@@ -141,9 +141,9 @@ h1{font-family:var(--fd);font-weight:600;font-size:26px;line-height:1.12;letter-
   transition:background .18s;
 }
 .banner:active{background:rgba(163,194,74,.19)}
-.banner.seed{background:var(--ink-2);border-color:var(--line-2)}
-.banner.seed .n{color:var(--muted)}
-.banner.seed .arw{color:var(--muted)}
+.banner.seed,.banner.quiet{background:var(--ink-2);border-color:var(--line-2)}
+.banner.seed .n,.banner.quiet .n{color:var(--muted)}
+.banner.seed .arw,.banner.quiet .arw{color:var(--muted)}
 .banner .n{
   font-family:var(--fd);font-size:22px;font-weight:600;color:var(--herb);
   line-height:1;min-width:26px;
@@ -324,7 +324,7 @@ ol.steps .amt{font-weight:600;color:#1B1815}
 
 /* ============ week ============ */
 .seg.panes{margin-bottom:18px}
-.seg.panes button{display:flex;align-items:center;justify-content:center;gap:7px}
+.seg.panes button{display:flex;align-items:center;justify-content:center;gap:7px;font-size:13.5px}
 .seg.panes .cnt{
   font-family:var(--fm);font-size:10px;background:var(--ink-4);color:var(--muted);
   border-radius:9px;padding:1px 6px;line-height:15px;
@@ -406,6 +406,24 @@ ol.steps .amt{font-weight:600;color:#1B1815}
 .trio{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
 .trio .field{margin-bottom:14px}
 .trio input{padding:12px 10px;text-align:center}
+/* ---------- suggestion review ---------- */
+.sug{display:flex;gap:12px;align-items:stretch;margin-bottom:9px}
+.sug-day{
+  flex:0 0 74px;font-family:var(--fm);font-size:10.5px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--muted-2);padding-top:15px;line-height:1.3;
+}
+.sug-day small{display:block;font-size:10px;color:var(--dim);text-transform:none;margin-top:2px}
+.sug-card{
+  flex:1;min-width:0;display:flex;align-items:center;gap:12px;text-align:left;
+  background:var(--ink-2);border:1px solid var(--line);border-radius:var(--r);padding:14px 15px;
+}
+.sug-card:active{border-color:var(--line-2)}
+.sug-body{flex:1;min-width:0}
+.sug-body h4{font-family:var(--fd);font-size:16.5px;font-weight:600;margin:0 0 5px;line-height:1.22;letter-spacing:-.012em}
+.sug-body .m{font-size:12.5px;color:var(--muted)}
+.sug-swap{flex:0 0 34px;height:34px;display:grid;place-items:center;color:var(--dim);border-radius:9px;background:var(--ink-3)}
+.sug-swap svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.banner.quiet .n{font-size:18px}
 .sec-dark{
   font-family:var(--fm);font-size:10px;letter-spacing:.12em;text-transform:uppercase;
   color:var(--muted-2);margin:24px 0 10px;padding-top:16px;border-top:1px solid var(--line);
@@ -589,6 +607,17 @@ textarea.ed:focus{border-color:var(--herb);outline:none}
   <div id="detail"></div>
 </section>
 
+<!-- ============ SUGGEST ============ -->
+<section class="view" id="v-suggest">
+  <button class="back" onclick="cancelSuggestion()"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>This week</button>
+  <div class="head"><h1>How about this?</h1><p class="sub">Weighted towards things you haven't made in a while. Tap any night to swap it.</p></div>
+  <div id="suggest-list"></div>
+  <div class="pair" style="margin-top:18px">
+    <button class="btn btn-s" onclick="cancelSuggestion()">Not now</button>
+    <button class="btn btn-p" onclick="acceptSuggestion()">Add to the week</button>
+  </div>
+</section>
+
 <!-- ============ EDIT ============ -->
 <section class="view" id="v-edit">
   <button class="back" onclick="cancelEdit()"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>Cancel</button>
@@ -604,12 +633,13 @@ textarea.ed:focus{border-color:var(--herb);outline:none}
 <section class="view" id="v-plan">
   <div class="head"><h1>This week</h1></div>
   <div class="seg panes" id="panes">
-    <button data-pane="week" onclick="setPane('week')">Plan</button>
-    <button data-pane="list" onclick="setPane('list')">Shopping<span class="cnt" id="list-cnt"></span></button>
+    <button data-pane="week" onclick="setPane('week')">Meals</button>
+    <button data-pane="list" onclick="setPane('list')">Shopping list<span class="cnt" id="list-cnt"></span></button>
   </div>
 
   <div class="pane" id="pane-week">
     <div id="week"></div>
+    <button class="btn btn-s btn-w" style="margin-top:14px" onclick="suggestWeek()">Suggest meals for the empty nights</button>
   </div>
 
   <div class="pane" id="pane-list" hidden>
@@ -644,7 +674,7 @@ textarea.ed:focus{border-color:var(--herb);outline:none}
   </button>
   <button data-v="plan" onclick="go('plan')">
     <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>
-    Plan
+    Week
   </button>
 </nav>
 
@@ -1193,6 +1223,16 @@ function metaBits(r){
   if (r.serves) bits.push(`serves ${r.serves}`);
   return bits.join(' <span class="sep">·</span> ');
 }
+
+function cookedBits(r){
+  const d = daysSinceCooked(r);
+  if (d === null) return '';
+  if (d === 0) return 'cooked today';
+  if (d === 1) return 'cooked yesterday';
+  if (d < 14) return `cooked ${d} days ago`;
+  if (d < 60) return `cooked ${Math.round(d/7)} weeks ago`;
+  return `cooked ${Math.round(d/30)} months ago`;
+}
 function rowCard(r, click, flag){
   const a = vegAction(r);
   return `<button class="row-card" onclick="${click}">
@@ -1234,6 +1274,14 @@ function renderHome(){
       <h2 class="none">${meals.length ? 'Nothing planned — pick something' : 'Nothing planned yet'}</h2>
       <span class="facts"><span class="pill">${meals.length ? 'Tap to choose' : 'Approve a recipe first'}</span></span>
     </button>`;
+    if (meals.length > 3) {
+      h += `<button class="banner quiet" onclick="suggestWeek()">
+        <span class="n">✦</span>
+        <span class="txt">Plan the week for me
+          <small>Picks from what you haven't made lately</small></span>
+        <span class="arw">›</span>
+      </button>`;
+    }
   }
 
   /* Banners sit together under the hero -- both are "something needs you". */
@@ -1264,6 +1312,17 @@ function renderHome(){
     h += `<div class="sec-head"><h3>Coming up</h3><button onclick="go('plan','week')">Whole week</button></div>
       <div class="rows">${rest.map(({d,r}) =>
         rowCard(r, `openRecipe('${r.id}','approved','home','Kitchen')`, dayLabel(d))).join('')}</div>`;
+  }
+
+  /* The point of the whole system is eating a wider range of things, so the
+     home screen argues for that rather than just listing what exists. */
+  const cold = neglected(3);
+  if (cold.length && meals.length > 3) {
+    h += `<div class="sec-head"><h3>Haven't made lately</h3>
+            <button onclick="setFilter('cold'); go('coll')">See all</button></div>
+      <div class="rows">${cold.map(({r, days}) => rowCard(
+        r, `openRecipe('${r.id}','approved','home','Kitchen')`,
+        days === null ? 'never cooked' : `${days} days ago`)).join('')}</div>`;
   }
 
   /* Your collection. A vertical list rather than a sideways strip: it shows
@@ -1313,7 +1372,7 @@ function renderColl(){
 
   const cuisines = [...new Set(APPROVED.map(r => r.cuisine).filter(Boolean))].sort();
   document.getElementById('filters').innerHTML =
-    [['all','All'],['veg','Vegetarian'],['quick','Under 45 min'],
+    [['all','All'],['cold',"Haven't made lately"],['veg','Vegetarian'],['quick','Under 45 min'],
      ...cuisines.map(c => [c, c[0].toUpperCase()+c.slice(1).replace(/-/g,' ')])]
     .map(([k,l]) => `<button class="fchip ${filter===k?'on':''}" onclick="setFilter('${k}')">${esc(l)}</button>`).join('');
 
@@ -1336,6 +1395,7 @@ function matches(r){
   if (filter === 'all')   return true;
   if (filter === 'veg')   return ['inherently-veg','easily-adaptable'].includes(r.vegetarian?.status);
   if (filter === 'quick') return (r.totalTimeMin || 999) <= 45;
+  if (filter === 'cold')  { const d = daysSinceCooked(r); return d === null || d >= 30; }
   return r.cuisine === filter;
 }
 function setFilter(f){ filter = f; renderColl(); }
@@ -1411,6 +1471,7 @@ function renderDetail(){
         ${tt && tt !== at ? `<span class="pill">${tt} total</span>` : ''}
         ${r.serves && r.recipeType !== 'component' ? `<span class="pill">serves ${r.serves}</span>` : ''}
         ${r.yield ? `<span class="pill">${esc(r.yield)}</span>` : ''}
+        ${cookedBits(r) ? `<span class="pill">${esc(cookedBits(r))}</span>` : ''}
       </div>
       ${[r.cuisine, ...(r.equipment||[]).slice(0,2)].filter(Boolean).length
         ? `<p class="crumb">${[r.cuisine, ...(r.equipment||[]).slice(0,2)]
@@ -1439,7 +1500,8 @@ function renderDetail(){
       ? `<div class="pair"><button class="btn btn-d" onclick="reject()">Not for us</button>
            <button class="btn btn-p" onclick="approve()">Save it</button></div>
          <button class="btn btn-s btn-w" style="margin-top:9px" onclick="startEdit()">Edit before saving</button>`
-      : `<div class="pair"><button class="btn btn-s" onclick="planIt()">Add to week</button>
+      : `<button class="btn btn-p btn-w" onclick="markCooked(current)">Made this</button>
+         <div class="pair" style="margin-top:9px"><button class="btn btn-s" onclick="planIt()">Add to week</button>
            <button class="btn btn-s" onclick="startEdit()">Edit</button></div>
          <button class="btn btn-s btn-w" style="margin-top:9px" onclick="removeRecipe()">Remove from collection</button>`}
   `;
@@ -1488,6 +1550,7 @@ function fmtClock(s){
 }
 function timer(id, secs){
   const el = document.getElementById('t-' + id);
+  if (!el) return;
   const label = t => `<svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9 2h6"/></svg>${t}`;
   if (timers[id]) {
     clearInterval(timers[id]); delete timers[id];
@@ -1795,6 +1858,137 @@ function renderList(){
     : (haveBlock || '') + emptyState('cart', 'Nothing to buy yet',
         'Plan a few meals for the week and the list builds itself.');
 }
+
+/* ==================== cooked history ==================== */
+async function markCooked(r){
+  const path = `recipes/approved/${r.id}.json`;
+  const stamp = today();
+  try {
+    const res = await queueWrite(path, () => commitShared(path, raw => {
+      const rec = raw && raw.id ? raw : { ...r };
+      rec.household = rec.household || {};
+      rec.household.lastCooked = stamp;
+      rec.household.timesCooked = (rec.household.timesCooked || 0) + 1;
+      delete rec._sha; delete rec._folder;
+      return rec;
+    }, () => r));
+    if (!res) throw new Error('conflict');
+    const idx = APPROVED.findIndex(x => x.id === r.id);
+    if (idx >= 0) APPROVED[idx] = { ...res.value, _folder:'approved', _sha:res.sha };
+    if (current?.id === r.id) current = APPROVED[idx];
+    render();
+    const n = res.value.household.timesCooked;
+    toast(n > 1 ? `Cooked ${n} times now` : 'Marked as cooked');
+  } catch { toast("Couldn't record that", true); }
+}
+
+function daysSinceCooked(r){
+  const d = r.household?.lastCooked;
+  if (!d) return null;                       // never cooked
+  return Math.round((new Date(today()+'T12:00:00') - new Date(d+'T12:00:00')) / 86400000);
+}
+
+/* Meals you own but haven't made lately -- the reason this app exists. */
+function neglected(limit = 3){
+  return APPROVED
+    .filter(r => r.recipeType !== 'component')
+    .map(r => ({ r, days: daysSinceCooked(r) }))
+    .filter(x => x.days === null || x.days >= 30)
+    .sort((a, b) => (b.days ?? 9999) - (a.days ?? 9999))
+    .slice(0, limit);
+}
+
+/* ==================== suggesting a week ==================== */
+/* Planning is the weekly chore. This does the first pass: pick meals you
+   haven't had recently, don't repeat a cuisine two nights running, and mix
+   in something quick on the nights that need it. You edit from there. */
+
+function scoreForVariety(r, chosen){
+  const days = daysSinceCooked(r);
+  /* Never cooked scores highest -- that's the backlog this exists to clear. */
+  let score = days === null ? 400 : Math.min(days, 365);
+
+  /* Nudge away from repeating a cuisine, and hard-avoid the same one twice. */
+  const sameCuisine = chosen.filter(c => c.cuisine && c.cuisine === r.cuisine).length;
+  score -= sameCuisine * 120;
+
+  /* Prefer things that don't need a separate pan -- a small thumb on the
+     scale, not a rule, since a swap is often just "use vegetable broth". */
+  if (r.vegetarian?.status === 'needs-parallel-cook') score -= 60;
+  if (r.vegetarian?.status === 'not-adaptable') score -= 90;
+
+  /* A little noise so the same five don't come back every single week. */
+  return score + Math.random() * 80;
+}
+
+function suggestMeals(n){
+  const pool = APPROVED.filter(r => r.recipeType !== 'component');
+  const chosen = [];
+  const left = [...pool];
+  while (chosen.length < n && left.length) {
+    left.sort((a, b) => scoreForVariety(b, chosen) - scoreForVariety(a, chosen));
+    chosen.push(left.shift());
+  }
+  return chosen;
+}
+
+/* Only fills empty days -- never overwrites something already planned. */
+async function suggestWeek(){
+  const open = weekDates().filter(d => !(PLAN[d] || []).length);
+  if (!open.length) return toast('Every day already has something');
+
+  const meals = suggestMeals(Math.min(open.length, 5));
+  if (!meals.length) return toast('Approve a few recipes first', true);
+
+  SUGGESTION = open.slice(0, meals.length).map((d, i) => ({ date: d, r: meals[i] }));
+  renderSuggestion();
+  go('suggest');
+}
+
+let SUGGESTION = null;
+
+function renderSuggestion(){
+  document.getElementById('suggest-list').innerHTML = SUGGESTION.map(({date, r}, n) => {
+    const days = daysSinceCooked(r);
+    return `<div class="sug">
+      <div class="sug-day">${dayLabel(date)}<small>${dateLabel(date)}</small></div>
+      <button class="sug-card" onclick="reroll(${n})">
+        <span class="sug-body">
+          <h4>${esc(r.title)}</h4>
+          <span class="m">${[r.cuisine, dur(r.totalTimeMin),
+             days === null ? 'never made' : `${days} days ago`].filter(Boolean).map(esc).join(' · ')}</span>
+        </span>
+        <span class="sug-swap"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-2.6-6.4"/><path d="M21 3v6h-6"/></svg></span>
+      </button>
+    </div>`;
+  }).join('');
+}
+
+/* Tap any night to swap just that one, keeping the rest. */
+function reroll(n){
+  const others = SUGGESTION.filter((_, i) => i !== n).map(x => x.r);
+  const pool = APPROVED.filter(r => r.recipeType !== 'component' &&
+    !others.some(o => o.id === r.id) && r.id !== SUGGESTION[n].r.id);
+  if (!pool.length) return toast('Nothing else to swap in');
+  pool.sort((a, b) => scoreForVariety(b, others) - scoreForVariety(a, others));
+  SUGGESTION[n].r = pool[0];
+  renderSuggestion();
+}
+
+async function acceptSuggestion(){
+  const picks = SUGGESTION;
+  SUGGESTION = null;
+  go('plan','week');
+  await commitPlan(pl => {
+    for (const { date, r } of picks) {
+      pl[date] = pl[date] || [];
+      if (!pl[date].includes(r.id)) pl[date].push(r.id);
+    }
+  });
+  toast(`${picks.length} nights planned`);
+}
+
+function cancelSuggestion(){ SUGGESTION = null; go('plan','week'); }
 
 /* ==================== editing ==================== */
 /* Extraction gets things wrong -- amounts, step wording, times. The review

@@ -392,6 +392,38 @@ ol.steps .amt{font-weight:600;color:#1B1815}
 .have-head .caret.open{transform:rotate(90deg)}
 .muted-row{color:var(--muted-2)}
 .muted-row .nm{font-size:13.5px}
+/* ---------- editor ---------- */
+.trio{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+.trio .field{margin-bottom:14px}
+.trio input{padding:12px 10px;text-align:center}
+.sec-dark{
+  font-family:var(--fm);font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--muted-2);margin:24px 0 10px;padding-top:16px;border-top:1px solid var(--line);
+}
+.erow{display:flex;gap:7px;align-items:center;margin-bottom:6px}
+.erow .eq{flex:0 0 62px;padding:11px 8px;text-align:center;font-size:15px}
+.erow .eu{flex:0 0 84px;padding:11px 6px;font-size:14px}
+.erow .ei{flex:1;min-width:0;padding:11px 12px;font-size:15px}
+.en{
+  width:100%;margin-bottom:14px;padding:9px 12px;font-size:13.5px;
+  background:transparent;border:1px dashed var(--line-2);color:var(--muted);
+}
+.ex{
+  flex:0 0 40px;height:40px;display:grid;place-items:center;color:var(--dim);
+  border-radius:8px;
+}
+.ex:active{color:var(--chile)}
+.ex svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+.estep{margin-bottom:14px}
+.estep-head{display:flex;gap:8px;align-items:center;margin-bottom:6px}
+.en-num{font-family:var(--fm);font-size:11px;color:var(--muted-2);flex:0 0 20px}
+.estep-head .et{flex:1;min-width:0;padding:11px 12px;font-size:15px}
+textarea.ed{
+  width:100%;background:var(--ink-2);border:1px solid var(--line-2);color:var(--text);
+  border-radius:11px;padding:12px 13px;font-family:var(--fb);font-size:16px;
+  line-height:1.5;resize:vertical;
+}
+textarea.ed:focus{border-color:var(--herb);outline:none}
 .progress{
   height:3px;background:var(--ink-3);border-radius:2px;overflow:hidden;margin-bottom:22px;
 }
@@ -544,6 +576,17 @@ ol.steps .amt{font-weight:600;color:#1B1815}
 <section class="view" id="v-detail">
   <button class="back" onclick="back()"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg><span id="back-l">Back</span></button>
   <div id="detail"></div>
+</section>
+
+<!-- ============ EDIT ============ -->
+<section class="view" id="v-edit">
+  <button class="back" onclick="cancelEdit()"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>Cancel</button>
+  <div class="head"><h1>Edit recipe</h1><p class="sub">Saved to the repo, so everyone sees the change.</p></div>
+  <div id="edit"></div>
+  <div class="pair" style="margin-top:20px">
+    <button class="btn btn-s" onclick="cancelEdit()">Cancel</button>
+    <button class="btn btn-p" onclick="saveEdit()">Save changes</button>
+  </div>
 </section>
 
 <!-- ============ PLAN (week + shopping) ============ -->
@@ -1342,9 +1385,11 @@ function renderDetail(){
     </div>
     ${pending
       ? `<div class="pair"><button class="btn btn-d" onclick="reject()">Not for us</button>
-         <button class="btn btn-p" onclick="approve()">Save it</button></div>`
+           <button class="btn btn-p" onclick="approve()">Save it</button></div>
+         <button class="btn btn-s btn-w" style="margin-top:9px" onclick="startEdit()">Edit before saving</button>`
       : `<div class="pair"><button class="btn btn-s" onclick="planIt()">Add to week</button>
-         <button class="btn btn-s" onclick="removeRecipe()">Remove</button></div>`}
+           <button class="btn btn-s" onclick="startEdit()">Edit</button></div>
+         <button class="btn btn-s btn-w" style="margin-top:9px" onclick="removeRecipe()">Remove from collection</button>`}
   `;
 }
 
@@ -1483,12 +1528,23 @@ function pick(day){
 }
 function renderPick(){
   const q = (document.getElementById('pq').value || '').toLowerCase().trim();
-  const meals = APPROVED.filter(r => r.recipeType !== 'component')
-    .filter(r => !q || searchable(r).includes(q));
-  document.getElementById('pick-list').innerHTML = meals.length
-    ? `<div class="rows">${meals.map(r => rowCard(r, `setDay('${r.id}')`)).join('')}</div>`
-    : emptyState('book','Nothing to pick from','Approve a few recipes and they show up here.');
+  const match = r => !q || searchable(r).includes(q);
+  /* Everything approved is addable. Components are grouped rather than hidden:
+     a recipe you approved should never be silently missing from this list. */
+  const meals = APPROVED.filter(r => r.recipeType !== 'component').filter(match);
+  const comps = APPROVED.filter(r => r.recipeType === 'component').filter(match);
+
+  const block = (list, heading) => list.length
+    ? `${heading ? `<div class="sec-head"><h3>${heading}</h3></div>` : ''}
+       <div class="rows">${list.map(r => rowCard(r, `setDay('${r.id}')`)).join('')}</div>`
+    : '';
+
+  const html = block(meals) + block(comps, meals.length ? 'Sides and components' : 'Components');
+  document.getElementById('pick-list').innerHTML = html ||
+    emptyState('book', q ? 'No matches' : 'Nothing to pick from',
+      q ? `Nothing matching "${esc(q)}".` : 'Approve a few recipes and they show up here.');
 }
+
 async function setDay(id){
   const day = pickDay;
   if ((PLAN[day] || []).includes(id)) { toast('Already on that day'); go('plan','week'); return; }
@@ -1668,6 +1724,161 @@ function renderList(){
     ? groups + haveBlock
     : (haveBlock || '') + emptyState('cart', 'Nothing to buy yet',
         'Plan a few meals for the week and the list builds itself.');
+}
+
+/* ==================== editing ==================== */
+/* Extraction gets things wrong -- amounts, step wording, times. The review
+   queue catches it; this is how you fix it. Edits go straight to the repo,
+   merged the same way as everything else. */
+let DRAFT = null;
+
+function startEdit(){
+  DRAFT = JSON.parse(JSON.stringify(current));
+  DRAFT.ingredients ||= [];
+  DRAFT.steps ||= [];
+  renderEdit();
+  go('edit');
+}
+function cancelEdit(){
+  DRAFT = null;
+  renderDetail();
+  go('detail');
+}
+
+const UNITS = ['', 'tsp','tbsp','cup','fl_oz','quart','ml','l','g','kg','oz','lb',
+               'clove','can','bunch','slice','head','sprig','pinch','each'];
+
+function renderEdit(){
+  const d = DRAFT;
+  const opt = (v, sel) => `<option value="${esc(v)}"${v===sel?' selected':''}>${esc(v||'—')}</option>`;
+
+  document.getElementById('edit').innerHTML = `
+    <div class="field">
+      <label for="e-title">Title</label>
+      <input id="e-title" value="${esc(d.title||'')}" oninput="DRAFT.title=this.value">
+    </div>
+    <div class="field">
+      <label for="e-desc">Description</label>
+      <input id="e-desc" value="${esc(d.description||'')}" oninput="DRAFT.description=this.value">
+    </div>
+
+    <div class="trio">
+      <div class="field"><label for="e-active">Hands-on (min)</label>
+        <input id="e-active" type="number" inputmode="numeric" value="${d.activeTimeMin ?? ''}"
+               oninput="DRAFT.activeTimeMin=this.value===''?null:+this.value"></div>
+      <div class="field"><label for="e-total">Total (min)</label>
+        <input id="e-total" type="number" inputmode="numeric" value="${d.totalTimeMin ?? ''}"
+               oninput="DRAFT.totalTimeMin=this.value===''?null:+this.value"></div>
+      <div class="field"><label for="e-serves">Serves</label>
+        <input id="e-serves" type="number" inputmode="numeric" value="${d.serves ?? ''}"
+               oninput="DRAFT.serves=this.value===''?null:+this.value"></div>
+    </div>
+
+    <div class="field">
+      <label for="e-type">Counts as</label>
+      <select id="e-type" onchange="DRAFT.recipeType=this.value">
+        <option value="meal"${d.recipeType!=='component'?' selected':''}>A meal</option>
+        <option value="component"${d.recipeType==='component'?' selected':''}>A component or side</option>
+      </select>
+    </div>
+
+    <p class="sec-dark">Ingredients</p>
+    <div id="e-ings">${d.ingredients.map((i,n) => `
+      <div class="erow">
+        <input class="eq" inputmode="decimal" placeholder="qty" value="${i.qty ?? ''}"
+               oninput="editIng(${n},'qty',this.value===''?null:parseFloat(this.value))">
+        <select class="eu" onchange="editIng(${n},'unit',this.value||null)">
+          ${UNITS.map(u => opt(u, i.unit || '')).join('')}
+        </select>
+        <input class="ei" placeholder="ingredient" value="${esc(i.item||'')}"
+               oninput="editIng(${n},'item',this.value)">
+        <button class="ex" onclick="removeIng(${n})" aria-label="Remove ${esc(i.item||'')}">
+          <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+      </div>
+      <input class="en" placeholder="note — e.g. couple glugs, to taste" value="${esc(i.note||'')}"
+             oninput="editIng(${n},'note',this.value||null)">
+    `).join('')}</div>
+    <button class="btn btn-s btn-w" onclick="addIng()">Add an ingredient</button>
+
+    <p class="sec-dark">Method</p>
+    <div id="e-steps">${d.steps.map((st,n) => `
+      <div class="estep">
+        <div class="estep-head">
+          <span class="en-num">${String(n+1).padStart(2,'0')}</span>
+          <input class="et" placeholder="step title" value="${esc(st.title||'')}"
+                 oninput="editStep(${n},'title',this.value)">
+          <button class="ex" onclick="removeStep(${n})" aria-label="Remove step ${n+1}">
+            <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+        </div>
+        <textarea class="ed" rows="3" placeholder="what to do"
+                  oninput="editStep(${n},'text',this.value)">${esc(st.text||'')}</textarea>
+      </div>`).join('')}</div>
+    <button class="btn btn-s btn-w" onclick="addStep()">Add a step</button>
+
+    <p class="note" style="margin-top:18px">
+      The original text stays untouched under <b>Original as written</b>, so you
+      can always see what the source actually said.
+    </p>`;
+}
+
+function editIng(n, key, val){ DRAFT.ingredients[n][key] = val;
+  if (key === 'qty') DRAFT.ingredients[n].vague = val == null; }
+function editStep(n, key, val){ DRAFT.steps[n][key] = val; }
+
+function addIng(){
+  const used = new Set(DRAFT.ingredients.map(i => i.id));
+  let n = 1; while (used.has(`i${String(n).padStart(2,'0')}`)) n++;
+  DRAFT.ingredients.push({ id:`i${String(n).padStart(2,'0')}`, qty:null, unit:null, item:'',
+    prep:null, note:null, section:'other', vague:true, optional:false, scalable:true });
+  renderEdit();
+}
+function removeIng(n){
+  const gone = DRAFT.ingredients[n];
+  /* A step referencing a deleted ingredient would render an empty gap. */
+  DRAFT.steps.forEach(st => {
+    st.text = (st.text||'').replace(new RegExp(`\\{${gone.id}\\}`,'g'), gone.item || '');
+    st.ingredientIds = (st.ingredientIds||[]).filter(x => x !== gone.id);
+  });
+  DRAFT.ingredients.splice(n,1);
+  renderEdit();
+}
+function addStep(){
+  const used = new Set(DRAFT.steps.map(st => st.id));
+  let n = 1; while (used.has(`s${String(n).padStart(2,'0')}`)) n++;
+  DRAFT.steps.push({ id:`s${String(n).padStart(2,'0')}`, title:'', text:'',
+    timerSeconds:null, unattended:false, ingredientIds:[] });
+  renderEdit();
+}
+function removeStep(n){ DRAFT.steps.splice(n,1); renderEdit(); }
+
+async function saveEdit(){
+  const d = DRAFT;
+  if (!d.title?.trim()) return toast('Give it a title', true);
+  d.ingredients = d.ingredients.filter(i => (i.item||'').trim());
+  d.steps = d.steps.filter(st => (st.text||'').trim() || (st.title||'').trim());
+  d.editedAt = new Date().toISOString().slice(0,10);
+  if (CFG.name) d.editedBy = CFG.name;
+
+  const folder = d._folder || 'approved';
+  const path = `recipes/${folder}/${d.id}.json`;
+  const clean = { ...d };
+  delete clean._sha; delete clean._folder;
+
+  toast('Saving…');
+  try {
+    const res = await queueWrite(path, () => commitShared(path, () => clean, () => clean));
+    if (!res) throw new Error('conflict');
+    const saved = { ...clean, _folder: folder, _sha: res.sha };
+    const list = folder === 'pending' ? PENDING : APPROVED;
+    const idx = list.findIndex(r => r.id === d.id);
+    if (idx >= 0) list[idx] = saved;
+    current = saved;
+    DRAFT = null;
+    render(); renderDetail(); go('detail');
+    toast('Saved');
+  } catch (e) {
+    toast("Couldn't save that — try again", true);
+  }
 }
 
 /* ==================== seeding ==================== */

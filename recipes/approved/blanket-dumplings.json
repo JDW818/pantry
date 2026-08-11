@@ -1,0 +1,330 @@
+{
+  "id": "blanket-dumplings",
+  "title": "Blanket Dumplings",
+  "description": "A fast, ingenious inversion of the classic dumpling: filling is scooped onto a pan, then draped with a wrapper and pinched shut — no folding required. Steamed in chicken broth and finished with chili crisp, soy, and sesame seeds, they come together in under 25 minutes.",
+  "source": {
+    "type": "instagram",
+    "url": "https://www.instagram.com/reel/DbyUJEQBmg7/",
+    "author": "Jeremy | Family Food Vlogs",
+    "addedBy": "JDW818"
+  },
+  "dateAdded": "2026-08-11",
+  "status": "approved",
+  "recipeType": "meal",
+  "componentOf": [],
+  "yield": "18–20 dumplings",
+  "cuisine": "Asian-American",
+  "tags": [
+    "dumplings",
+    "weeknight",
+    "quick",
+    "steamed",
+    "pork",
+    "under-30-minutes"
+  ],
+  "mainProtein": "pork",
+  "equipment": [
+    "large skillet or pan with lid",
+    "mixing bowl",
+    "cookie scoop",
+    "sheet pan or oven-safe pan"
+  ],
+  "activeTimeMin": 15,
+  "totalTimeMin": 25,
+  "serves": 4,
+  "vegetarian": {
+    "status": "needs-parallel-cook",
+    "notes": "Make a separate batch of filling with plant-based ground or finely chopped mushrooms and cabbage; swap oyster sauce for vegetarian oyster sauce or hoisin, and use vegetable broth to steam.",
+    "swaps": [
+      {
+        "ingredientId": "i06",
+        "with": "vegetarian oyster sauce or hoisin sauce"
+      },
+      {
+        "ingredientId": "i12",
+        "with": "vegetable broth"
+      }
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "i01",
+      "qty": 1,
+      "unit": "lb",
+      "item": "ground pork",
+      "prep": null,
+      "note": null,
+      "section": "meat",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i02",
+      "qty": 0.333,
+      "unit": "cup",
+      "item": "green onions",
+      "prep": "thinly sliced",
+      "note": "1/3 cup",
+      "section": "produce",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i03",
+      "qty": 1,
+      "unit": "tbsp",
+      "item": "fresh ginger",
+      "prep": "grated",
+      "note": null,
+      "section": "produce",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i04",
+      "qty": 4,
+      "unit": "cloves",
+      "item": "garlic",
+      "prep": "minced",
+      "note": null,
+      "section": "produce",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i05",
+      "qty": 1,
+      "unit": "tsp",
+      "item": "black pepper",
+      "prep": null,
+      "note": null,
+      "section": "spices",
+      "vague": false,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i06",
+      "qty": 1,
+      "unit": "tbsp",
+      "item": "oyster sauce",
+      "prep": null,
+      "note": null,
+      "section": "pantry",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i07",
+      "qty": 2,
+      "unit": "tbsp",
+      "item": "chili crisp",
+      "prep": null,
+      "note": null,
+      "section": "pantry",
+      "vague": false,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i08",
+      "qty": 3,
+      "unit": "tbsp",
+      "item": "soy sauce",
+      "prep": null,
+      "note": null,
+      "section": "pantry",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i09",
+      "qty": 1.5,
+      "unit": "tsp",
+      "item": "sesame oil",
+      "prep": null,
+      "note": "1½ tsp",
+      "section": "pantry",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i10",
+      "qty": 1,
+      "unit": "tbsp",
+      "item": "rice vinegar",
+      "prep": null,
+      "note": null,
+      "section": "pantry",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i11",
+      "qty": null,
+      "unit": null,
+      "item": "dumpling wrappers",
+      "prep": null,
+      "note": "18–20 wrappers",
+      "section": "frozen",
+      "vague": true,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i12",
+      "qty": 0.25,
+      "unit": "cup",
+      "item": "chicken broth",
+      "prep": null,
+      "note": null,
+      "section": "pantry",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i13",
+      "qty": null,
+      "unit": null,
+      "item": "avocado oil",
+      "prep": null,
+      "note": "drizzle; no amount given in source",
+      "section": "pantry",
+      "vague": true,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i14",
+      "qty": null,
+      "unit": null,
+      "item": "soy sauce",
+      "prep": null,
+      "note": "for topping; amount to taste",
+      "section": "pantry",
+      "vague": true,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i15",
+      "qty": null,
+      "unit": null,
+      "item": "chili crisp",
+      "prep": null,
+      "note": "for topping; amount to taste",
+      "section": "pantry",
+      "vague": true,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i16",
+      "qty": null,
+      "unit": null,
+      "item": "green onions",
+      "prep": "sliced",
+      "note": "for topping; amount to taste",
+      "section": "produce",
+      "vague": true,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i17",
+      "qty": null,
+      "unit": null,
+      "item": "sesame seeds",
+      "prep": null,
+      "note": "for topping; amount to taste",
+      "section": "pantry",
+      "vague": true,
+      "optional": false,
+      "scalable": false
+    }
+  ],
+  "steps": [
+    {
+      "id": "s01",
+      "title": "Mix the filling",
+      "text": "In a bowl, combine {i01}, {i02}, {i03}, {i04}, {i06}, {i05}, {i07}, {i08}, {i09}, and {i10}. Mix until fully combined.",
+      "timerSeconds": null,
+      "unattended": false,
+      "ingredientIds": [
+        "i01",
+        "i02",
+        "i03",
+        "i04",
+        "i05",
+        "i06",
+        "i07",
+        "i08",
+        "i09",
+        "i10"
+      ]
+    },
+    {
+      "id": "s02",
+      "title": "Scoop filling onto pan",
+      "text": "Use a cookie scoop to place mounds of the filling onto a pan, leaving enough space between each one.",
+      "timerSeconds": null,
+      "unattended": false,
+      "ingredientIds": [
+        "i01"
+      ]
+    },
+    {
+      "id": "s03",
+      "title": "Drape and seal wrappers",
+      "text": "Place one {i11} over each mound of filling and pinch the edges down around the filling to seal.",
+      "timerSeconds": null,
+      "unattended": false,
+      "ingredientIds": [
+        "i11"
+      ]
+    },
+    {
+      "id": "s04",
+      "title": "Steam until cooked through",
+      "text": "Drizzle {i13} over the dumplings, pour in {i12}, cover the pan, and steam for 10 minutes, or until the pork reaches an internal temperature of 160°F.",
+      "timerSeconds": 600,
+      "unattended": true,
+      "ingredientIds": [
+        "i13",
+        "i12"
+      ]
+    },
+    {
+      "id": "s05",
+      "title": "Top and serve",
+      "text": "Top with {i14}, {i15}, {i16}, and {i17} before serving. Optionally serve with a side of rice.",
+      "timerSeconds": null,
+      "unattended": false,
+      "ingredientIds": [
+        "i14",
+        "i15",
+        "i16",
+        "i17"
+      ]
+    }
+  ],
+  "household": {
+    "lastCooked": null,
+    "timesCooked": null,
+    "ratings": {},
+    "kidNotes": null,
+    "inRotation": true
+  },
+  "rawText": "CAPTION (as written by the author -- trust these amounts):\nBlanket Dumplings 🥟\n\nComment “Recipe” and I’ll send you the full recipe for free.\n\nThese are by far the quickest and easiest way to make homemade dumplings, and you can have them on the table in under 25 minutes.\n\nIf you’re always looking for new dinner ideas, you’re in the right place. That’s why I share simple and affordable meals that save you time and money.\n\nFollow for more Weeknight Staples.\n\nIngredients\n\n• 1 lb ground pork\n• 1/3 cup green onions, thinly sliced\n• 1 tbsp fresh ginger, grated\n• 4 garlic cloves, minced\n• 1 tbsp oyster sauce\n• 1 tsp black pepper\n• 2 tbsp chili crisp\n• 3 tbsp soy sauce\n• 1½ tsp sesame oil\n• 1 tbsp rice vinegar\n• 18–20 dumpling wrappers\n• 1/4 cup chicken broth\n• Avocado oil\n\nFor Topping\n\n• Soy sauce\n• Chili crisp\n• Green onions\n• Sesame seeds\n\nInstructions\n\n1. In a bowl, combine the ground pork, green onions, grated ginger, garlic, oyster sauce, black pepper, chili crisp, soy sauce, sesame oil, and rice vinegar. Mix until fully combined.\n2. Use a cookie scoop to place mounds of the filling onto a sheet pan, leaving enough space between each one.\n3. Place a dumpling wrapper over each mound and pinch the edges around the filling to seal.\n4. Drizzle with avocado oil, pour in the chicken broth, cover, and steam for 10 minutes, or until the pork reaches an internal temperature of 160°F.\n5. Top with soy sauce, chili crisp, green onions, and sesame seeds before serving with a side of rice.\n\n#dumplings #blanketdumpling #easydinners\n\nSPOKEN TRANSCRIPT (what they say in the video -- the method is usually here, and often includes steps the caption omits):\nThis is episode 37 of Weeknight Staples, easy dinners that save you time and money. Tonight, we're making the famous blanket dumplings. These definitely live up to the hype in our by far the quickest and easiest way to make dumplings. Start by mixing the ground pork, green onions, ginger, garlic, oyster sauce, pepper, chili crisps, soy sauce, sesame oil, and rice vinegar. Then use a cookie scoop to place the filling onto a pan, then cover each one with a dumpling wrapper and pinch the edges to seal. Trissel with avocado oil, pour over the chicken broth, cover, and steam for 10 minutes. If you're always looking for new dinner ideas, that's why I share simple and affordable meals that help you eat better and spend less. Follow for more Weeknight Staples.",
+  "sourceNotes": "Avocado oil has no quantity in either source; marked vague. Dumpling wrapper count is given as a range (18–20) in the caption; stored in note rather than as a derived single number. Built from the caption and the voiceover together -- check amounts before cooking.",
+  "confidence": "medium"
+}

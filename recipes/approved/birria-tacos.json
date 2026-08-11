@@ -1,0 +1,418 @@
+{
+  "id": "birria-tacos",
+  "title": "Birria Tacos",
+  "description": "Braised chuck roast birria with a blended guajillo-ancho-arbol chili consommé, served in cheese-crisped corn tortillas dipped in the braising liquid, topped with onion and cilantro.",
+  "source": {
+    "type": "instagram",
+    "url": "https://www.instagram.com/reel/Da1HsSHujRX/",
+    "author": "Vincenzo Patriarca",
+    "addedBy": "JDW818"
+  },
+  "dateAdded": "2026-08-11",
+  "status": "approved",
+  "recipeType": "meal",
+  "componentOf": [],
+  "yield": null,
+  "cuisine": "Mexican",
+  "tags": [
+    "birria",
+    "tacos",
+    "beef",
+    "braise",
+    "weekend",
+    "consommé",
+    "crispy"
+  ],
+  "mainProtein": "beef",
+  "equipment": [
+    "large heavy pot or Dutch oven",
+    "blender",
+    "fine mesh strainer",
+    "cast iron or carbon steel pan"
+  ],
+  "activeTimeMin": 60,
+  "totalTimeMin": 310,
+  "serves": 6,
+  "vegetarian": {
+    "status": "not-adaptable",
+    "notes": "Beef chuck is structural — the braise and consommé are built entirely around it. No vegetarian adaptation is practical for this dish.",
+    "swaps": []
+  },
+  "ingredients": [
+    {
+      "id": "i01",
+      "qty": 4,
+      "unit": "lb",
+      "item": "beef chuck roast",
+      "prep": "cut into smaller cubes",
+      "note": null,
+      "section": "meat",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i02",
+      "qty": null,
+      "unit": null,
+      "item": "kosher salt",
+      "prep": null,
+      "note": "used liberally to season the cubed chuck; source says 'heavily salted'",
+      "section": "pantry",
+      "vague": true,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i03",
+      "qty": null,
+      "unit": null,
+      "item": "black pepper",
+      "prep": null,
+      "note": "used liberally to season the cubed chuck; source says 'heavily… peppered'",
+      "section": "spices",
+      "vague": true,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i04",
+      "qty": null,
+      "unit": null,
+      "item": "high smoke point oil",
+      "prep": null,
+      "note": "source says 'some high smoke point oil'; quantity not given",
+      "section": "pantry",
+      "vague": true,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i05",
+      "qty": 1,
+      "unit": null,
+      "item": "white onion",
+      "prep": "cut up",
+      "note": null,
+      "section": "produce",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i06",
+      "qty": 3,
+      "unit": null,
+      "item": "roma tomatoes",
+      "prep": "cut up",
+      "note": null,
+      "section": "produce",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i07",
+      "qty": 8,
+      "unit": "cloves",
+      "item": "garlic",
+      "prep": null,
+      "note": null,
+      "section": "produce",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i08",
+      "qty": 10,
+      "unit": null,
+      "item": "dried guajillo chilies",
+      "prep": "stems removed, seeded and cleaned",
+      "note": null,
+      "section": "pantry",
+      "vague": false,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i09",
+      "qty": 5,
+      "unit": null,
+      "item": "dried ancho chilies",
+      "prep": "stems removed, seeded and cleaned",
+      "note": "transcript says 'ounce show' — interpreted as ancho; caption omits chilies detail so transcript is the sole source for variety and count",
+      "section": "pantry",
+      "vague": false,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i10",
+      "qty": 4,
+      "unit": null,
+      "item": "dried arbol chilies",
+      "prep": "stems removed, seeded and cleaned",
+      "note": null,
+      "section": "pantry",
+      "vague": false,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i11",
+      "qty": 3,
+      "unit": null,
+      "item": "bay leaves",
+      "prep": null,
+      "note": null,
+      "section": "pantry",
+      "vague": false,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i12",
+      "qty": 0.5,
+      "unit": null,
+      "item": "Mexican cinnamon stick (canela)",
+      "prep": null,
+      "note": "source says 'half of Mexican cinnamon stick'",
+      "section": "spices",
+      "vague": false,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i13",
+      "qty": 1,
+      "unit": "cup",
+      "item": "vegetable-chili cooking broth",
+      "prep": null,
+      "note": "reserved from boiling the vegetables and chilies; 1 cup retained for blending, remainder discarded",
+      "section": "other",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i14",
+      "qty": 2,
+      "unit": "cups",
+      "item": "beef broth",
+      "prep": null,
+      "note": null,
+      "section": "canned",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i15",
+      "qty": 0.25,
+      "unit": "cup",
+      "item": "white vinegar",
+      "prep": null,
+      "note": "source says 'about a fourth cup'",
+      "section": "pantry",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i16",
+      "qty": null,
+      "unit": null,
+      "item": "seasoning blend",
+      "prep": null,
+      "note": "source refers to 'our seasoning blend' without specifying ingredients or amounts; likely a Mexican spice mix",
+      "section": "spices",
+      "vague": true,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i17",
+      "qty": null,
+      "unit": null,
+      "item": "corn tortillas",
+      "prep": null,
+      "note": "quantity not given; source says 'take your corn tortillas'",
+      "section": "bakery",
+      "vague": true,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i18",
+      "qty": null,
+      "unit": null,
+      "item": "mozzarella cheese",
+      "prep": null,
+      "note": "author notes Oaxacan cheese is traditional; mozzarella used as substitute",
+      "section": "dairy",
+      "vague": true,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i19",
+      "qty": null,
+      "unit": null,
+      "item": "white onion",
+      "prep": "finely chopped",
+      "note": "for taco topping; quantity not given",
+      "section": "produce",
+      "vague": true,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i20",
+      "qty": null,
+      "unit": null,
+      "item": "fresh cilantro",
+      "prep": "chopped",
+      "note": "for taco topping; quantity not given",
+      "section": "produce",
+      "vague": true,
+      "optional": false,
+      "scalable": true
+    }
+  ],
+  "steps": [
+    {
+      "id": "s01",
+      "title": "Season and cube the chuck",
+      "text": "Cut {i01} into smaller cubes. Season all sides heavily with {i02} and {i03}.",
+      "timerSeconds": null,
+      "unattended": false,
+      "ingredientIds": [
+        "i01",
+        "i02",
+        "i03"
+      ]
+    },
+    {
+      "id": "s02",
+      "title": "Sear the beef in batches",
+      "text": "Heat {i04} in a large heavy pot over medium-high heat until shimmering. Working in batches to avoid crowding, sear {i01} on all sides until deeply browned, about 2–3 minutes per side. Remove seared beef and set aside; leave the brown bits in the pot. Repeat until all beef is seared.",
+      "timerSeconds": 150,
+      "unattended": false,
+      "ingredientIds": [
+        "i01",
+        "i04"
+      ]
+    },
+    {
+      "id": "s03",
+      "title": "Prep and clean dried chilies",
+      "text": "Slice the stems off {i08}, {i09}, and {i10}. Run a finger down each chili to open it up and shake or scrape out all the seeds until each is clean.",
+      "timerSeconds": null,
+      "unattended": false,
+      "ingredientIds": [
+        "i08",
+        "i09",
+        "i10"
+      ]
+    },
+    {
+      "id": "s04",
+      "title": "Boil vegetables and chilies",
+      "text": "In the same pot (no need to clean it), add {i05}, {i06}, {i07}, {i08}, {i09}, {i10}, {i11}, and {i12}. Pour in enough water to cover everything. Bring to a boil and cook for about 10 minutes until all the vegetables and chilies are soft.",
+      "timerSeconds": 600,
+      "unattended": false,
+      "ingredientIds": [
+        "i05",
+        "i06",
+        "i07",
+        "i08",
+        "i09",
+        "i10",
+        "i11",
+        "i12"
+      ]
+    },
+    {
+      "id": "s05",
+      "title": "Blend the chili sauce",
+      "text": "Remove everything from the pot and transfer to a blender — discard the bay leaves ({i11}). Reserve {i13} from the cooking liquid; discard the rest. Add {i13}, {i14}, and {i15} to the blender. Blend until completely smooth.",
+      "timerSeconds": null,
+      "unattended": false,
+      "ingredientIds": [
+        "i11",
+        "i13",
+        "i14",
+        "i15"
+      ]
+    },
+    {
+      "id": "s06",
+      "title": "Strain sauce over the beef",
+      "text": "Return the seared {i01} to the pot. Strain the blended chili sauce through a fine mesh strainer over the beef, pressing with a spoon to extract all the liquid. Add {i16} and stir to combine.",
+      "timerSeconds": null,
+      "unattended": false,
+      "ingredientIds": [
+        "i01",
+        "i16"
+      ]
+    },
+    {
+      "id": "s07",
+      "title": "Braise covered on low",
+      "text": "Bring the pot to a boil, then reduce heat to low. Cover and simmer for 3.5 to 4 hours, until the meat is completely fall-apart tender. A bright red consommé layer will form on top.",
+      "timerSeconds": 13500,
+      "unattended": true,
+      "ingredientIds": []
+    },
+    {
+      "id": "s08",
+      "title": "Shred the beef and soak",
+      "text": "Remove the beef and shred it — you can use your hands or two forks. Return the shredded meat to the broth and let it sit for at least a couple of minutes (longer is better) so it soaks up the consommé flavor.",
+      "timerSeconds": null,
+      "unattended": false,
+      "ingredientIds": [
+        "i01"
+      ]
+    },
+    {
+      "id": "s09",
+      "title": "Dip tortillas and fill",
+      "text": "Skim the bright red consommé fat from the top of the broth into a separate bowl (this is for dipping). Dip each {i17} into the fat/consommé layer, then lay in a hot pan. Add {i18} to one half, then pile on shredded {i01}, chopped {i19}, and {i20}. Fold the tortilla over.",
+      "timerSeconds": null,
+      "unattended": false,
+      "ingredientIds": [
+        "i17",
+        "i18",
+        "i01",
+        "i19",
+        "i20"
+      ]
+    },
+    {
+      "id": "s10",
+      "title": "Pan-fry until crispy",
+      "text": "Cook the filled tacos in a pan over medium to medium-high heat, flipping once, until both sides are golden and crispy and the cheese is melted. Serve immediately with consommé on the side for dipping.",
+      "timerSeconds": null,
+      "unattended": false,
+      "ingredientIds": [
+        "i17",
+        "i18"
+      ]
+    }
+  ],
+  "household": {
+    "lastCooked": null,
+    "timesCooked": null,
+    "ratings": {},
+    "kidNotes": null,
+    "inRotation": true
+  },
+  "rawText": "CAPTION (as written by the author -- trust these amounts):\nThe much requested recipe for my Birria Tacos is now up on Substack! Comment “Recipe” and I’ll send it to you!! #cookwithme #birria #foodinstagram #marriedcouple #cooking\n\nSPOKEN TRANSCRIPT (what they say in the video -- the method is usually here, and often includes steps the caption omits):\nBut today I'm gonna be showing you guys how to make whatever my wife's craving. I haven't stopped thinking about the Bury Attack that was you made since her daughter's birthday. So I'm gonna have you make them again for me tonight. Sounds good. I owe you guys the recipe for that one anyways. No, I don't really think Selena pronounced that properly. So yell at her. You pronounce. I think you're saying like Burya. It's not bear meat. It's beef. Just make the damn food. Then nice thing about these is that they're actually super easy to make. They just take a little bit of time. First thing we're gonna do is take four pounds of our bear meat. I'm gonna cut it down. Actually a chock roast, obviously. It's gonna get this cut up into smaller cubes. Get these all heavily salted and peppered up. Out of our pot over medium high heat, we're gonna add in some high smoke point oil. Gonna sear all of the chock roast off in batches. You don't necessarily have to do this. Getting that nice sear on the outside of the meat is gonna give it a lot of flavor. It'll also leave a lot of those brown bits in the pot to eat about two to three minutes per side. Just remove these all from the pot and stuff them to the side. All right, now we'll get all of the vegetables that we need cut up. I'm doing one onion, three roma tomatoes, and eight cloves of garlic. Also did all of my dry Mexican chilies, did 10 guajillo, five ounce show and four arbols. Just slice the stems off. Then you can kind of run your finger down it to open it up and dump all the seeds out until they're nice and clean like this. Out of the same pot, we're gonna add in all of the vegetables of our dried chilies. We'll also add in three bay leaves and half of Mexican cinnamon stick. People are asking me why this cinnamon stick is Mexican. And honestly, I don't really know. So somebody let me know. We'll hit it with enough water to cover it up. Bring this up to a boil and let it go for about 10 minutes so everything's nice and soft. We're gonna remove everything and put it into a blender. Set the bay leaf. So add in one cup of the broth from here. You can get rid of the rest of it. Add in two cups of beef broth. About a fourth cup of white vinegar. We'll get this blended up. Add all the beef back in. We'll strain in our little veggie smoothie. And kind of just go through with a spoon to make sure you get all the liquid out. Final thing that we'll add in is our seasoning blend. And we'll bring it up to a boil. Turn the heat down to low. Let it simmer covered for about three and a half to four hours. See guys in a little bit. When you're done, you should have that nice bright red consummate on the top and the meat should be full of part tenders. I literally strutted up all of mine with my hands. Kind of burnt my fingers in the process. But then you just add it back into that broth. Let it sit for a couple minutes. Ideally more so it can soak in all that flavor. Then you'll take your corn tortillas, dip them in the top of the broth, hit them with some cheese, your beer, some chopped onions and cilantro and get those pan fried until they're nice and crispy. By the way, you're supposed to use well, hawk and cheese for this, but I use mozzarella. It's a pretty close substitute. And you can just serve it with some consummate on the side. We're going to give them a taste. It looks so freaking good. Dip it in the consummate. Those are in 10. Just my green one of my top fives now. I agree. Did you see the flavor fall? Just how like it? Give them a try for yourself.",
+  "sourceNotes": "The transcript's '5 ounce show' is almost certainly 'ancho' — a common ASR mishearing; interpreted accordingly. The 'seasoning blend' mentioned in the transcript is never specified by ingredient or amount in either source; included as a vague ingredient. The full recipe lives on the author's Substack; this extraction is from the reel alone and may be missing seasoning blend details. Built from the caption and the voiceover together -- check amounts before cooking.",
+  "confidence": "medium",
+  "extractionWarnings": [
+    "The 'seasoning blend' added before braising is referenced by the speaker but never described — ingredients, quantities, and composition are entirely unknown from this source.",
+    "Chili variety 'ancho' is inferred from ASR transcription 'ounce show'; could be a different dried chili."
+  ]
+}

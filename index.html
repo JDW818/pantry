@@ -187,14 +187,18 @@ h1{font-family:var(--fd);font-weight:600;font-size:27px;line-height:1.12;letter-
   padding:14px 15px;transition:border-color .18s,transform .12s;
 }
 .row-card:active{transform:scale(.993);border-color:var(--line-2)}
-.row-card .stat{width:7px;height:7px;border-radius:50%;background:var(--herb);flex-shrink:0}
-.row-card .stat.none{background:transparent;width:0;margin-left:-13px}
-.row-card .stat.warn{background:var(--ochre)} .row-card .stat.no{background:var(--chile)}
+.row-card .stat{
+  flex:0 0 7px;width:7px;height:7px;border-radius:50%;background:var(--herb);
+  align-self:flex-start;margin-top:7px;
+}
+.row-card .stat.none{background:transparent}
+.row-card .stat.warn{background:var(--ochre)}
+.row-card .stat.no{background:var(--chile)}
 .row-card .body{flex:1;min-width:0}
 .row-card h4{font-family:var(--fd);font-size:19px;font-weight:600;line-height:1.24;margin:0 0 5px;letter-spacing:-.012em}
 .row-card .m{font-size:15px;color:var(--muted);display:flex;flex-wrap:wrap;gap:5px 9px;align-items:center}
 .row-card .m .sep{color:var(--ink-5)}
-.row-card .flag{color:var(--ochre)}
+.row-card .flag{color:var(--ochre);display:block;margin-top:3px}
 .row-card .chev{color:var(--dim);flex-shrink:0}
 .row-card .chev svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 
@@ -1328,7 +1332,8 @@ function rowCard(r, click, flag){
     ${a ? `<span class="stat ${a.tone}"></span>` : '<span class="stat none"></span>'}
     <span class="body">
       <h4>${esc(r.title)}</h4>
-      <span class="m">${metaBits(r)}${flag ? ` <span class="sep">·</span> <span class="flag">${esc(flag)}</span>` : ''}</span>
+      <span class="m">${metaBits(r)}</span>
+      ${flag ? `<span class="m flag">${esc(flag)}</span>` : ''}
     </span>
     <span class="chev"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></span>
   </button>`;

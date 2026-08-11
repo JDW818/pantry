@@ -563,6 +563,11 @@ def _strip_html(html: str) -> str:
 # --------------------------------------------------------------- social
 
 def _fetch_social(url: str, kind: str, allow_transcription: bool) -> Fetched:
+    if "/stories/" in url:
+        raise ValueError(
+            "Instagram stories need a logged-in session and disappear after 24 "
+            "hours, so nothing here can fetch one. Screenshot it and attach the "
+            "image to an issue instead -- that path reads recipes fine.")
     meta = _ytdlp_meta(url)
     caption = (meta.get("description") or "").strip()
     author = meta.get("uploader") or meta.get("channel")
@@ -596,17 +601,38 @@ def _ytdlp_meta(url: str) -> dict:
     return json.loads(out.stdout)
 
 
+def _load_whisper():
+    """Installed on demand. It drags in torch (a few hundred MB), so paying
+    that cost on every run to serve the minority of posts with a thin caption
+    would be silly -- we only reach here when there's nothing else to read."""
+    try:
+        import whisper
+        return whisper
+    except ImportError:
+        pass
+
+    trace("caption too short -- installing whisper to read the audio (slow, one-off per run)")
+    subprocess.run([sys.executable, "-m", "pip", "install", "--quiet", "openai-whisper"],
+                   check=True, timeout=900)
+    import whisper
+    return whisper
+
+
 def _transcribe(url: str) -> str:
     """Audio only -- much smaller and faster than pulling the video."""
     with tempfile.TemporaryDirectory() as tmp:
+        trace("downloading audio")
         subprocess.run(
             ["yt-dlp", "-f", "bestaudio", "-x", "--audio-format", "mp3",
              "-o", f"{tmp}/a.%(ext)s", "--no-warnings", url],
             capture_output=True, timeout=240, check=True)
 
-        import whisper
+        whisper = _load_whisper()
+        trace("transcribing")
         model = whisper.load_model("base")
-        return model.transcribe(f"{tmp}/a.mp3")["text"].strip()
+        text = model.transcribe(f"{tmp}/a.mp3")["text"].strip()
+        trace(f"transcript: {len(text)} chars")
+        return text
 
 
 # ==========================================================================

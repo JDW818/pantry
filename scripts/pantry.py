@@ -563,32 +563,57 @@ def _strip_html(html: str) -> str:
 # --------------------------------------------------------------- social
 
 def _fetch_social(url: str, kind: str, allow_transcription: bool) -> Fetched:
+    """Caption AND audio, always -- they carry different halves of the recipe.
+
+    This used to skip transcription whenever the caption looked long enough,
+    on the assumption that a long caption was a complete one. For a reel that
+    is exactly backwards: the caption is usually the ingredient list, and the
+    method lives in the voiceover. Steps like "boil the limes first" appear
+    only in the audio, and a caption-length check will never catch that.
+    """
     if "/stories/" in url:
         raise ValueError(
             "Instagram stories need a logged-in session and disappear after 24 "
             "hours, so nothing here can fetch one. Screenshot it and attach the "
             "image to an issue instead -- that path reads recipes fine.")
+
     meta = _ytdlp_meta(url)
     caption = (meta.get("description") or "").strip()
     author = meta.get("uploader") or meta.get("channel")
-
-    if len(caption) >= CAPTION_MIN_CHARS:
-        return Fetched(text=caption, source_type=kind, url=url, author=author)
+    trace(f"caption: {len(caption)} chars")
 
     if not allow_transcription:
-        return Fetched(text=caption, source_type=kind, url=url, author=author,
-                       note="Caption was short and transcription is off -- amounts may be missing.")
+        if len(caption) < CAPTION_MIN_CHARS:
+            note = "Transcription is off and the caption is thin -- steps may be missing."
+        else:
+            note = ("Transcription is off, so anything said only in the video "
+                    "was not captured.")
+        return Fetched(text=caption, source_type=kind, url=url, author=author, note=note)
 
     try:
         transcript = _transcribe(url)
     except Exception as e:
-        return Fetched(text=caption, source_type=kind, url=url, author=author,
-                       note=f"Caption was short and transcription failed ({e}). Amounts may be missing.")
+        trace(f"transcription failed: {e}")
+        return Fetched(
+            text=caption, source_type=kind, url=url, author=author,
+            note=(f"Could not read the audio ({e}), so this is the caption only. "
+                  "Any step that was only spoken is missing."))
 
-    combined = f"CAPTION:\n{caption}\n\nSPOKEN TRANSCRIPT:\n{transcript}"
+    if not transcript:
+        return Fetched(text=caption, source_type=kind, url=url, author=author,
+                       note="No speech found in the video; caption only.")
+
+    combined = (
+        "CAPTION (as written by the author -- trust these amounts):\n"
+        f"{caption}\n\n"
+        "SPOKEN TRANSCRIPT (what they say in the video -- the method is usually "
+        "here, and often includes steps the caption omits):\n"
+        f"{transcript}"
+    )
     return Fetched(text=combined, source_type=kind, url=url, author=author,
                    used_transcript=True,
-                   note="Reconstructed partly from spoken audio -- check amounts before cooking.")
+                   note="Built from the caption and the voiceover together -- "
+                        "check amounts before cooking.")
 
 
 def _ytdlp_meta(url: str) -> dict:
@@ -829,8 +854,21 @@ def _build_user_message(f: Fetched, added_by: str) -> list[dict]:
     if f.author:
         head.append(f"Author: {f.author}")
     if f.used_transcript:
-        head.append("NOTE: partly reconstructed from spoken audio. "
-                    "Set confidence to low and be conservative with amounts.")
+        head.append(
+            "NOTE: this has TWO sources -- a written caption and a transcript of "
+            "the voiceover. Use both. They cover different things:\n"
+            "- Amounts and ingredient names: trust the CAPTION. Spoken numbers "
+            "are easy to mishear.\n"
+            "- Method and technique: mostly in the TRANSCRIPT. Cooks routinely "
+            "describe steps out loud that never make it into the caption -- "
+            "soaking, boiling, resting, straining, blooming spices. Every such "
+            "step must appear in your steps array.\n"
+            "- If the transcript mentions an ingredient the caption omits, include "
+            "it with qty null and vague true rather than guessing an amount.\n"
+            "- Where the two genuinely conflict, follow the caption and say so in "
+            "sourceNotes.\n"
+            "Set confidence to medium (not high) since speech recognition is "
+            "imperfect.")
     if f.images:
         head.append(
             "NOTE: the recipe is in the attached image. Transcribe it exactly as "
@@ -1119,7 +1157,8 @@ def _report(recipe: dict, result, fetched) -> str:
         lines += ["", f"> {recipe['sourceNotes']}"]
 
     if fetched.used_transcript:
-        lines += ["", "Reconstructed partly from spoken audio. Check the amounts."]
+        lines += ["", "Built from the caption and the video's voiceover together. "
+                      "Spoken amounts are easy to mishear -- check them."]
 
     if recipe.get("extractionErrors"):
         lines += ["", "**This one didn't pass validation.** It's in the queue so you "

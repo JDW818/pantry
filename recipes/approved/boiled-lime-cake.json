@@ -1,0 +1,272 @@
+{
+  "id": "boiled-lime-cake",
+  "title": "Boiled Lime Cake with Lime Icing",
+  "description": "Whole limes are boiled skin-on for 10 minutes, then blended into a batter with eggs, sugar, milk, and neutral oil. The result is an intensely limey snack cake finished with a simple powdered-sugar glaze.",
+  "source": {
+    "type": "instagram",
+    "url": "https://www.instagram.com/reel/DbybTr4ikaE/",
+    "author": "Jose Xiloj",
+    "addedBy": "JDW818"
+  },
+  "dateAdded": "2026-08-11",
+  "status": "approved",
+  "recipeType": "meal",
+  "componentOf": [],
+  "yield": "one cake",
+  "cuisine": "American",
+  "tags": [
+    "cake",
+    "citrus",
+    "lime",
+    "baking",
+    "snack cake",
+    "icing"
+  ],
+  "mainProtein": "eggs",
+  "equipment": [
+    "mixing bowls",
+    "saucepan",
+    "blender or food processor",
+    "baking pan",
+    "oven"
+  ],
+  "activeTimeMin": 25,
+  "totalTimeMin": 90,
+  "serves": 8,
+  "vegetarian": {
+    "status": "inherently-veg",
+    "notes": "",
+    "swaps": []
+  },
+  "ingredients": [
+    {
+      "id": "i01",
+      "qty": 2,
+      "unit": null,
+      "item": "limes",
+      "prep": "boiled whole, skin on",
+      "note": null,
+      "section": "produce",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i02",
+      "qty": 3,
+      "unit": null,
+      "item": "eggs",
+      "prep": null,
+      "note": null,
+      "section": "dairy",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i03",
+      "qty": 175,
+      "unit": "g",
+      "item": "sugar",
+      "prep": null,
+      "note": null,
+      "section": "pantry",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i04",
+      "qty": 50,
+      "unit": "g",
+      "item": "whole milk",
+      "prep": null,
+      "note": null,
+      "section": "dairy",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i05",
+      "qty": 65,
+      "unit": "g",
+      "item": "neutral oil",
+      "prep": null,
+      "note": null,
+      "section": "pantry",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i06",
+      "qty": 1,
+      "unit": "tbsp",
+      "item": "vanilla bean paste",
+      "prep": null,
+      "note": null,
+      "section": "pantry",
+      "vague": false,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i07",
+      "qty": 0.25,
+      "unit": "tsp",
+      "item": "salt",
+      "prep": null,
+      "note": "source: 1/4 tsp",
+      "section": "pantry",
+      "vague": false,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i08",
+      "qty": 250,
+      "unit": "g",
+      "item": "all-purpose flour",
+      "prep": null,
+      "note": null,
+      "section": "pantry",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i09",
+      "qty": 2.5,
+      "unit": "tsp",
+      "item": "baking powder",
+      "prep": null,
+      "note": "source: 2 1/2 tsp",
+      "section": "pantry",
+      "vague": false,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i10",
+      "qty": 1,
+      "unit": "cup",
+      "item": "powdered sugar",
+      "prep": null,
+      "note": "for icing",
+      "section": "pantry",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i11",
+      "qty": 1,
+      "unit": "tsp",
+      "item": "lime juice",
+      "prep": null,
+      "note": "for icing",
+      "section": "produce",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i12",
+      "qty": 2,
+      "unit": "tbsp",
+      "item": "water",
+      "prep": null,
+      "note": "for icing",
+      "section": "pantry",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    }
+  ],
+  "steps": [
+    {
+      "id": "s01",
+      "title": "Boil limes whole",
+      "text": "Place {i01} in a saucepan, cover with water, and boil whole with the skin on for 10 minutes. Remove and let cool slightly.",
+      "timerSeconds": 600,
+      "unattended": true,
+      "ingredientIds": [
+        "i01"
+      ]
+    },
+    {
+      "id": "s02",
+      "title": "Blend lime with wet ingredients",
+      "text": "Transfer the boiled {i01} to a blender or food processor. Add {i02}, {i03}, {i04}, {i05}, {i06}, and {i07}. Blend until smooth.",
+      "timerSeconds": null,
+      "unattended": false,
+      "ingredientIds": [
+        "i01",
+        "i02",
+        "i03",
+        "i04",
+        "i05",
+        "i06",
+        "i07"
+      ]
+    },
+    {
+      "id": "s03",
+      "title": "Combine with dry ingredients",
+      "text": "Add {i08} and {i09} to the blended wet mixture and mix until just combined. Do not overmix.",
+      "timerSeconds": null,
+      "unattended": false,
+      "ingredientIds": [
+        "i08",
+        "i09"
+      ]
+    },
+    {
+      "id": "s04",
+      "title": "Preheat oven",
+      "text": "Preheat your oven to 325°F.",
+      "timerSeconds": null,
+      "unattended": true,
+      "ingredientIds": []
+    },
+    {
+      "id": "s05",
+      "title": "Bake",
+      "text": "Pour the batter into a greased baking pan and bake at 325°F for 45–55 minutes, until a toothpick inserted in the center comes out clean.",
+      "timerSeconds": 3000,
+      "unattended": true,
+      "ingredientIds": []
+    },
+    {
+      "id": "s06",
+      "title": "Make icing",
+      "text": "While the cake cools, whisk together {i10}, {i11}, and {i12} until smooth.",
+      "timerSeconds": null,
+      "unattended": false,
+      "ingredientIds": [
+        "i10",
+        "i11",
+        "i12"
+      ]
+    },
+    {
+      "id": "s07",
+      "title": "Ice and serve",
+      "text": "Drizzle or spread the icing over the cooled cake and serve.",
+      "timerSeconds": null,
+      "unattended": false,
+      "ingredientIds": []
+    }
+  ],
+  "household": {
+    "lastCooked": null,
+    "timesCooked": null,
+    "ratings": {},
+    "kidNotes": null,
+    "inRotation": true
+  },
+  "rawText": "CAPTION (as written by the author -- trust these amounts):\nWhen life give you limes \n\nHere’s the recipe my boi \n* 2 limes\n* 3 eggs\n* 175g sugar\n* 50g whole milk\n* 65g neutral oil\n* 1 Tbsp vanilla bean paste\n* 1/4 tsp salt\n* 250g AP flour\n* 2 1/2 tsp baking powder\n\nFor the icing\n\n* 1 cup powdered sugar\n* 1 tsp lime juice\n* 2 Tbsp water\n\n325F for 45-55\n\nSPOKEN TRANSCRIPT (what they say in the video -- the method is usually here, and often includes steps the caption omits):\nApparently if you boil two limes with the skin and everything for 10 minutes, then take it out and put it into a bowl. So go ahead and add in some of that shiggy shiggy and some milk. Three should have been chickens and a good high quality neutral oil. Are you confused right now? Yes, are you still watching? We both know the answer to that. Oh y'all thought I forgot about the vanilla? Nah, I'm using your network too. I can already see your face all messed up and whatnot, but let me cook. After you make this, because you are going to make it, you're literally going to see limes in a whole new light that you never thought was possible. It might dare I say change your life even. Y'all, my rent is doing the first. And if I give this to my landlord, I don't think she can blame him. You ever smell the smell that takes you back? I can't describe it like... I want to just put it in your nose.",
+  "sourceNotes": "The transcript establishes the key technique the caption omits: limes are boiled whole, skin on, for 10 minutes before being blended into the batter. timerSeconds for baking step is set to 3000 seconds (50 minutes), the midpoint of the 45–55 minute range given in the caption. Built from the caption and the voiceover together -- check amounts before cooking.",
+  "confidence": "medium"
+}

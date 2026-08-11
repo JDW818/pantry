@@ -45,6 +45,10 @@ jobs:
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           ISSUE_BODY: ${{ github.event.issue.body }}
+          # Reels and TikToks often carry the method only in the voiceover.
+          # Whisper installs itself on demand, so this costs nothing until
+          # a post actually turns up with a thin caption.
+          PANTRY_TRANSCRIBE: '1' 
           ISSUE_TITLE: ${{ github.event.issue.title }}
           ISSUE_AUTHOR: ${{ github.event.issue.user.login }}
           PANTRY_TRANSCRIBE: ${{ vars.PANTRY_TRANSCRIBE }}

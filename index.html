@@ -1571,13 +1571,11 @@ function renderQueue(){
 
 /* ---------- collection ---------- */
 function renderColl(){
-  const mains = APPROVED.filter(r => roleOf(r) === 'main').length;
-  const sides = APPROVED.filter(r => roleOf(r) === 'side').length;
-  const comps = APPROVED.filter(r => roleOf(r) === 'component').length;
   document.getElementById('coll-count').textContent =
-    [mains && `${mains} dinner${mains===1?'':'s'}`,
-     sides && `${sides} side${sides===1?'':'s'}`,
-     comps && `${comps} component${comps===1?'':'s'}`].filter(Boolean).join(' · ');
+    Object.entries(ROLES).map(([key, names]) => {
+      const n = APPROVED.filter(r => roleOf(r) === key).length;
+      return n && `${n} ${n === 1 ? names.one.toLowerCase() : names.many.toLowerCase()}`;
+    }).filter(Boolean).join(' · ');
 
   renderActiveFilters();
 
@@ -1677,9 +1675,10 @@ function renderFilterSheet(){
 
   document.getElementById('filter-body').innerHTML = `
     <p class="fgroup">Type</p>
-    ${[['main','Dinners'],['side','Sides'],['component','Components']]
+    ${Object.entries(ROLES)
       .filter(([k]) => roleCount(k))
-      .map(([k,l]) => row(F.roles.has(k), l, roleCount(k), `toggleFilter('role','${k}')`)).join('')}
+      .map(([k,names]) => row(F.roles.has(k), names.many, roleCount(k),
+        `toggleFilter('role','${k}')`)).join('')}
 
     ${cuisines.length ? `<p class="fgroup">Cuisine</p>
     ${cuisines.map(k => row(F.cuisines.has(k), cuisineLabel(k), counts[k],
@@ -1704,7 +1703,7 @@ function renderActiveFilters(){
 
   if (!n) { el.innerHTML = ''; return; }
   const bits = [
-    ...[...F.roles].map(k => ({ label: k === 'main' ? 'Dinners' : k === 'side' ? 'Sides' : 'Components',
+    ...[...F.roles].map(k => ({ label: (ROLES[k] || {}).many || k,
                                 click: `toggleFilter('role','${k}')` })),
     ...[...F.cuisines].map(k => ({ label: cuisineLabel(k), click: `toggleFilter('cuisine','${esc(k)}')` })),
     ...(F.quick ? [{ label:'Under 45 min', click:`toggleFilter('flag','quick')` }] : []),
@@ -1938,7 +1937,9 @@ function renderWeek(){
                 <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
             </span>`).join('')
           : ''}
-        <button class="add" onclick="pick('${d}')">${items.length ? '+ Add another' : 'Add a meal'}</button>
+        <button class="add" onclick="pick('${d}')">${
+          items.length ? (items.some(isMain) ? '+ Add a side or dessert' : '+ Add another')
+                       : 'Add a meal'}</button>
       </span>
     </div>`;
   }).join('');
@@ -1946,7 +1947,10 @@ function renderWeek(){
 
 function pick(day){
   pickDay = day;
-  document.getElementById('pick-h').textContent = `What's for ${dayLabel(day)}?`;
+  const planned = dayItems(day);
+  document.getElementById('pick-h').textContent = planned.some(isMain)
+    ? `What else for ${dayLabel(day)}?`
+    : `What's for ${dayLabel(day)}?`;
   go('pick');
 }
 function renderPick(){
@@ -1954,16 +1958,24 @@ function renderPick(){
   const match = r => !q || searchable(r).includes(q);
   /* Everything approved is addable. Components are grouped rather than hidden:
      a recipe you approved should never be silently missing from this list. */
-  const mains = APPROVED.filter(r => roleOf(r) === 'main').filter(match);
-  const sides = APPROVED.filter(r => roleOf(r) === 'side').filter(match);
-  const comps = APPROVED.filter(r => roleOf(r) === 'component').filter(match);
-
   const block = (list, heading) => list.length
     ? `${heading ? `<div class="sec-head"><h3>${heading}</h3></div>` : ''}
        <div class="rows">${list.map(r => rowCard(r, `setDay('${r.id}')`)).join('')}</div>`
     : '';
 
-  const html = block(mains) + block(sides, 'Sides') + block(comps, 'Components');
+  /* If the night already has a main, you're here for something to go with it --
+     so sides and dessert come first. Otherwise mains lead. */
+  const hasMain = (PLAN[pickDay] || [])
+    .map(id => APPROVED.find(r => r.id === id))
+    .filter(Boolean).some(isMain);
+  const order = hasMain
+    ? ['side','dessert','main','component']
+    : ['main','side','dessert','component'];
+
+  const html = order.map((key, i) => {
+    const list = APPROVED.filter(r => roleOf(r) === key).filter(match);
+    return block(list, i === 0 && !hasMain ? null : ROLES[key].many);
+  }).join('');
   document.getElementById('pick-list').innerHTML = html ||
     emptyState('book', q ? 'No matches' : 'Nothing to pick from',
       q ? `Nothing matching "${esc(q)}".` : 'Approve a few recipes and they show up here.');
@@ -2224,12 +2236,36 @@ function cuisineLabel(key){
   return key.replace(/\b\w/g, c => c.toUpperCase());
 }
 
-const SIDE_TAGS = new Set(['side','bread','salad','vegetable','snack','condiment','dessert']);
+/* A dessert is not a side. A side accompanies the main in the same course and
+   belongs next to it; a dessert is occasional and additive. They need to be
+   suggested, counted and nagged about differently, so they're separate roles.
+   "Main" rather than "dinner" on purpose -- a breakfast is a main dish too,
+   and "dinner" was quietly meaning both a role and a time of day. */
+const SIDE_TAGS    = new Set(['side','bread','salad','vegetable','snack','condiment']);
+const DESSERT_TAGS = new Set(['dessert','cake','pie','cookie','cookies','ice cream',
+  'pudding','sweet','sweets','baking-sweet','pastry','tart','brownie','brownies']);
+
+const ROLES = {
+  main:      { one:'Main',      many:'Mains',      pick:'A main dish' },
+  side:      { one:'Side',      many:'Sides',      pick:'A side dish' },
+  dessert:   { one:'Dessert',   many:'Desserts',   pick:'A dessert' },
+  component: { one:'Component', many:'Components', pick:'A component — sauce, spice mix, base' },
+};
 
 function roleOf(r){
-  if (r.role) return r.role;                       // explicitly set
+  if (r.role) return r.role;                       // explicitly set in the editor
   if (r.recipeType === 'component') return 'component';
-  if ((r.tags || []).some(t => SIDE_TAGS.has(String(t).toLowerCase()))) return 'side';
+  const tags = (r.tags || []).map(t => String(t).toLowerCase());
+  if (tags.some(t => DESSERT_TAGS.has(t))) return 'dessert';
+  if (tags.some(t => SIDE_TAGS.has(t))) return 'side';
+  /* Titles carry it when the tags don't -- "Boiled Lime Cake" is not dinner.
+     Only unambiguous words: "pie" and "tart" and "pudding" all have savoury
+     forms (shepherd's pie, tomato tart, black pudding), so those are left to
+     the tags and the editor rather than guessed at. */
+  if (/\b(cake|cookies?|brownies?|ice cream|cheesecake|cobbler|crumble|sundae|trifle)\b/i
+      .test(r.title || '')
+      && !/\b(crab|fish|salmon|potato|rice|polenta|savou?ry)\s+cakes?\b/i.test(r.title || ''))
+    return 'dessert';
   return 'main';
 }
 const isMain = r => roleOf(r) === 'main';
@@ -2377,9 +2413,8 @@ function renderEdit(){
     <div class="field">
       <label for="e-role">This is</label>
       <select id="e-role" onchange="setRole(this.value)">
-        <option value="main"${roleOf(d)==='main'?' selected':''}>A dinner on its own</option>
-        <option value="side"${roleOf(d)==='side'?' selected':''}>A side dish</option>
-        <option value="component"${roleOf(d)==='component'?' selected':''}>A component — sauce, spice mix, base</option>
+        ${Object.entries(ROLES).map(([k,names]) =>
+          `<option value="${k}"${roleOf(d)===k?' selected':''}>${esc(names.pick)}</option>`).join('')}
       </select>
     </div>
 

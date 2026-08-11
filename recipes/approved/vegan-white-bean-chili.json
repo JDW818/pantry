@@ -1,0 +1,375 @@
+{
+  "id": "vegan-white-bean-chili",
+  "title": "Creamy Vegan White Bean Chili",
+  "description": "Hearty, rich, and creamy white bean chili made with 10 ingredients. Tastes even better the next day, making it ideal for meal prep.",
+  "source": {
+    "type": "instagram",
+    "url": "https://www.instagram.com/reel/Co9-zOBj0TA/",
+    "author": "Ioanna (Joanne) Rappos | Food & Photography",
+    "addedBy": "JDW818"
+  },
+  "dateAdded": "2026-08-11",
+  "status": "approved",
+  "recipeType": "meal",
+  "componentOf": [],
+  "yield": "4 servings",
+  "cuisine": "American",
+  "tags": [
+    "vegan",
+    "plant-based",
+    "chili",
+    "white bean",
+    "meal-prep",
+    "one-pot"
+  ],
+  "mainProtein": "white beans",
+  "equipment": [
+    "large pot or dutch oven",
+    "blender or immersion blender"
+  ],
+  "activeTimeMin": 20,
+  "totalTimeMin": 40,
+  "serves": 4,
+  "vegetarian": {
+    "status": "inherently-veg",
+    "notes": null,
+    "swaps": []
+  },
+  "ingredients": [
+    {
+      "id": "i01",
+      "qty": 3,
+      "unit": "tablespoons",
+      "item": "olive oil",
+      "prep": null,
+      "note": null,
+      "section": "pantry",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i02",
+      "qty": 1,
+      "unit": "large",
+      "item": "onion",
+      "prep": "peeled and diced",
+      "note": null,
+      "section": "produce",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i03",
+      "qty": 2,
+      "unit": "large ribs",
+      "item": "celery",
+      "prep": "diced",
+      "note": null,
+      "section": "produce",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i04",
+      "qty": 1,
+      "unit": null,
+      "item": "jalapeño",
+      "prep": "seeded and diced",
+      "note": null,
+      "section": "produce",
+      "vague": false,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i05",
+      "qty": 4,
+      "unit": "cloves",
+      "item": "garlic",
+      "prep": "peeled and minced",
+      "note": null,
+      "section": "produce",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i06",
+      "qty": 0.5,
+      "unit": "teaspoon",
+      "item": "ground cumin",
+      "prep": null,
+      "note": null,
+      "section": "spices",
+      "vague": false,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i07",
+      "qty": 0.5,
+      "unit": "teaspoon",
+      "item": "dried oregano",
+      "prep": null,
+      "note": null,
+      "section": "spices",
+      "vague": false,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i08",
+      "qty": 0.5,
+      "unit": "teaspoon",
+      "item": "dried coriander",
+      "prep": null,
+      "note": null,
+      "section": "spices",
+      "vague": false,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i09",
+      "qty": 0.5,
+      "unit": "teaspoon",
+      "item": "chili powder",
+      "prep": null,
+      "note": null,
+      "section": "spices",
+      "vague": false,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i10",
+      "qty": null,
+      "unit": null,
+      "item": "salt and pepper",
+      "prep": null,
+      "note": "to taste",
+      "section": "spices",
+      "vague": true,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i11",
+      "qty": 4,
+      "unit": "ounce",
+      "item": "canned diced green chiles",
+      "prep": null,
+      "note": "1 can",
+      "section": "canned",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i12",
+      "qty": 38,
+      "unit": "ounce",
+      "item": "canned white beans",
+      "prep": "divided — half pureed with liquid, half left whole",
+      "note": "2 (19-ounce) cans, divided; transcript specifies pureeing half the beans with their liquid for a richer, creamier base",
+      "section": "canned",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i13",
+      "qty": 4,
+      "unit": "cups",
+      "item": "vegetable broth",
+      "prep": null,
+      "note": "use 3 cups if you want a thicker chili",
+      "section": "pantry",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i14",
+      "qty": 1,
+      "unit": "cup",
+      "item": "corn",
+      "prep": null,
+      "note": "fresh or frozen",
+      "section": "frozen",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i15",
+      "qty": null,
+      "unit": "cup",
+      "item": "plant-based heavy cream",
+      "prep": null,
+      "note": "source says 1/4–1/2 cup; almond or coconut cream",
+      "section": "dairy",
+      "vague": true,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i16",
+      "qty": null,
+      "unit": null,
+      "item": "diced avocado",
+      "prep": null,
+      "note": "for serving",
+      "section": "produce",
+      "vague": true,
+      "optional": true,
+      "scalable": false
+    },
+    {
+      "id": "i17",
+      "qty": null,
+      "unit": null,
+      "item": "fresh cilantro",
+      "prep": "chopped",
+      "note": "for serving",
+      "section": "produce",
+      "vague": true,
+      "optional": true,
+      "scalable": false
+    },
+    {
+      "id": "i18",
+      "qty": null,
+      "unit": null,
+      "item": "jalapeño",
+      "prep": "sliced",
+      "note": "for serving",
+      "section": "produce",
+      "vague": true,
+      "optional": true,
+      "scalable": false
+    },
+    {
+      "id": "i19",
+      "qty": null,
+      "unit": null,
+      "item": "tortilla chips",
+      "prep": null,
+      "note": "for serving",
+      "section": "other",
+      "vague": true,
+      "optional": true,
+      "scalable": false
+    },
+    {
+      "id": "i20",
+      "qty": null,
+      "unit": null,
+      "item": "lime wedges",
+      "prep": null,
+      "note": "for serving",
+      "section": "produce",
+      "vague": true,
+      "optional": true,
+      "scalable": false
+    }
+  ],
+  "steps": [
+    {
+      "id": "s01",
+      "title": "Puree half the beans",
+      "text": "Open the cans of {i12}. Transfer one can (including its liquid) to a blender and puree until smooth. Set aside the second can of whole beans separately.",
+      "timerSeconds": null,
+      "unattended": false,
+      "ingredientIds": [
+        "i12"
+      ]
+    },
+    {
+      "id": "s02",
+      "title": "Sauté the vegetables",
+      "text": "Heat {i01} in a large pot over medium heat. Add {i02}, {i03}, and {i04}. Season with {i10} and sauté until softened, about 5–7 minutes. Add {i05} and cook for 1 minute more until fragrant.",
+      "timerSeconds": 360,
+      "unattended": false,
+      "ingredientIds": [
+        "i01",
+        "i02",
+        "i03",
+        "i04",
+        "i05",
+        "i10"
+      ]
+    },
+    {
+      "id": "s03",
+      "title": "Bloom the spices",
+      "text": "Add {i06}, {i07}, {i08}, and {i09} to the pot. Stir and cook for about 1 minute until the spices are fragrant.",
+      "timerSeconds": 60,
+      "unattended": false,
+      "ingredientIds": [
+        "i06",
+        "i07",
+        "i08",
+        "i09"
+      ]
+    },
+    {
+      "id": "s04",
+      "title": "Add chiles, beans, and broth",
+      "text": "Stir in {i11}, the pureed bean mixture from s01, the whole {i12}, and {i13}. Stir to combine.",
+      "timerSeconds": null,
+      "unattended": false,
+      "ingredientIds": [
+        "i11",
+        "i12",
+        "i13"
+      ]
+    },
+    {
+      "id": "s05",
+      "title": "Simmer",
+      "text": "Bring to a simmer and cook uncovered for 15 minutes, stirring occasionally.",
+      "timerSeconds": 900,
+      "unattended": true,
+      "ingredientIds": []
+    },
+    {
+      "id": "s06",
+      "title": "Add cream and corn",
+      "text": "Stir in {i15} and {i14}. Simmer for 1–2 more minutes until the corn is heated through.",
+      "timerSeconds": 90,
+      "unattended": false,
+      "ingredientIds": [
+        "i15",
+        "i14"
+      ]
+    },
+    {
+      "id": "s07",
+      "title": "Serve",
+      "text": "Ladle into bowls and top with any combination of {i16}, {i17}, {i18}, {i19}, and {i20}.",
+      "timerSeconds": null,
+      "unattended": false,
+      "ingredientIds": [
+        "i16",
+        "i17",
+        "i18",
+        "i19",
+        "i20"
+      ]
+    }
+  ],
+  "household": {
+    "lastCooked": null,
+    "timesCooked": null,
+    "ratings": {},
+    "kidNotes": null,
+    "inRotation": true
+  },
+  "rawText": "CAPTION (as written by the author -- trust these amounts):\nVegan white bean chili - hearty rich and creamy and only requires 10 ingredients to make (excluding spices) all from @metroontario - I used Metro’s My Health, My Choices program to easily source ingredients with vegan attributes for this tasty dish. So simple to make and even tastes better the next day - so it’s also perfect for meal prep! RECIPE in caption👇🏼\n •\nCreamy vegan white bean chili \n •\nServes: 4 \nPrep Time: 10 min \nCook Time: 30 min \n •\nIngredients \n\t•\t3 tablespoons olive oil\n\t•\t1 large onion, peeled and diced \n\t•\t2 large ribs celery, diced\n\t•\t1 jalapeño, seeded and diced\n\t•\t4 cloves garlic, peeled and minced\n\t•\t½ teaspoon ground cumin\n\t•\t½ teaspoon dried oregano\n\t•\t½ teaspoon dried coriander\n\t•\t1/2 teaspoon Chile powder \n\t•\tSalt and pepper to taste \n\t•\t1 (4-ounce) can diced green chiles\n\t•\t2 (19-ounce) cans white beans, divided \n\t•\t4 cups vegetable broth, (less one cup if you want chili thicker) \n\t•\t1 cup corn, fresh or frozen \n\t•\t1/4-1/2 cup plant based heavy cream (almond or coconut) \n•\nFor serving (optional): \nDiced avocado , Chopped cilantro, Sliced jalapeno, Tortilla chips, Lime wedges \n•\n#MetroOntario #plantbased #vegan #veganfoodshare #whitebeansoup #whitebeanchili \n•\nhttps://www.oliveandmango.com/creamy-vegan-white-bean-chili/\n\nSPOKEN TRANSCRIPT (what they say in the video -- the method is usually here, and often includes steps the caption omits):\nThis creamy veggie white bean chilies easy to make with only 10 ingredients all from the Toronto. Let's get started. Peer a half of your beans in the liquid for a richer, creamier soup. Then chop all your veggies and saute them in olive oil in season with salt and pepper to taste. Add your spices, green chilies, the beans and puree along with the vegetable broth. Simmer 15 minutes then add the cream and corn and simmer one to two minutes more. Load your chili up with all the fresh fixings or serve it with homemade tortilla chips. Enjoy!",
+  "sourceNotes": "The transcript describes pureeing half the beans with their liquid before adding to the pot — a technique step absent from the caption that materially affects texture; it has been added as step s01. The caption lists the cream quantity as \"1/4–1/2 cup\"; this range is preserved as-is rather than averaged. Built from the caption and the voiceover together -- check amounts before cooking.",
+  "confidence": "medium"
+}

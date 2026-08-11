@@ -426,8 +426,8 @@
     }
   ],
   "household": {
-    "lastCooked": null,
-    "timesCooked": null,
+    "lastCooked": "2026-08-11",
+    "timesCooked": 1,
     "ratings": {},
     "kidNotes": null,
     "inRotation": true

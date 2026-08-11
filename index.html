@@ -221,13 +221,61 @@ label{display:block;font-family:var(--fm);font-size:12px;letter-spacing:.12em;te
 .search svg{position:absolute;left:15px;top:50%;transform:translateY(-50%);width:16px;height:16px;stroke:var(--dim);fill:none;stroke-width:1.9}
 .search input{padding-left:41px;font-size:17px;padding-top:12px;padding-bottom:12px}
 
-.filters{display:flex;gap:7px;overflow-x:auto;scrollbar-width:none;margin:0 -20px 16px;padding:1px 20px 8px}
-.filters::-webkit-scrollbar{display:none}
-.fchip{
-  flex-shrink:0;background:var(--ink-2);border:1px solid var(--line);color:var(--muted);
-  border-radius:20px;padding:8px 14px;font-size:13px;font-weight:500;white-space:nowrap;transition:all .16s;
+/* ---------- filtering ---------- */
+.searchrow{display:flex;gap:9px;margin-bottom:12px}
+.searchrow .search{flex:1;margin-bottom:0}
+.filterbtn{
+  flex:0 0 52px;display:grid;place-items:center;position:relative;
+  background:var(--ink-2);border:1px solid var(--line-2);border-radius:11px;color:var(--muted);
 }
-.fchip.on{background:var(--herb);border-color:var(--herb);color:#161A08;font-weight:600}
+.filterbtn.on{border-color:var(--herb);color:var(--herb)}
+.filterbtn svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round}
+.filterbtn span{
+  position:absolute;top:5px;right:6px;background:var(--herb);color:#161A08;
+  font-family:var(--fm);font-size:11px;line-height:16px;min-width:16px;border-radius:8px;text-align:center;
+}
+.activef{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px}
+.afchip{
+  display:inline-flex;align-items:center;gap:6px;background:var(--herb-dim);
+  border:1px solid rgba(163,194,74,.3);color:#B9D468;border-radius:20px;
+  padding:7px 11px;font-size:13px;font-weight:500;
+}
+.afchip svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round}
+
+.sheet-scrim{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:40;
+  animation:fade .2s ease both}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.sheet-panel{
+  position:fixed;left:0;right:0;bottom:0;z-index:41;
+  background:var(--ink-2);border-top:1px solid var(--line-2);
+  border-radius:20px 20px 0 0;padding:10px 20px calc(20px + env(safe-area-inset-bottom));
+  max-height:78dvh;display:flex;flex-direction:column;
+  transform:translateY(100%);transition:transform .24s cubic-bezier(.2,.8,.3,1);
+}
+.sheet-panel.up{transform:translateY(0)}
+.sheet-grip{width:38px;height:4px;border-radius:2px;background:var(--ink-5);margin:0 auto 14px}
+.sheet-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:6px}
+.sheet-head h3{font-family:var(--fd);font-size:20px;font-weight:600;margin:0}
+.sheet-clear{font-size:14px;color:var(--muted);padding:6px 0}
+.sheet-body{flex:1;min-height:0;overflow-y:auto;margin-bottom:14px;-webkit-overflow-scrolling:touch}
+.fgroup{
+  font-family:var(--fm);font-size:12px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--muted-2);margin:16px 0 6px;
+}
+.fgroup:first-child{margin-top:8px}
+.frow{
+  display:flex;width:100%;align-items:center;gap:12px;padding:12px 0;min-height:48px;
+  border-bottom:1px solid var(--line);text-align:left;
+}
+.frow:last-child{border-bottom:0}
+.fbox{
+  width:21px;height:21px;border-radius:6px;border:1.5px solid var(--ink-5);flex-shrink:0;
+  display:grid;place-items:center;font-size:12px;color:#161A08;transition:all .15s;
+}
+.frow.on .fbox{background:var(--herb);border-color:var(--herb)}
+.frow.on .fbox::after{content:"✓"}
+.flabel{flex:1;font-size:17px;color:var(--text)}
+.fcount{font-family:var(--fm);font-size:13px;color:var(--muted-2)}
 
 /* ============ empty ============ */
 .empty{text-align:center;padding:44px 24px}
@@ -586,11 +634,17 @@ textarea.ed:focus{border-color:var(--herb);outline:none}
 <!-- ============ RECIPES ============ -->
 <section class="view" id="v-coll">
   <div class="head"><h1>Recipes</h1><p class="sub" id="coll-count"></p></div>
-  <div class="search">
-    <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
-    <input id="q" placeholder="Search" oninput="renderColl()" autocapitalize="off" enterkeyhint="search">
+  <div class="searchrow">
+    <div class="search">
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+      <input id="q" placeholder="Search" oninput="renderColl()" autocapitalize="off" enterkeyhint="search">
+    </div>
+    <button class="filterbtn" id="filterbtn" onclick="openFilters()">
+      <svg viewBox="0 0 24 24"><path d="M3 5h18M6 12h12M10 19h4"/></svg>
+      <span id="filter-count"></span>
+    </button>
   </div>
-  <div class="filters" id="filters"></div>
+  <div id="active-filters"></div>
   <div id="coll-list"></div>
 </section>
 
@@ -662,6 +716,17 @@ textarea.ed:focus{border-color:var(--herb);outline:none}
 
 </div>
 </main>
+
+<div class="sheet-scrim" id="filter-scrim" hidden onclick="closeFilters()"></div>
+<div class="sheet-panel" id="filter-panel" hidden>
+  <div class="sheet-grip"></div>
+  <div class="sheet-head">
+    <h3>Filter</h3>
+    <button class="sheet-clear" onclick="clearFilters()">Clear all</button>
+  </div>
+  <div class="sheet-body" id="filter-body"></div>
+  <button class="btn btn-p btn-w" onclick="closeFilters()">Show <span id="filter-result">0</span></button>
+</div>
 
 <nav>
   <button data-v="home" onclick="go('home')">
@@ -788,7 +853,31 @@ let HAVE = new Set(), HAVE_SHA = null, showHave = false;
 let GOT_SHA = null;   // shopping check-offs, shared so two people can split a store
 let SEED_WAITING = 0;   // recipes in seed.json not yet in the collection
 let current = null, scale = 1, checked = new Set(), got = new Set();
-let filter = 'all', pickDay = null, prevView = 'home', prevLabel = 'Kitchen';
+let pickDay = null, prevView = 'home', prevLabel = 'Kitchen';
+
+/* A single-select chip row can't express "quick vegetarian dinners", and it
+   grew a horizontal scrollbar as cuisines piled up. Several dimensions,
+   combinable, behind one button. */
+const F = { roles: new Set(), cuisines: new Set(), quick: false, veg: false, cold: false };
+
+function activeFilterCount(){
+  return F.roles.size + F.cuisines.size + (F.quick?1:0) + (F.veg?1:0) + (F.cold?1:0);
+}
+function clearFilters(){
+  F.roles.clear(); F.cuisines.clear();
+  F.quick = F.veg = F.cold = false;
+  renderFilterSheet(); renderColl();
+}
+/* Kept so "See all" from the kitchen screen can jump straight to one view. */
+function setFilter(name){
+  F.roles.clear(); F.cuisines.clear();
+  F.quick = F.veg = F.cold = false;
+  if (name === 'cold') F.cold = true;
+  else if (name === 'veg') F.veg = true;
+  else if (name === 'quick') F.quick = true;
+  else if (name === 'main' || name === 'side' || name === 'component') F.roles.add(name);
+  renderColl();
+}
 /* Which half of Plan you were last on. At the store you want the list, not the
    planner, and you shouldn't have to tap through the planner to reach it. */
 let pane = store.get('pantry.pane') === 'list' ? 'list' : 'week';
@@ -1218,7 +1307,7 @@ function vegPill(r){
 }
 function metaBits(r){
   const bits = [];
-  if (r.cuisine) bits.push(esc(r.cuisine));
+  if (r.cuisine) bits.push(esc(cuisineLabel(cuisineKey(r))));
   const d = dur(r.totalTimeMin); if (d) bits.push(d);
   if (r.serves) bits.push(`serves ${r.serves}`);
   return bits.join(' <span class="sep">·</span> ');
@@ -1373,19 +1462,16 @@ function renderColl(){
      sides && `${sides} side${sides===1?'':'s'}`,
      comps && `${comps} component${comps===1?'':'s'}`].filter(Boolean).join(' · ');
 
-  const cuisines = [...new Set(APPROVED.map(r => r.cuisine).filter(Boolean))].sort();
-  document.getElementById('filters').innerHTML =
-    [['all','All'],['main','Dinners'],['side','Sides'],['cold',"Haven't made lately"],['veg','Vegetarian'],['quick','Under 45 min'],
-     ...cuisines.map(c => [c, c[0].toUpperCase()+c.slice(1).replace(/-/g,' ')])]
-    .map(([k,l]) => `<button class="fchip ${filter===k?'on':''}" onclick="setFilter('${k}')">${esc(l)}</button>`).join('');
+  renderActiveFilters();
 
   const q = (document.getElementById('q').value || '').toLowerCase().trim();
   const list = APPROVED.filter(matches).filter(r => !q || searchable(r).includes(q));
 
   document.getElementById('coll-list').innerHTML = list.length
     ? `<div class="rows">${list.map(r => rowCard(r, `openRecipe('${r.id}','approved','coll','Recipes')`)).join('')}</div>`
-    : q
-      ? emptyState('search', 'No matches', `Nothing matching "${esc(q)}".`)
+    : q || activeFilterCount()
+      ? emptyState('search', 'No matches',
+          q ? `Nothing matching "${esc(q)}".` : 'Nothing matches those filters.')
       : emptyState('book', 'Nothing here yet', 'Approve something from the queue and it lands here.')
         + (SEED_WAITING
            ? `<button class="btn btn-s btn-w" onclick="importSeed()">Import ${SEED_WAITING} from seed.json</button>`
@@ -1395,14 +1481,13 @@ function searchable(r){
   return [r.title, r.cuisine, ...(r.tags||[]), ...r.ingredients.map(i => i.item)].join(' ').toLowerCase();
 }
 function matches(r){
-  if (filter === 'all')   return true;
-  if (filter === 'veg')   return ['inherently-veg','easily-adaptable'].includes(r.vegetarian?.status);
-  if (filter === 'quick') return (r.totalTimeMin || 999) <= 45;
-  if (filter === 'cold')  { const d = daysSinceCooked(r); return d === null || d >= 30; }
-  if (filter === 'main' || filter === 'side') return roleOf(r) === filter;
-  return r.cuisine === filter;
+  if (F.roles.size && !F.roles.has(roleOf(r))) return false;
+  if (F.cuisines.size && !F.cuisines.has(cuisineKey(r))) return false;
+  if (F.quick && (r.totalTimeMin || 999) > 45) return false;
+  if (F.veg && !['inherently-veg','easily-adaptable'].includes(r.vegetarian?.status)) return false;
+  if (F.cold) { const d = daysSinceCooked(r); if (d !== null && d < 30) return false; }
+  return true;
 }
-function setFilter(f){ filter = f; renderColl(); }
 
 /* The block only earns its space when it tells the cook to do something.
    "Vegetarian as written, no swaps needed" is a badge, not a note -- so it
@@ -1425,6 +1510,89 @@ function vegNote(r){
     ${body}
     ${note ? `<p>${esc(note)}</p>` : ''}
   </div>`;
+}
+
+/* ---------- filters ---------- */
+function openFilters(){
+  renderFilterSheet();
+  document.getElementById('filter-scrim').hidden = false;
+  document.getElementById('filter-panel').hidden = false;
+  /* next frame, so the transform transition actually runs */
+  const raise = () => document.getElementById('filter-panel').classList.add('up');
+  typeof requestAnimationFrame === 'function' ? requestAnimationFrame(raise) : setTimeout(raise, 0);
+}
+function closeFilters(){
+  const panel = document.getElementById('filter-panel');
+  panel.classList.remove('up');
+  setTimeout(() => {
+    panel.hidden = true;
+    document.getElementById('filter-scrim').hidden = true;
+  }, 220);
+}
+
+function toggleFilter(kind, value){
+  if (kind === 'role')    F.roles.has(value) ? F.roles.delete(value) : F.roles.add(value);
+  if (kind === 'cuisine') F.cuisines.has(value) ? F.cuisines.delete(value) : F.cuisines.add(value);
+  if (kind === 'flag')    F[value] = !F[value];
+  renderFilterSheet();
+  renderColl();
+}
+
+function renderFilterSheet(){
+  const counts = {};
+  for (const r of APPROVED) {
+    const k = cuisineKey(r);
+    if (k) counts[k] = (counts[k] || 0) + 1;
+  }
+  const cuisines = Object.keys(counts).sort((a,b) => counts[b] - counts[a] || a.localeCompare(b));
+
+  const roleCount = role => APPROVED.filter(r => roleOf(r) === role).length;
+  const row = (on, label, count, onclick) => `
+    <button class="frow ${on ? 'on' : ''}" onclick="${onclick}">
+      <span class="fbox"></span>
+      <span class="flabel">${esc(label)}</span>
+      ${count != null ? `<span class="fcount">${count}</span>` : ''}
+    </button>`;
+
+  document.getElementById('filter-body').innerHTML = `
+    <p class="fgroup">Type</p>
+    ${[['main','Dinners'],['side','Sides'],['component','Components']]
+      .filter(([k]) => roleCount(k))
+      .map(([k,l]) => row(F.roles.has(k), l, roleCount(k), `toggleFilter('role','${k}')`)).join('')}
+
+    ${cuisines.length ? `<p class="fgroup">Cuisine</p>
+    ${cuisines.map(k => row(F.cuisines.has(k), cuisineLabel(k), counts[k],
+        `toggleFilter('cuisine','${esc(k)}')`)).join('')}` : ''}
+
+    <p class="fgroup">Anything else</p>
+    ${row(F.quick, 'Under 45 minutes', null, `toggleFilter('flag','quick')`)}
+    ${row(F.veg, 'Works without meat', null, `toggleFilter('flag','veg')`)}
+    ${row(F.cold, "Haven't made lately", null, `toggleFilter('flag','cold')`)}
+  `;
+  document.getElementById('filter-result').textContent =
+    `${APPROVED.filter(matches).length} recipes`;
+}
+
+/* A summary line, so an active filter is visible without opening the sheet. */
+function renderActiveFilters(){
+  const el = document.getElementById('active-filters');
+  const n = activeFilterCount();
+  const btn = document.getElementById('filter-count');
+  if (btn) { btn.textContent = n || ''; btn.hidden = !n; }
+  document.getElementById('filterbtn')?.classList.toggle('on', !!n);
+
+  if (!n) { el.innerHTML = ''; return; }
+  const bits = [
+    ...[...F.roles].map(k => ({ label: k === 'main' ? 'Dinners' : k === 'side' ? 'Sides' : 'Components',
+                                click: `toggleFilter('role','${k}')` })),
+    ...[...F.cuisines].map(k => ({ label: cuisineLabel(k), click: `toggleFilter('cuisine','${esc(k)}')` })),
+    ...(F.quick ? [{ label:'Under 45 min', click:`toggleFilter('flag','quick')` }] : []),
+    ...(F.veg   ? [{ label:'Without meat', click:`toggleFilter('flag','veg')` }] : []),
+    ...(F.cold  ? [{ label:"Haven't made lately", click:`toggleFilter('flag','cold')` }] : []),
+  ];
+  el.innerHTML = `<div class="activef">${bits.map(b =>
+    `<button class="afchip" onclick="${b.click}">${esc(b.label)}
+       <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>`).join('')}</div>`;
 }
 
 /* ---------- detail ---------- */
@@ -1477,9 +1645,9 @@ function renderDetail(){
         ${r.yield ? `<span class="pill">${esc(r.yield)}</span>` : ''}
         ${cookedBits(r) ? `<span class="pill">${esc(cookedBits(r))}</span>` : ''}
       </div>
-      ${[r.cuisine, ...(r.equipment||[]).slice(0,2)].filter(Boolean).length
-        ? `<p class="crumb">${[r.cuisine, ...(r.equipment||[]).slice(0,2)]
-            .filter(Boolean).map(x => esc(x.replace(/-/g,' '))).join(' · ')}</p>` : ''}
+      ${[cuisineLabel(cuisineKey(r)), ...(r.equipment||[]).slice(0,2)].filter(Boolean).length
+        ? `<p class="crumb">${[cuisineLabel(cuisineKey(r)), ...(r.equipment||[]).slice(0,2)]
+            .filter(Boolean).map(x => esc(String(x).replace(/-/g,' '))).join(' · ')}</p>` : ''}
       ${(r.extractionErrors || []).length ? `<div class="flagged">
         <span class="st">Didn't pass validation</span>
         <p>Extraction couldn't get this one clean. Check these against the original before you save it:</p>
@@ -1923,6 +2091,18 @@ function neglected(limit = 3){
    the sense that you eat them, but nobody serves cornbread as Wednesday
    dinner. Three roles, inferred from the data we already have, overridable
    per recipe in the editor. */
+/* The extractor writes "Tex Mex", my seed wrote "tex-mex". Same cuisine, two
+   filter chips. Collapse on a normalised key, display it consistently. */
+function cuisineKey(r){
+  return String(r.cuisine || '').toLowerCase().replace(/[-_]+/g,' ').replace(/\s+/g,' ').trim();
+}
+const CUISINE_NAMES = { 'tex mex':'Tex-Mex', 'bbq':'BBQ' };
+function cuisineLabel(key){
+  if (!key) return '';
+  if (CUISINE_NAMES[key]) return CUISINE_NAMES[key];
+  return key.replace(/\b\w/g, c => c.toUpperCase());
+}
+
 const SIDE_TAGS = new Set(['side','bread','salad','vegetable','snack','condiment','dessert']);
 
 function roleOf(r){
@@ -1990,7 +2170,7 @@ function renderSuggestion(){
       <button class="sug-card" onclick="reroll(${n})">
         <span class="sug-body">
           <h4>${esc(r.title)}</h4>
-          <span class="m">${[r.cuisine, dur(r.totalTimeMin),
+          <span class="m">${[cuisineLabel(cuisineKey(r)), dur(r.totalTimeMin),
              days === null ? 'never made' : `${days} days ago`].filter(Boolean).map(esc).join(' · ')}</span>
         </span>
         <span class="sug-swap"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-2.6-6.4"/><path d="M21 3v6h-6"/></svg></span>

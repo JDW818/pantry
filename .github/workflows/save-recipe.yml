@@ -45,13 +45,13 @@ jobs:
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           ISSUE_BODY: ${{ github.event.issue.body }}
-          # Reels and TikToks often carry the method only in the voiceover.
-          # Whisper installs itself on demand, so this costs nothing until
-          # a post actually turns up with a thin caption.
-          PANTRY_TRANSCRIBE: '1' 
           ISSUE_TITLE: ${{ github.event.issue.title }}
           ISSUE_AUTHOR: ${{ github.event.issue.user.login }}
-          PANTRY_TRANSCRIBE: ${{ vars.PANTRY_TRANSCRIBE }}
+          # Reels often carry the method only in the voiceover. Whisper is
+          # installed on demand, so this costs nothing until a post turns up
+          # with a caption too thin to use. Set a repo variable named
+          # PANTRY_TRANSCRIBE to 0 to turn it off.
+          PANTRY_TRANSCRIBE: ${{ vars.PANTRY_TRANSCRIBE || '1' }}
         run: python scripts/pantry.py
 
       # The web app writes plan.json and list-state.json straight to main, so

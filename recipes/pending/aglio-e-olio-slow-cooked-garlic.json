@@ -1,0 +1,205 @@
+{
+  "id": "aglio-e-olio-slow-cooked-garlic",
+  "title": "Slow-Cooked Garlic Aglio e Olio",
+  "description": "A refined take on aglio e olio built on garlic blanched four times to strip harshness and bitterness, then blended with EVOO and starchy pasta water into a completely smooth emulsion. No cream, no butter — just silky, sweet garlic.",
+  "source": {
+    "type": "instagram",
+    "url": "https://www.instagram.com/reel/Db5a8EUPWtB/?igsi=azR6bWdkZXJ4emw1",
+    "author": "Mr Botturo",
+    "addedBy": "JDW818"
+  },
+  "dateAdded": "2026-08-12",
+  "status": "pending",
+  "recipeType": "meal",
+  "componentOf": [],
+  "yield": "1 serving",
+  "cuisine": "Italian",
+  "tags": [
+    "pasta",
+    "vegetarian",
+    "garlic",
+    "quick",
+    "aglio e olio",
+    "weeknight"
+  ],
+  "mainProtein": "none",
+  "equipment": [
+    "pot",
+    "blender",
+    "carbon steel wok or large skillet"
+  ],
+  "activeTimeMin": 30,
+  "totalTimeMin": 35,
+  "serves": 1,
+  "vegetarian": {
+    "status": "inherently-veg",
+    "notes": null,
+    "swaps": []
+  },
+  "ingredients": [
+    {
+      "id": "i01",
+      "qty": 100,
+      "unit": "g",
+      "item": "garlic",
+      "prep": "peeled, germ removed",
+      "note": null,
+      "section": "produce",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i02",
+      "qty": 120,
+      "unit": "g",
+      "item": "extra virgin olive oil",
+      "prep": null,
+      "note": null,
+      "section": "pantry",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i03",
+      "qty": 120,
+      "unit": "g",
+      "item": "pasta water",
+      "prep": "starchy, reserved from cooking",
+      "note": null,
+      "section": "other",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i04",
+      "qty": 120,
+      "unit": "g",
+      "item": "spaghetti",
+      "prep": null,
+      "note": null,
+      "section": "pantry",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i05",
+      "qty": null,
+      "unit": null,
+      "item": "fresh parsley",
+      "prep": "freshly chopped",
+      "note": "quantity not specified in source",
+      "section": "produce",
+      "vague": true,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i06",
+      "qty": null,
+      "unit": null,
+      "item": "cayenne pepper",
+      "prep": null,
+      "note": "quantity not specified in source; added as finish",
+      "section": "spices",
+      "vague": true,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i07",
+      "qty": null,
+      "unit": null,
+      "item": "salt",
+      "prep": null,
+      "note": "quantity not specified in source",
+      "section": "pantry",
+      "vague": true,
+      "optional": false,
+      "scalable": false
+    }
+  ],
+  "steps": [
+    {
+      "id": "s01",
+      "title": "Prep garlic",
+      "text": "Peel {i01} and remove the germ from each clove.",
+      "timerSeconds": null,
+      "unattended": false,
+      "ingredientIds": [
+        "i01"
+      ]
+    },
+    {
+      "id": "s02",
+      "title": "Blanch garlic four times",
+      "text": "Bring a small pot of water to a boil. Add {i01} and boil for 1 minute. Strain and let the garlic rest for 1 minute. Repeat this boil-strain-rest cycle a total of 4 times. This removes harshness and bitterness, leaving a sweeter, smoother flavor.",
+      "timerSeconds": 480,
+      "unattended": false,
+      "ingredientIds": [
+        "i01"
+      ]
+    },
+    {
+      "id": "s03",
+      "title": "Cook pasta",
+      "text": "Bring a well-salted pot of water to a boil. Cook {i04} until al dente according to package directions. Before draining, reserve {i03} of the starchy pasta water. Set pasta aside.",
+      "timerSeconds": null,
+      "unattended": false,
+      "ingredientIds": [
+        "i04",
+        "i03",
+        "i07"
+      ]
+    },
+    {
+      "id": "s04",
+      "title": "Blend garlic emulsion",
+      "text": "Add the blanched {i01}, {i02}, and {i03} to a blender. Blend until completely silky and emulsified.",
+      "timerSeconds": 60,
+      "unattended": false,
+      "ingredientIds": [
+        "i01",
+        "i02",
+        "i03"
+      ]
+    },
+    {
+      "id": "s05",
+      "title": "Combine pasta and sauce",
+      "text": "Transfer the hot cooked {i04} directly into the garlic emulsion — either in a pan over gentle heat or directly in the blender vessel if it's wide enough. Toss aggressively so the starch from the pasta water stabilizes the sauce and creates a glossy texture.",
+      "timerSeconds": 90,
+      "unattended": false,
+      "ingredientIds": [
+        "i04",
+        "i01",
+        "i02",
+        "i03"
+      ]
+    },
+    {
+      "id": "s06",
+      "title": "Finish and plate",
+      "text": "Add {i05} and toss to combine. Plate and finish with {i06} to taste.",
+      "timerSeconds": null,
+      "unattended": false,
+      "ingredientIds": [
+        "i05",
+        "i06"
+      ]
+    }
+  ],
+  "household": {
+    "lastCooked": null,
+    "timesCooked": null,
+    "ratings": {},
+    "kidNotes": null,
+    "inRotation": true
+  },
+  "rawText": "CAPTION (as written by the author -- trust these amounts):\n🧄 100g GARLIC. ZERO CREAM. INSANE TEXTURE.\n\nThe secret to the creamiest Aglio e Olio?\nSlow-cooked garlic. 🧄🔥\n\nCook the garlic gently until sweet, soft and silky, then emulsify with EVOO + starchy pasta water.\n\nNo cream. Just GARLIC. 🧄✨\n\n1 Serving\n🧄 Garlic 100g\n🫒 EVOO 120g\n💧 Pasta water 120g\n🍝 Spaghetti 120g\n🌿 Parsley\n🌶️ Cayenne\n🧂 Salt\n\nSave this one. You’ll never look at Aglio e Olio the same way. 🍝\n\n#aglioeolio #garlic #pasta #spaghetti #italianfood pastarecipe foodie michelin\n\nSPOKEN TRANSCRIPT (what they say in the video -- the method is usually here, and often includes steps the caption omits):\nMost alloy recipes are too aggressive, too heavy, and with too much raw garlic flavor, but this version is different. Peel the garlic and remove the germ inside. Then boil it in water for 1 minute. Strain it and let it rest for 1 minute more. Repeat this process 4 times. You lose the harshness and bitterness, leaving behind a sweeter, smoother flavor profile. Now blend the cooked garlic with olive oil and pasta water until completely silky. Now cook this baguette el dente and transfer them directly into the garlic emotion. Add freshly chopped parsley and toss aggressively. The starch from pasta water stabilizes the sauce and creates that glossy texture without cream or butter. Finish with cayenne pepper. The result is completely different from the classic home-style aloe oil. It's softer, more elegant and controlled.",
+  "sourceNotes": "The four-round blanching technique (boil 1 min, strain, rest 1 min, repeat × 4) comes entirely from the transcript — the caption only says 'slow-cooked garlic' with no method detail. The caption describes the garlic as 'slow-cooked' while the transcript uses blanching/boiling; the blanching method has been followed as it is the only concrete technique provided. Built from the caption and the voiceover together -- check amounts before cooking.",
+  "confidence": "medium"
+}

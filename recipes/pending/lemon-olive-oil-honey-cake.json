@@ -1,0 +1,249 @@
+{
+  "id": "lemon-olive-oil-honey-cake",
+  "title": "Lemon Olive Oil Honey Cake",
+  "description": "A 6-ingredient gluten-free cake built around a whole boiled lemon blended with olive oil, honey, and eggs, then folded with oat flour. Moist and naturally sweet, finished with an optional whipped honey glaze and lemon zest.",
+  "source": {
+    "type": "instagram",
+    "url": "https://www.instagram.com/reel/Db8SEcKxSw6/?igsi=MTZpZmM3azdydG9sNg==",
+    "author": "Joey Wellness",
+    "addedBy": "JDW818"
+  },
+  "dateAdded": "2026-08-13",
+  "status": "pending",
+  "recipeType": "meal",
+  "componentOf": [],
+  "yield": "7–8 slices",
+  "cuisine": "American",
+  "tags": [
+    "gluten-free",
+    "cake",
+    "dessert",
+    "healthy",
+    "dairy-free"
+  ],
+  "mainProtein": "eggs",
+  "equipment": [
+    "blender",
+    "large bowl",
+    "spatula",
+    "deep dish cake pan",
+    "oven"
+  ],
+  "activeTimeMin": 20,
+  "totalTimeMin": 80,
+  "serves": 8,
+  "vegetarian": {
+    "status": "inherently-veg",
+    "notes": "",
+    "swaps": []
+  },
+  "ingredients": [
+    {
+      "id": "i01",
+      "qty": 1,
+      "unit": null,
+      "item": "large lemon",
+      "prep": "whole, uncut",
+      "note": null,
+      "section": "produce",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i02",
+      "qty": 0.5,
+      "unit": "cup",
+      "item": "extra virgin olive oil",
+      "prep": null,
+      "note": null,
+      "section": "pantry",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i03",
+      "qty": 0.5,
+      "unit": "cup",
+      "item": "honey",
+      "prep": null,
+      "note": null,
+      "section": "pantry",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i04",
+      "qty": 3,
+      "unit": null,
+      "item": "eggs",
+      "prep": null,
+      "note": null,
+      "section": "dairy",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i05",
+      "qty": 1.5,
+      "unit": "cups",
+      "item": "oat flour",
+      "prep": null,
+      "note": null,
+      "section": "pantry",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i06",
+      "qty": 2,
+      "unit": "tsp",
+      "item": "baking powder",
+      "prep": null,
+      "note": null,
+      "section": "pantry",
+      "vague": false,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i07",
+      "qty": null,
+      "unit": null,
+      "item": "salt",
+      "prep": null,
+      "note": "pinch of salt",
+      "section": "pantry",
+      "vague": true,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i08",
+      "qty": 0.25,
+      "unit": "cup",
+      "item": "honey",
+      "prep": null,
+      "note": "for whipped honey glaze",
+      "section": "pantry",
+      "vague": false,
+      "optional": true,
+      "scalable": true
+    },
+    {
+      "id": "i09",
+      "qty": null,
+      "unit": null,
+      "item": "lemon zest",
+      "prep": null,
+      "note": "mentioned in transcript as a finishing garnish; no amount given",
+      "section": "produce",
+      "vague": true,
+      "optional": true,
+      "scalable": false
+    }
+  ],
+  "steps": [
+    {
+      "id": "s01",
+      "title": "Boil the lemon",
+      "text": "Place {i01} in a pot of boiling water and let it simmer for 25 minutes until fully softened.",
+      "timerSeconds": 1500,
+      "unattended": true,
+      "ingredientIds": [
+        "i01"
+      ]
+    },
+    {
+      "id": "s02",
+      "title": "Preheat the oven",
+      "text": "Preheat your oven to 350°F.",
+      "timerSeconds": null,
+      "unattended": false,
+      "ingredientIds": []
+    },
+    {
+      "id": "s03",
+      "title": "Blend wet ingredients",
+      "text": "Transfer the boiled {i01} to a blender along with {i02}, {i03}, and {i04}. Blend for 1–2 minutes until completely smooth — there should be no chunks of lemon remaining.",
+      "timerSeconds": 90,
+      "unattended": false,
+      "ingredientIds": [
+        "i01",
+        "i02",
+        "i03",
+        "i04"
+      ]
+    },
+    {
+      "id": "s04",
+      "title": "Fold in dry ingredients",
+      "text": "Pour the blended mixture into a large bowl. Add {i05}, {i06}, and {i07}. Fold gently with a spatula — do not whisk. Folding is important with oat flour to avoid a gummy texture.",
+      "timerSeconds": null,
+      "unattended": false,
+      "ingredientIds": [
+        "i05",
+        "i06",
+        "i07"
+      ]
+    },
+    {
+      "id": "s05",
+      "title": "Rest the batter",
+      "text": "Cover the bowl with a towel and let the batter rest at room temperature for 10 minutes. This step prevents a gummy texture in the finished cake.",
+      "timerSeconds": 600,
+      "unattended": true,
+      "ingredientIds": []
+    },
+    {
+      "id": "s06",
+      "title": "Bake",
+      "text": "Pour the batter into a deep dish cake pan and bake at 350°F for about 40 minutes, until a toothpick comes out clean.",
+      "timerSeconds": 2400,
+      "unattended": true,
+      "ingredientIds": []
+    },
+    {
+      "id": "s07",
+      "title": "Cool the cake",
+      "text": "Remove the cake from the oven and allow it to cool fully before slicing or glazing.",
+      "timerSeconds": null,
+      "unattended": true,
+      "ingredientIds": []
+    },
+    {
+      "id": "s08",
+      "title": "Make whipped honey glaze (optional)",
+      "text": "Whip {i08} until it becomes lighter and glossy. Spread or drizzle over the cooled cake.",
+      "timerSeconds": null,
+      "unattended": false,
+      "ingredientIds": [
+        "i08"
+      ]
+    },
+    {
+      "id": "s09",
+      "title": "Slice and garnish",
+      "text": "Slice the cake into 7–8 pieces. Finish with a little {i09} on top if desired.",
+      "timerSeconds": null,
+      "unattended": false,
+      "ingredientIds": [
+        "i09"
+      ]
+    }
+  ],
+  "household": {
+    "lastCooked": null,
+    "timesCooked": null,
+    "ratings": {},
+    "kidNotes": null,
+    "inRotation": true
+  },
+  "rawText": "CAPTION (as written by the author -- trust these amounts):\n6 ingredient lemon olive oil honey cake\n\n1 large lemon\n1/2 cup extra virgin olive oil\n1/2 cup honey\n3 eggs\n1.5 cups oat flour\n2 tsp baking powder\npinch of salt\n1/4 cup honey for whipped honey glaze (optional)\n\n- Boil lemon for 25 minutes\n- Place in blender with oil, honey, eggs\n- In a bowl, mix together all ingredients\n- Cover bowl with a towel and let sit at room temp for 10 minutes… this ensures no gummy texture\n- Preheat oven to 350F\n- Bake for about 40 minutes\n\n#healthy #food #cakes #glutenfree\n\nSPOKEN TRANSCRIPT (what they say in the video -- the method is usually here, and often includes steps the caption omits):\nApparently, if you place a lemon into boiling water and let it simmer for about 25 minutes, and then place it in the blender with extra virgin olive oil, a nice chunk of honey, and not one, not two, but three eggs, and let it blend for a good minute or two until everything's nice and smoothie, because you're going to get chunks of lemon in there. Wow! Well, that's nice. Then pop it into a bowl, and here you're going to put your dry ingredients that's just oat flour and a little bit of baking powder, and don't whisk it. You want to fold it with a spatula because it's oat, and you want to let it rest for 10 minutes before putting into your deep dish at 350 in the oven for about 40 minutes. And this is extra, but if you want, you could do some whipped honey. It's like a nice glaze to put on top. Once your cake cools and is ready to cut, slice it into how many pieces you want. I did about seven or eight with that glaze on top, a little bit more lemon zest. Wow! That's incredible. Obviously very moist because of the olive oil, and sweet because of the honey. That's great!",
+  "sourceNotes": "The transcript mentions adding lemon zest as a garnish at the end, which does not appear in the caption; included as an optional ingredient with no quantity. The caption says 'mix together all ingredients' but the transcript specifies folding with a spatula rather than whisking — the transcript method was followed as it provides technique rationale. The caption's title says '6 ingredient' but the ingredient list has 7 (8 counting the optional glaze honey), likely because salt and the glaze are not counted. Built from the caption and the voiceover together -- check amounts before cooking.",
+  "confidence": "medium"
+}

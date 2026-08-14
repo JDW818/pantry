@@ -459,6 +459,18 @@ ol.steps .amt{font-weight:600;color:#1B1815}
 .trio .field{margin-bottom:14px}
 .trio input{padding:12px 10px;text-align:center}
 /* ---------- suggestion review ---------- */
+.idea{
+  background:var(--ink-2);border:1px solid var(--line);border-radius:var(--r);
+  padding:15px 16px;margin-bottom:9px;
+}
+.idea h4{font-family:var(--fd);font-size:19px;font-weight:600;margin:0 0 6px;line-height:1.25;letter-spacing:-.012em}
+.idea .why{margin:0 0 8px;font-size:15px;line-height:1.45;color:var(--muted)}
+.idea .m{margin:0 0 13px;font-size:13px;color:var(--muted-2);text-transform:capitalize}
+.idea-foot{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.idea-src{font-size:13px;color:var(--muted-2);text-decoration:none;min-height:40px;display:flex;align-items:center}
+.idea-src:active{color:var(--herb)}
+.idea-have{font-size:13px;color:var(--dim)}
+.idea-save{padding:11px 18px;font-size:15px}
 .sug{display:flex;gap:12px;align-items:stretch;margin-bottom:9px}
 .sug-day{
   flex:0 0 74px;font-family:var(--fm);font-size:12px;letter-spacing:.08em;
@@ -558,21 +570,20 @@ textarea.ed:focus{border-color:var(--herb);outline:none}
 }
 .toast.up{transform:translate(-50%,0)}
 .toast.bad{background:var(--chile);color:#fff}
-/* Fixed, not absolute: it lives in the viewport just under the header, so it
-   can't drift with the content it's refreshing. z-index sits below the header
-   so it slides out from behind it, the way iOS does. */
+/* Fixed to the viewport under the header, and -- the part I got wrong twice --
+   it barely moves. The indicator travels 34px total, from tucked behind the
+   header to just below it. How far you have pulled is shown by rotation and
+   opacity, not by walking the spinner down over the content. */
 .pull{
-  position:fixed;top:var(--top-h,56px);left:50%;margin-left:-17px;
+  position:fixed;top:var(--top-h,58px);left:50%;margin-left:-17px;
   width:34px;height:34px;border-radius:50%;display:grid;place-items:center;
   background:var(--ink-3);border:1px solid var(--line-2);color:var(--muted);
-  opacity:0;pointer-events:none;z-index:20;
-  transform:translateY(-52px);
+  opacity:0;pointer-events:none;z-index:20;transform:translateY(-40px);
 }
-/* Only while settling -- during the drag it must track the finger exactly. */
-.pull.settling{transition:transform .28s cubic-bezier(.2,.8,.3,1),opacity .2s}
-.pull svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.pull svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:none}
 .pull.ready{color:var(--herb);border-color:rgba(163,194,74,.45)}
-.pull.spin svg{animation:sp .8s linear infinite}
+.pull.settling{transition:transform .26s cubic-bezier(.2,.8,.3,1),opacity .2s}
+.pull.spin svg{animation:sp .8s linear infinite;transform:none!important}
 .spin{width:24px;height:24px;border:2px solid var(--ink-4);border-top-color:var(--herb);border-radius:50%;animation:sp .7s linear infinite;margin:56px auto}
 @keyframes sp{to{transform:rotate(360deg)}}
 .skel{background:var(--ink-2);border-radius:var(--r);height:70px;margin-bottom:8px;animation:pulse 1.4s ease-in-out infinite}
@@ -682,6 +693,14 @@ textarea.ed:focus{border-color:var(--herb);outline:none}
 <section class="view" id="v-detail">
   <button class="back" onclick="back()"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg><span id="back-l">Back</span></button>
   <div id="detail"></div>
+</section>
+
+<!-- ============ IDEAS ============ -->
+<section class="view" id="v-ideas">
+  <button class="back" onclick="go('home')"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>Kitchen</button>
+  <div class="head"><h1>Something new</h1><p class="sub" id="ideas-sub"></p></div>
+  <div id="ideas-list"></div>
+  <button class="btn btn-s btn-w" style="margin-top:16px" onclick="askForIdeas()">Look again</button>
 </section>
 
 <!-- ============ SUGGEST ============ -->
@@ -955,7 +974,7 @@ async function boot(){
     '<div class="skel" style="height:150px"></div><div class="skel"></div><div class="skel"></div>';
   try {
     [PENDING, APPROVED] = await Promise.all([listFolder('pending'), listFolder('approved')]);
-    await Promise.all([loadPlan(), loadHave(), loadGot(), checkSeed()]);
+    await Promise.all([loadPlan(), loadHave(), loadGot(), checkSeed(), loadIdeas()]);
     lastRefresh = Date.now();
     render();
   } catch (e) {
@@ -1191,79 +1210,79 @@ async function commitPlan(apply){
 }
 
 /* ==================== pull to refresh ==================== */
-/* The shell is fixed and <main> scrolls, so Safari's own pull gesture never
-   fires. Build it: only when already at the top, only downward, and only far
-   enough to be deliberate. */
+/* The shell is fixed and <main> scrolls, so Safari's own gesture never fires.
+   Geometry that matters: the indicator moves between two fixed points a short
+   distance apart and never travels with the finger -- it peeks out from under
+   the header and stops. Pull progress is rotation and opacity. */
+const PULL = { HIDDEN: -40, SHOWN: -6, TRIGGER: 80 };   // px, px, finger travel
+
 function initPullToRefresh(){
   const scroller = document.querySelector('main');
   const ind = document.getElementById('pull');
+  const icon = ind && ind.querySelector('svg');
   if (!scroller || !ind) return;
 
-  /* The header's height depends on the safe-area inset, so measure it rather
-     than guessing -- otherwise the spinner overlaps the wordmark on notched
-     phones and floats too low on others. */
+  /* Header height varies with the safe-area inset, so measure it. */
   const sizeHeader = () => {
     const top = document.querySelector('.top');
-    if (top) document.documentElement.style.setProperty('--top-h', `${top.offsetHeight + 8}px`);
+    if (top && top.offsetHeight) {
+      document.documentElement.style.setProperty('--top-h', `${top.offsetHeight + 6}px`);
+    }
   };
   sizeHeader();
   window.addEventListener('resize', sizeHeader);
-  window.addEventListener('orientationchange', () => setTimeout(sizeHeader, 200));
+  window.addEventListener('orientationchange', () => setTimeout(sizeHeader, 250));
 
-  /* Finger travel to fire = TRIGGER / RESIST, so ~80px -- about what iOS
-     itself asks for. At 0.5 resistance it needed a 144px drag, which is most
-     of a phone screen. */
-  const TRIGGER = 48, MAX = 88, RESIST = 0.6;
-  const REST = -52, HOLD = 14;    // hidden above the fold, and the spin position
-  let startY = 0, dist = 0, tracking = false;
+  let startY = 0, progress = 0, tracking = false, busy = false;
+
+  const place = (p) => {
+    /* p is 0..1. The spinner covers a fixed 34px regardless of pull length. */
+    const y = PULL.HIDDEN + (PULL.SHOWN - PULL.HIDDEN) * Math.min(1, p);
+    ind.style.transform = `translateY(${y.toFixed(1)}px)`;
+    ind.style.opacity = Math.min(1, p * 1.2).toFixed(2);
+    if (icon) icon.style.transform = `rotate(${Math.min(1, p) * 270}deg)`;
+    ind.classList.toggle('ready', p >= 1);
+  };
+
+  const hide = () => {
+    tracking = false; progress = 0;
+    ind.classList.add('settling');
+    ind.style.transform = `translateY(${PULL.HIDDEN}px)`;
+    ind.style.opacity = '0';
+    ind.classList.remove('ready');
+    if (icon) icon.style.transform = '';
+  };
 
   scroller.addEventListener('touchstart', e => {
-    if (scroller.scrollTop > 0 || e.touches.length !== 1) { tracking = false; return; }
+    if (busy || scroller.scrollTop > 0 || e.touches.length !== 1) { tracking = false; return; }
     startY = e.touches[0].clientY;
-    tracking = true;
-    dist = 0;
+    tracking = true; progress = 0;
+    ind.classList.remove('settling');
   }, { passive: true });
 
   scroller.addEventListener('touchmove', e => {
     if (!tracking) return;
     const delta = e.touches[0].clientY - startY;
-    /* Scrolling up, or the list moved under us -- hand it back to the browser. */
-    if (delta <= 0 || scroller.scrollTop > 0) { reset(); return; }
-    /* Resistance, so it feels like pulling against something. */
-    dist = Math.min(MAX, delta * RESIST);
-    ind.classList.remove('settling');
-    ind.style.transform = `translateY(${REST + dist}px)`;
-    ind.style.opacity = Math.min(1, dist / TRIGGER);
-    ind.classList.toggle('ready', dist >= TRIGGER);
+    if (delta <= 0 || scroller.scrollTop > 0) { hide(); return; }
+    progress = delta / PULL.TRIGGER;
+    place(progress);
     if (e.cancelable) e.preventDefault();
   }, { passive: false });
 
   scroller.addEventListener('touchend', async () => {
     if (!tracking) return;
-    const fire = dist >= TRIGGER;
     tracking = false;
-    if (!fire) return reset();
+    if (progress < 1) return hide();
 
-    /* Settle to the spin position from wherever the finger was, rather than
-       jumping there. */
+    busy = true;
     ind.classList.add('settling', 'spin');
-    ind.style.transform = `translateY(${HOLD}px)`;
+    ind.style.transform = `translateY(${PULL.SHOWN}px)`;
     ind.style.opacity = '1';
-    try { await refresh({ quiet: false }); } finally {
-      ind.classList.remove('spin', 'ready');
-      reset();
-    }
+    try { await refresh({ quiet: false }); }
+    finally { ind.classList.remove('spin'); hide(); busy = false; }
   }, { passive: true });
 
-  scroller.addEventListener('touchcancel', reset, { passive: true });
-
-  function reset(){
-    tracking = false; dist = 0;
-    ind.classList.add('settling');
-    ind.style.transform = `translateY(${REST}px)`;
-    ind.style.opacity = '0';
-    ind.classList.remove('ready');
-  }
+  scroller.addEventListener('touchcancel', hide, { passive: true });
 }
 
 /* ==================== staying current ==================== */
@@ -1283,7 +1302,7 @@ async function refresh({ quiet = true } = {}){
 
     const [pend, appr] = await Promise.all([listFolder('pending'), listFolder('approved')]);
     PENDING = pend; APPROVED = appr;
-    await Promise.all([loadPlan(), loadHave(), loadGot(), checkSeed()]);
+    await Promise.all([loadPlan(), loadHave(), loadGot(), checkSeed(), loadIdeas()]);
     lastRefresh = Date.now();
     render();
     if (pane === 'list') renderList();
@@ -1553,6 +1572,19 @@ function renderHome(){
       <div class="rows">${cold.map(({r, days}) => rowCard(
         r, `openRecipe('${r.id}','approved','home','Kitchen')`,
         days === null ? 'never cooked' : `${days} days ago`)).join('')}</div>`;
+  }
+
+  /* The suggester can only reshuffle what you own; this is how the collection
+     itself grows in a direction you didn't already have. */
+  if (meals.length >= 3) {
+    h += `<button class="banner quiet" onclick="go('ideas')">
+      <span class="n">✦</span>
+      <span class="txt">Find something new
+        <small>${IDEAS?.ideas?.length
+          ? `${IDEAS.ideas.length} ideas waiting`
+          : "Gaps in what you cook, and real recipes to fill them"}</small></span>
+      <span class="arw">›</span>
+    </button>`;
   }
 
   /* Your collection. A vertical list rather than a sideways strip: it shows
@@ -2293,6 +2325,101 @@ function roleOf(r){
   return 'main';
 }
 const isMain = r => roleOf(r) === 'main';
+
+/* ==================== finding something new ==================== */
+/* The week suggester can only reshuffle what you already own. This is the
+   other half: Claude looks at the gaps and searches the web for real recipes
+   by real cooks. It never writes one -- a generated recipe has no source and
+   no original text, which is how invented quantities get in. Every idea here
+   is a link that goes through the same extraction and review as anything else. */
+let IDEAS = null, IDEAS_SHA = null, ideasPending = false;
+
+async function loadIdeas(){
+  const f = await gh(`/repos/${CFG.repo}/contents/ideas.json`);
+  if (f && f.content) {
+    try { IDEAS = JSON.parse(b64decode(f.content)); IDEAS_SHA = f.sha; } catch { IDEAS = null; }
+  } else { IDEAS = null; IDEAS_SHA = null; }
+}
+
+/* The app holds no API key, so this goes the same way recipes do: open an
+   issue, the Action does the work, the result comes back as a file. */
+async function askForIdeas(){
+  if (ideasPending) return toast('Already looking');
+  ideasPending = true;
+  renderIdeas();
+  go('ideas');
+  try {
+    await gh(`/repos/${CFG.repo}/issues`, {
+      method: 'POST',
+      body: JSON.stringify({ title: 'Ideas', body: 'ideas' }),
+    });
+    toast('Looking — about a minute');
+    /* Poll rather than make them pull to refresh for something they just asked for. */
+    const started = IDEAS?.generatedAt || '';
+    for (let i = 0; i < 30; i++) {
+      await new Promise(r => setTimeout(r, 6000));
+      await loadIdeas();
+      if (IDEAS && JSON.stringify(IDEAS.generatedAt + IDEAS.ideas?.length) !== started + (0)) {
+        if (IDEAS.ideas?.length) break;
+      }
+    }
+    renderIdeas();
+  } catch (e) {
+    toast(e.message, true);
+  } finally {
+    ideasPending = false;
+    renderIdeas();
+  }
+}
+
+function renderIdeas(){
+  const sub = document.getElementById('ideas-sub');
+  const list = document.getElementById('ideas-list');
+  if (!sub || !list) return;
+
+  if (ideasPending) {
+    sub.textContent = 'Looking at what you cook and searching for the gaps.';
+    list.innerHTML = '<div class="skel" style="height:96px"></div>'.repeat(3);
+    return;
+  }
+  if (!IDEAS || !IDEAS.ideas?.length) {
+    sub.textContent = '';
+    list.innerHTML = emptyState('search', 'Nothing yet',
+      'Ask and Claude will look at what you already cook, work out what\'s missing, and go find real recipes for it.');
+    return;
+  }
+
+  sub.textContent = IDEAS.gaps?.length ? IDEAS.gaps.join(' · ') : '';
+  list.innerHTML = `<div class="rows">${IDEAS.ideas.map((i, n) => {
+    const have = APPROVED.some(r => (r.source?.url || '').split('?')[0] === (i.url || '').split('?')[0]);
+    const bits = [i.cuisine, i.effort, i.vegetarian === 'as-written' ? 'vegetarian'
+                  : i.vegetarian === 'easy-swap' ? 'one swap' : null].filter(Boolean);
+    return `<div class="idea">
+      <h4>${esc(i.title)}</h4>
+      <p class="why">${esc(i.why || '')}</p>
+      <p class="m">${bits.map(esc).join(' <span class="sep">·</span> ')}</p>
+      <div class="idea-foot">
+        <a class="idea-src" href="${esc(i.url)}" target="_blank" rel="noopener">${esc(i.source || 'source')} ↗</a>
+        ${have ? `<span class="idea-have">Already saved</span>`
+               : `<button class="btn btn-s idea-save" onclick="saveIdea(${n})">Save it</button>`}
+      </div>
+    </div>`;
+  }).join('')}</div>`;
+}
+
+/* Sending it through the normal pipeline is the whole point -- it arrives in
+   the queue with rawText and a source URL, and gets reviewed like anything else. */
+async function saveIdea(n){
+  const idea = IDEAS?.ideas?.[n];
+  if (!idea) return;
+  try {
+    await gh(`/repos/${CFG.repo}/issues`, {
+      method: 'POST',
+      body: JSON.stringify({ title: `Recipe: ${idea.title}`, body: idea.url }),
+    });
+    toast(`Fetching ${idea.title} — check the queue in a minute`);
+  } catch (e) { toast(e.message, true); }
+}
 
 /* ==================== suggesting a week ==================== */
 /* Planning is the weekly chore. This does the first pass: pick meals you

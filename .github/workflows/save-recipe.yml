@@ -67,7 +67,10 @@ jobs:
           git config user.name  "pantry"
           git config user.email "pantry@users.noreply.github.com"
           git add recipes/
-          git commit -m "add: $TITLE"
+          # only present on an ideas run, and `set -e` would kill the job
+          [ -f ideas.json ] && git add ideas.json || true
+          if [ -n "$TITLE" ]; then MSG="add: $TITLE"; else MSG="pantry: new ideas"; fi
+          git commit -m "$MSG"
 
           for attempt in 1 2 3 4 5; do
             if git push origin HEAD:main; then

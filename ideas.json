@@ -1,0 +1,68 @@
+{
+  "generatedAt": "2026-08-14",
+  "gaps": [
+    "No fish or seafood of any kind across all 13 mains.",
+    "Korean cuisine is entirely absent.",
+    "Chinese cuisine is absent — the one Asian dish is a generic noodle.",
+    "North Indian cooking is missing; the only Indian dish is South Indian.",
+    "The Big Green Egg and grill are never used for a weekend project main.",
+    "Italian pasta stays at one technique (aglio e olio); no umami-built or caramelized sauce."
+  ],
+  "ideas": [
+    {
+      "title": "Crispy Pan Fried Fish",
+      "cuisine": "universal / technique",
+      "url": "https://www.recipetineats.com/crispy-pan-fried-fish/",
+      "source": "RecipeTin Eats",
+      "why": "Seafood is completely absent from the rotation; this cast-iron technique fills the protein gap fast on a weeknight.",
+      "effort": "weeknight",
+      "vegetarian": "needs-meat"
+    },
+    {
+      "title": "Japchae (Sweet Potato Starch Noodles Stir Fried with Vegetables)",
+      "cuisine": "Korean",
+      "url": "https://www.maangchi.com/recipe/japchae",
+      "source": "Maangchi",
+      "why": "Korean cuisine is completely missing; this wok-friendly glass-noodle dish is instantly kid-approved and trivially made vegetarian.",
+      "effort": "weeknight",
+      "vegetarian": "easy-swap"
+    },
+    {
+      "title": "Vegan Mapo Tofu",
+      "cuisine": "Chinese (Sichuan)",
+      "url": "https://thewoksoflife.com/vegan-mapo-tofu/",
+      "source": "The Woks of Life",
+      "why": "Chinese cuisine is absent and tofu as a protein never appears; shiitake mushrooms replace pork without sacrificing umami.",
+      "effort": "weeknight",
+      "vegetarian": "as-written"
+    },
+    {
+      "title": "Palak Paneer",
+      "cuisine": "North Indian",
+      "url": "https://www.indianhealthyrecipes.com/palak-paneer-recipe-easy-paneer-recipes-step-by-step-pics/",
+      "source": "Indian Healthy Recipes (Swasthi's)",
+      "why": "North Indian cooking is missing entirely; paneer introduces a new vegetarian protein and a totally different spice vocabulary from the one South Indian dish already in rotation.",
+      "effort": "weeknight",
+      "vegetarian": "as-written"
+    },
+    {
+      "title": "BBQ Char Siu (Chinese Roast Pork) on the Grill",
+      "cuisine": "Cantonese",
+      "url": "https://thewoksoflife.com/bbq-char-siu-grill/",
+      "source": "The Woks of Life",
+      "why": "The Big Green Egg is never used for a project main; overnight-marinated pork shoulder over live fire fills the weekend-project and Chinese-cuisine gaps at once.",
+      "effort": "project",
+      "vegetarian": "needs-meat"
+    },
+    {
+      "title": "Caramelized Shallot Pasta",
+      "cuisine": "Italian-American",
+      "url": "https://www.alisoneroman.com/recipes/caramelized-shallot-pasta/",
+      "source": "Alison Roman",
+      "why": "Italian pasta stays at a single technique; this anchovy-and-tomato-paste jammy sauce teaches a completely different flavor-building approach and is vegetarian with one ingredient omitted.",
+      "effort": "weeknight",
+      "vegetarian": "easy-swap"
+    }
+  ],
+  "basedOn": 13
+}

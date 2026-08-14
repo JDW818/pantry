@@ -74,7 +74,7 @@ main{
   flex:1 1 auto;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;
   overscroll-behavior-y:contain;width:100%;position:relative;z-index:1;
 }
-.inner{max-width:680px;margin:0 auto;padding:22px 20px 32px}
+.inner{max-width:680px;margin:0 auto;padding:22px 20px 32px;position:relative}
 .view{display:none}
 .view.on{display:block;animation:in .3s cubic-bezier(.2,.7,.3,1) both}
 @keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
@@ -294,6 +294,20 @@ label{display:block;font-family:var(--fm);font-size:12px;letter-spacing:.12em;te
   ul.ing li{font-size:17px}
   .sheet{padding:20px 17px}
 }
+/* The source's own photo. onerror removes the block, because link rot on
+   someone else's CDN shouldn't leave a broken-image box in your recipe. */
+.hero-img{
+  border-radius:18px;overflow:hidden;margin-bottom:12px;background:var(--ink-2);
+  aspect-ratio:16/10;
+}
+.hero-img img{width:100%;height:100%;object-fit:cover;display:block}
+.src-link{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  margin-top:18px;padding:14px 0 0;border-top:1px solid var(--paper-2);
+  color:#5C534B;font-size:15px;text-decoration:none;min-height:44px;
+}
+.src-link svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.src-link:active{color:#4E6618}
 .sheet{background:var(--paper);color:#1B1815;border-radius:18px;padding:22px 19px;margin-bottom:12px}
 .sheet h2{font-family:var(--fd);font-size:27px;font-weight:600;line-height:1.1;letter-spacing:-.026em;margin:0 0 9px}
 .sheet .desc{font-size:15px;line-height:1.55;color:#5C534B;margin:0 0 16px}
@@ -459,6 +473,20 @@ ol.steps .amt{font-weight:600;color:#1B1815}
 .trio .field{margin-bottom:14px}
 .trio input{padding:12px 10px;text-align:center}
 /* ---------- suggestion review ---------- */
+.working{padding:34px 8px;text-align:center}
+.working-dot{
+  width:11px;height:11px;border-radius:50%;background:var(--herb);margin:0 auto 18px;
+  animation:breathe 1.6s ease-in-out infinite;
+}
+@keyframes breathe{
+  0%,100%{opacity:.28;transform:scale(.82)}
+  50%{opacity:1;transform:scale(1)}
+}
+.working p{margin:0;font-size:17px;color:var(--text);line-height:1.45}
+.working .working-note{
+  margin-top:12px;font-size:15px;color:var(--muted-2);line-height:1.55;
+  max-width:300px;margin-left:auto;margin-right:auto;
+}
 .idea{
   background:var(--ink-2);border:1px solid var(--line);border-radius:var(--r);
   padding:15px 16px;margin-bottom:9px;
@@ -553,6 +581,10 @@ textarea.ed:focus{border-color:var(--herb);outline:none}
 }
 .reassure{display:flex;gap:10px;align-items:flex-start;margin-top:24px;font-size:13px;line-height:1.55;color:var(--muted-2)}
 .reassure svg{width:15px;height:15px;stroke:var(--herb-deep);fill:none;stroke-width:1.7;flex-shrink:0;margin-top:1px}
+.buildstamp{
+  text-align:center;margin:18px 0 0;font-size:13px;color:var(--dim);
+}
+.buildstamp b{font-family:var(--fm);font-weight:400;color:var(--muted-2)}
 .helplink{display:block;margin:18px auto 0;color:var(--muted-2);font-size:13px;text-decoration:underline}
 .note{font-size:13px;color:var(--muted-2);line-height:1.65}
 .note code{font-family:var(--fm);font-size:13px;background:var(--ink-3);padding:2px 6px;border-radius:5px}
@@ -574,8 +606,13 @@ textarea.ed:focus{border-color:var(--herb);outline:none}
    it barely moves. The indicator travels 34px total, from tucked behind the
    header to just below it. How far you have pulled is shown by rotation and
    opacity, not by walking the spinner down over the content. */
+/* Absolutely positioned against .inner, not the viewport, and with no measured
+   offset anywhere. The gesture only fires when the scroller is already at the
+   top, so .inner's top edge is exactly the visible top -- which is what
+   "just under the header" means. Two failed attempts at computing that
+   position are the reason this is structural now. */
 .pull{
-  position:fixed;top:var(--top-h,58px);left:50%;margin-left:-17px;
+  position:absolute;top:0;left:50%;margin-left:-17px;
   width:34px;height:34px;border-radius:50%;display:grid;place-items:center;
   background:var(--ink-3);border:1px solid var(--line-2);color:var(--muted);
   opacity:0;pointer-events:none;z-index:20;transform:translateY(-40px);
@@ -605,12 +642,11 @@ textarea.ed:focus{border-color:var(--herb);outline:none}
   </span>
 </header>
 
+<main>
+<div class="inner">
 <div class="pull" id="pull" aria-hidden="true">
   <svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-2.6-6.4"/><path d="M21 3v6h-6"/></svg>
 </div>
-
-<main>
-<div class="inner">
 
 <!-- ============ WELCOME ============ -->
 <section class="view" id="v-settings">
@@ -649,6 +685,10 @@ textarea.ed:focus{border-color:var(--herb);outline:none}
       <button class="btn btn-s btn-w" style="margin-top:10px" onclick="importSeed()">Import from seed.json</button>
       <button class="btn btn-s btn-w" style="margin-top:8px" onclick="clearHave()">Clear the "already have" list</button>
       <p class="note" id="have-count" style="text-align:center;margin-top:8px"></p>
+      <p class="note" style="text-align:center;margin-top:16px">
+        Version <b id="build-stamp"></b>
+      </p>
+      <p class="buildstamp">Version <b id="build-id"></b></p>
       <button class="helplink" onclick="toggleHelp()">Token not working?</button>
       <p class="note" id="help" hidden style="margin-top:14px">
         It needs <b>Contents: read and write</b> on this repo, not just Issues —
@@ -789,6 +829,10 @@ textarea.ed:focus{border-color:var(--herb);outline:none}
 
 <script>
 'use strict';
+
+/* Bumped every time this file ships. Settings shows it, so there's a way to
+   tell whether the copy running on your phone is the one you were handed. */
+const BUILD = '2026-08-14 · ideas';
 
 /* ==================== storage ==================== */
 const mem = {};
@@ -986,6 +1030,8 @@ async function boot(){
 }
 
 function prefill(){
+  const b = document.getElementById('build-id');
+  if (b) b.textContent = BUILD;
   document.getElementById('f-token').value = CFG.token;
   document.getElementById('f-name').value = CFG.name || '';
   paintRepo();
@@ -1214,24 +1260,13 @@ async function commitPlan(apply){
    Geometry that matters: the indicator moves between two fixed points a short
    distance apart and never travels with the finger -- it peeks out from under
    the header and stops. Pull progress is rotation and opacity. */
-const PULL = { HIDDEN: -40, SHOWN: -6, TRIGGER: 80 };   // px, px, finger travel
+const PULL = { HIDDEN: -46, SHOWN: 2, TRIGGER: 80 };   // px, px, finger travel
 
 function initPullToRefresh(){
   const scroller = document.querySelector('main');
   const ind = document.getElementById('pull');
   const icon = ind && ind.querySelector('svg');
   if (!scroller || !ind) return;
-
-  /* Header height varies with the safe-area inset, so measure it. */
-  const sizeHeader = () => {
-    const top = document.querySelector('.top');
-    if (top && top.offsetHeight) {
-      document.documentElement.style.setProperty('--top-h', `${top.offsetHeight + 6}px`);
-    }
-  };
-  sizeHeader();
-  window.addEventListener('resize', sizeHeader);
-  window.addEventListener('orientationchange', () => setTimeout(sizeHeader, 250));
 
   let startY = 0, progress = 0, tracking = false, busy = false;
 
@@ -1518,19 +1553,32 @@ function renderHome(){
       </span>
     </button>`;
   } else {
-    h += `<button class="hero" onclick="pick('${today}')">
+    h += `<button class="hero" onclick="pick('${today()}')">
       <span class="when">Tonight</span>
       <h2 class="none">${meals.length ? 'Nothing planned — pick something' : 'Nothing planned yet'}</h2>
       <span class="facts"><span class="pill">${meals.length ? 'Tap to choose' : 'Approve a recipe first'}</span></span>
     </button>`;
-    if (meals.length > 3) {
-      h += `<button class="banner quiet" onclick="suggestWeek()">
-        <span class="n">✦</span>
-        <span class="txt">Plan the week for me
-          <small>Picks from what you haven't made lately</small></span>
-        <span class="arw">›</span>
-      </button>`;
-    }
+  }
+
+  /* Everything that offers to do something for you sits together directly
+     under the hero. A banner stranded between two lists reads as an error. */
+  if (meals.length > 3) {
+    h += `<button class="banner quiet" onclick="suggestWeek()">
+      <span class="n">✦</span>
+      <span class="txt">Plan the week for me
+        <small>Picks from what you haven't made lately</small></span>
+      <span class="arw">›</span>
+    </button>`;
+  }
+  if (meals.length >= 3) {
+    h += `<button class="banner quiet" onclick="go('ideas')">
+      <span class="n">✦</span>
+      <span class="txt">Find something new
+        <small>${ideasPending ? 'Looking…'
+          : IDEAS?.ideas?.length ? `${IDEAS.ideas.length} ideas waiting`
+          : "Gaps in what you cook, and real recipes to fill them"}</small></span>
+      <span class="arw">›</span>
+    </button>`;
   }
 
   /* Banners sit together under the hero -- both are "something needs you". */
@@ -1572,19 +1620,6 @@ function renderHome(){
       <div class="rows">${cold.map(({r, days}) => rowCard(
         r, `openRecipe('${r.id}','approved','home','Kitchen')`,
         days === null ? 'never cooked' : `${days} days ago`)).join('')}</div>`;
-  }
-
-  /* The suggester can only reshuffle what you own; this is how the collection
-     itself grows in a direction you didn't already have. */
-  if (meals.length >= 3) {
-    h += `<button class="banner quiet" onclick="go('ideas')">
-      <span class="n">✦</span>
-      <span class="txt">Find something new
-        <small>${IDEAS?.ideas?.length
-          ? `${IDEAS.ideas.length} ideas waiting`
-          : "Gaps in what you cook, and real recipes to fill them"}</small></span>
-      <span class="arw">›</span>
-    </button>`;
   }
 
   /* Your collection. A vertical list rather than a sideways strip: it shows
@@ -1810,6 +1845,8 @@ function renderDetail(){
   const at = dur(r.activeTimeMin), tt = dur(r.totalTimeMin);
 
   document.getElementById('detail').innerHTML = `
+    ${r.image ? `<div class="hero-img"><img src="${esc(r.image)}" alt="" loading="lazy"
+        onerror="this.parentElement.remove()"></div>` : ''}
     <div class="sheet">
       <h2>${esc(r.title)}</h2>
       ${r.description ? `<p class="desc">${esc(r.description)}</p>` : ''}
@@ -1842,6 +1879,10 @@ function renderDetail(){
       <ol class="steps">${steps}</ol>
       ${cleanNotes(r.sourceNotes) ? `<p class="sec">Worth knowing</p>
         <p class="notes">${esc(cleanNotes(r.sourceNotes))}</p>` : ''}
+      ${r.source?.url ? `<a class="src-link" href="${esc(r.source.url)}" target="_blank" rel="noopener">
+          <span>View the original${r.source.author ? ` on ${esc(String(r.source.author).replace(/^www\./,''))}` : ''}</span>
+          <svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H9M17 7v8"/></svg>
+        </a>` : ''}
       ${r.rawText ? `<details class="raw"><summary>Original as written</summary><pre>${esc(r.rawText)}</pre></details>` : ''}
     </div>
     ${pending
@@ -2342,34 +2383,97 @@ async function loadIdeas(){
 }
 
 /* The app holds no API key, so this goes the same way recipes do: open an
-   issue, the Action does the work, the result comes back as a file. */
+   issue, the Action does the work, the result comes back as a file.
+
+   That takes a minute or so, and a minute of nothing is unacceptable -- so
+   this reports what's actually happening by watching the workflow run, and it
+   doesn't trap you here: leave and it keeps going, and you get told when it
+   lands. */
+let ideasStage = '';
+
+function setStage(text){
+  ideasStage = text;
+  const el = document.getElementById('ideas-stage');
+  if (el) el.textContent = text;
+  else renderIdeas();
+  /* The kitchen banner shows the same state -- it has to move with it, or
+     walking away from this screen shows you a stale invitation to start. */
+  renderHome();
+}
+
+/* Ask GitHub what the run is actually doing rather than guessing at a spinner. */
+async function latestRunState(since){
+  try {
+    const r = await gh(`/repos/${CFG.repo}/actions/runs?event=issues&per_page=5`);
+    const run = (r?.workflow_runs || []).find(w => new Date(w.created_at) >= since);
+    if (!run) return 'queued';
+    if (run.status === 'completed') return run.conclusion === 'success' ? 'done' : 'failed';
+    return run.status === 'in_progress' ? 'running' : 'queued';
+  } catch { return null; }
+}
+
 async function askForIdeas(){
-  if (ideasPending) return toast('Already looking');
+  if (ideasPending) { go('ideas'); return; }
   ideasPending = true;
-  renderIdeas();
+  const before = IDEAS?.generatedAt || '';
+  const startedAt = new Date(Date.now() - 5000);
+
+  setStage('Asking…');
   go('ideas');
+
   try {
     await gh(`/repos/${CFG.repo}/issues`, {
       method: 'POST',
       body: JSON.stringify({ title: 'Ideas', body: 'ideas' }),
     });
-    toast('Looking — about a minute');
-    /* Poll rather than make them pull to refresh for something they just asked for. */
-    const started = IDEAS?.generatedAt || '';
-    for (let i = 0; i < 30; i++) {
-      await new Promise(r => setTimeout(r, 6000));
+  } catch (e) {
+    ideasPending = false;
+    setStage('');
+    return toast(e.message, true);
+  }
+
+  /* Poll in the background. Leaving the screen doesn't cancel it. */
+  (async () => {
+    let stage = 'queued';
+    for (let i = 0; i < 60; i++) {
+      await new Promise(r => setTimeout(r, 4000));
+
+      const s = await latestRunState(startedAt);
+      if (s && s !== stage) {
+        stage = s;
+        if (s === 'queued')  setStage('Waiting for a runner…');
+        if (s === 'running') setStage('Reading your collection and searching…');
+      }
+
       await loadIdeas();
-      if (IDEAS && JSON.stringify(IDEAS.generatedAt + IDEAS.ideas?.length) !== started + (0)) {
-        if (IDEAS.ideas?.length) break;
+      if (IDEAS?.ideas?.length && IDEAS.generatedAt !== before) break;
+
+      if (stage === 'failed') {
+        ideasPending = false; setStage('');
+        renderIdeas();
+        return toast("That run failed — check the issue on GitHub", true);
+      }
+      if (stage === 'done') {
+        /* Finished but nothing new committed: it found nothing worth showing. */
+        await loadIdeas();
+        if (!IDEAS?.ideas?.length || IDEAS.generatedAt === before) {
+          ideasPending = false; setStage('');
+          renderIdeas();
+          return toast("Didn't turn up anything solid this time", true);
+        }
+        break;
       }
     }
-    renderIdeas();
-  } catch (e) {
-    toast(e.message, true);
-  } finally {
+
     ideasPending = false;
+    setStage('');
+    render();
     renderIdeas();
-  }
+    if (IDEAS?.ideas?.length) {
+      toast(`${IDEAS.ideas.length} ideas ready`);
+      try { navigator.vibrate?.(120); } catch {}
+    }
+  })();
 }
 
 function renderIdeas(){
@@ -2378,8 +2482,12 @@ function renderIdeas(){
   if (!sub || !list) return;
 
   if (ideasPending) {
-    sub.textContent = 'Looking at what you cook and searching for the gaps.';
-    list.innerHTML = '<div class="skel" style="height:96px"></div>'.repeat(3);
+    sub.textContent = '';
+    list.innerHTML = `<div class="working">
+      <div class="working-dot"></div>
+      <p id="ideas-stage">${esc(ideasStage || 'Starting…')}</p>
+      <p class="working-note">Takes about a minute. You can go and do something else — this keeps running, and you'll get a nudge when it lands.</p>
+    </div>`;
     return;
   }
   if (!IDEAS || !IDEAS.ideas?.length) {

@@ -1,68 +1,67 @@
 {
   "generatedAt": "2026-08-14",
   "gaps": [
-    "No Korean cuisine at all, despite owning a Big Green Egg and carbon steel wok that are ideal for it.",
-    "No Japanese cuisine at all — a whole culinary tradition absent from a household with good equipment.",
-    "No North Indian cuisine — the one Indian dish is South Indian; paneer and greens-based curries are completely missing.",
-    "Eggs are never used as a protein, leaving a fast, cheap, vegetarian-friendly slot empty.",
-    "No Levantine or Middle Eastern mains — the existing 'Middle Eastern-inspired' dish is a stew; the rice-and-lentil tradition is unused.",
-    "No Chinese cuisine — the wok's native genre is absent despite the equipment being there.",
-    "The weekend project slot is thin: only one true project dish (birria); the Ooni and Big Green Egg can do much more."
+    "No Korean food at all — a cuisine the wok and kid-friendly palates are perfectly suited for.",
+    "No seafood of any kind in 13 mains.",
+    "No North African or Maghrebi cuisine.",
+    "No Sichuan or Taiwanese Chinese cooking despite owning a carbon steel wok.",
+    "Only one North Indian dish (rice kanji); no slow-cooked Punjabi/restaurant-style lentil dishes.",
+    "Pork appears once (birria uses beef, blanket dumplings use pork) but no standalone pork project for the Big Green Egg or oven."
   ],
   "ideas": [
     {
-      "title": "Bulgogi (Korean Beef BBQ)",
+      "title": "Easy Japchae (Korean Stir-Fried Glass Noodles and Vegetables)",
       "cuisine": "Korean",
-      "url": "https://www.maangchi.com/recipe/bulgogi",
+      "url": "https://www.maangchi.com/recipe/easy-japchae",
       "source": "maangchi.com",
-      "why": "Fills the total absence of Korean cuisine and gives the Big Green Egg its first real BBQ project with a tested, crowd-pleasing marinade.",
+      "why": "Opens Korean cuisine for the first time and is a natural wok dish; meat is simply omitted for the vegetarian with no separate pan needed.",
       "effort": "weeknight",
       "vegetarian": "easy-swap"
     },
     {
-      "title": "Mapo Tofu (Vegan Version)",
-      "cuisine": "Chinese (Sichuan)",
-      "url": "https://thewoksoflife.com/vegan-mapo-tofu/",
+      "title": "Three Cup Tofu",
+      "cuisine": "Taiwanese",
+      "url": "https://thewoksoflife.com/three-cup-tofu/",
       "source": "thewoksoflife.com",
-      "why": "Fills the complete absence of Chinese cuisine and finally puts the carbon steel wok to use in its native genre, as-written for the vegetarian adult.",
+      "why": "Introduces Taiwanese cooking and a bold wok-based tofu technique that is as-written vegetarian and unfamiliar to the household.",
       "effort": "weeknight",
       "vegetarian": "as-written"
     },
     {
-      "title": "Saag Paneer",
-      "cuisine": "North Indian",
-      "url": "https://www.indianhealthyrecipes.com/saag-paneer/",
-      "source": "indianhealthyrecipes.com",
-      "why": "Fills the complete gap in North Indian cuisine and adds paneer as a new protein — a natural complement to the one South Indian dish they already cook.",
+      "title": "Mapo Tofu (The Real Deal)",
+      "cuisine": "Sichuan Chinese",
+      "url": "https://thewoksoflife.com/ma-po-tofu-real-deal/",
+      "source": "thewoksoflife.com",
+      "why": "Fills the Sichuan gap and exercises the wok properly; pork is a small garnish that is easily left out for the vegetarian using the site's linked vegan version.",
       "effort": "weeknight",
-      "vegetarian": "as-written"
-    },
-    {
-      "title": "Mujaddara with Spiced Yogurt",
-      "cuisine": "Levantine",
-      "url": "https://food52.com/recipes/8565-mujaddara-with-spiced-yogurt",
-      "source": "food52.com",
-      "why": "Fills the missing Levantine grain-and-legume tradition and adds lentils as a new protein with a make-ahead dish that improves overnight.",
-      "effort": "weeknight",
-      "vegetarian": "as-written"
-    },
-    {
-      "title": "Yotam Ottolenghi's Shakshuka",
-      "cuisine": "North African / Israeli",
-      "url": "https://food52.com/recipes/65845-yotam-ottolenghi-s-shakshuka",
-      "source": "food52.com",
-      "why": "Fills the egg-as-protein gap entirely and brings a fast, one-pan weeknight dinner from a cuisine and technique the household has never touched.",
-      "effort": "weeknight",
-      "vegetarian": "as-written"
-    },
-    {
-      "title": "Japanese Beef Curry (Beef Kare Raisu)",
-      "cuisine": "Japanese",
-      "url": "https://www.justonecookbook.com/japanese-beef-curry/",
-      "source": "justonecookbook.com",
-      "why": "Fills the total absence of Japanese cuisine with a mild, crowd-pleasing Dutch oven project that scales easily to six and tastes better the next day.",
-      "effort": "project",
       "vegetarian": "easy-swap"
+    },
+    {
+      "title": "Dal Makhani (Restaurant-Style)",
+      "cuisine": "North Indian / Punjabi",
+      "url": "https://www.indianhealthyrecipes.com/dal-makhani-recipe/",
+      "source": "indianhealthyrecipes.com",
+      "why": "Expands the thin North Indian slot beyond kanji with a slow-cooked black lentil project that is as-written vegetarian and suits the Dutch oven.",
+      "effort": "project",
+      "vegetarian": "as-written"
+    },
+    {
+      "title": "Moroccan Fish Tagine",
+      "cuisine": "North African / Moroccan",
+      "url": "https://americastestkitchen.com/recipes/12828-moroccan-fish-tagine",
+      "source": "americastestkitchen.com",
+      "why": "Adds both seafood and North African cuisine — two gaps in one — using the Dutch oven and a tested chermoula technique from ATK.",
+      "effort": "weeknight",
+      "vegetarian": "needs-meat"
+    },
+    {
+      "title": "Char Siu (Chinese BBQ Pork), Restaurant-Style",
+      "cuisine": "Cantonese Chinese",
+      "url": "https://thewoksoflife.com/chinese-bbq-pork-cha-siu/",
+      "source": "thewoksoflife.com",
+      "why": "A Big Green Egg weekend project that fills the Cantonese gap and gives pork a proper starring role; skinless pork shoulder is called for, fitting the household's no-skin rule.",
+      "effort": "project",
+      "vegetarian": "needs-meat"
     }
   ],
   "basedOn": 13

@@ -36,8 +36,24 @@ jobs:
             pip install anthropic requests yt-dlp
           fi
 
+      # An ideas run has no media to touch, and installing ffmpeg costs about
+      # 18 seconds of a job the person is sitting and waiting on.
+      - name: What kind of request is this
+        id: kind
+        env:
+          ISSUE_BODY: ${{ github.event.issue.body }}
+        run: |
+          body="$(printf '%s' "$ISSUE_BODY" | head -c 60 | tr '[:upper:]' '[:lower:]' | tr -d '[:space:]')"
+          case "$body" in
+            ideas|brainstorm|whatshouldweeat|whatshouldwecook|whatshouldweeat\?|whatshouldwecook\?)
+              echo "ideas=true"  >> "$GITHUB_OUTPUT" ;;
+            *)
+              echo "ideas=false" >> "$GITHUB_OUTPUT" ;;
+          esac
+
       - name: Install ffmpeg
         # Only needed when a caption is too short and we fall back to audio.
+        if: steps.kind.outputs.ideas != 'true'
         run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
 
       - name: Extract recipe

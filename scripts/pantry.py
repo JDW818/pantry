@@ -1021,6 +1021,221 @@ def free_id(base: str, taken: dict[str, str]) -> str:
     return f"{base}-{int(time.time())}"
 
 
+# ==================== brainstorming ====================
+# Claude never writes a recipe here. It reads what's already in the collection,
+# names the gaps, and searches the web for real recipes by real cooks. Every
+# suggestion is a link that goes through the normal extraction pipeline, so it
+# keeps its rawText and its source. A generated recipe would have neither --
+# that is exactly how you end up with invented quantities.
+
+TRUSTED_SOURCES = [
+    "seriouseats.com", "cooking.nytimes.com", "smittenkitchen.com",
+    "bonappetit.com", "food52.com", "thewoksoflife.com", "maangchi.com",
+    "hetty-lui-mckinnon", "justonecookbook.com", "rasamalaysia.com",
+    "indianhealthyrecipes.com", "recipetineats.com", "seriouseats.com",
+    "alisoneroman.com", "ottolenghi.co.uk", "bbcgoodfood.com",
+    "americastestkitchen.com", "kingarthurbaking.com", "budgetbytes.com",
+]
+
+
+def profile_collection() -> dict:
+    """What the household already cooks, in the terms the gaps matter in."""
+    recipes = []
+    d = ROOT / "recipes" / "approved"
+    if d.exists():
+        for f in sorted(d.glob("*.json")):
+            try:
+                recipes.append(json.loads(f.read_text()))
+            except Exception:
+                continue
+
+    def role_of(r):
+        if r.get("role"):
+            return r["role"]
+        if r.get("recipeType") == "component":
+            return "component"
+        tags = [str(t).lower() for t in (r.get("tags") or [])]
+        if any(t in ("dessert", "cake", "pie", "cookie", "sweet") for t in tags):
+            return "dessert"
+        if any(t in ("side", "bread", "salad", "vegetable", "snack") for t in tags):
+            return "side"
+        return "main"
+
+    mains = [r for r in recipes if role_of(r) == "main"]
+
+    def norm(c):
+        return (c or "").lower().replace("-", " ").replace("_", " ").strip()
+
+    cuisines, proteins, equipment, techniques = {}, {}, {}, {}
+    for r in mains:
+        c = norm(r.get("cuisine"))
+        if c:
+            cuisines[c] = cuisines.get(c, 0) + 1
+        p = (r.get("mainProtein") or "").lower()
+        if p:
+            proteins[p] = proteins.get(p, 0) + 1
+        for e in (r.get("equipment") or []):
+            equipment[str(e).lower()] = equipment.get(str(e).lower(), 0) + 1
+        for t in (r.get("tags") or []):
+            techniques[str(t).lower()] = techniques.get(str(t).lower(), 0) + 1
+
+    quick = [r for r in mains if (r.get("totalTimeMin") or 999) <= 45]
+    veg = [r for r in mains
+           if (r.get("vegetarian") or {}).get("status") in
+           ("inherently-veg", "easily-adaptable")]
+
+    return {
+        "titles": [r.get("title") for r in mains],
+        "count": len(mains),
+        "cuisines": cuisines,
+        "proteins": proteins,
+        "equipment": sorted(equipment, key=equipment.get, reverse=True)[:8],
+        "tags": sorted(techniques, key=techniques.get, reverse=True)[:15],
+        "quick_count": len(quick),
+        "veg_friendly_count": len(veg),
+    }
+
+
+IDEAS_SYSTEM = """You help a home cook widen what their family eats.
+
+You do NOT write recipes. You find them. Every suggestion must be a real recipe
+that a real person published and tested, located with the web search tool. If
+you cannot find a real URL for an idea, drop the idea. Never invent a URL,
+never reconstruct a recipe from memory, never suggest a page you have not seen
+in search results.
+
+THE HOUSEHOLD
+- Two adults and four children (6, 9, 12, 14). Cooks for six.
+- One adult is vegetarian. Dishes that work without meat, or with one easy
+  swap, are worth much more than ones needing a separate pan.
+- The cook is experienced: gas range, cast iron, carbon steel wok, Ooni pizza
+  oven, Big Green Egg. Do not suggest beginner food or shortcut versions.
+- Standing rules: no lamb, no skin-on cuts.
+- Weeknights need to be manageable. Weekends can be projects.
+
+WHAT MAKES A GOOD SUGGESTION
+- A dish they have never made, not a variation on one they have.
+- It fills a real gap -- a cuisine, a technique, a protein, or a time slot
+  that is missing or thin in their collection.
+- It comes from a source that tests recipes. Strongly prefer these:
+{SOURCES}
+  A personal blog is fine if the recipe is clearly well tested. Avoid
+  content-farm sites, listicles and aggregators.
+
+RETURN
+Only JSON, no commentary, no markdown fence:
+{
+  "gaps": ["short plain sentences naming what is missing"],
+  "ideas": [
+    {
+      "title": "the dish",
+      "cuisine": "...",
+      "url": "the real recipe URL you found",
+      "source": "the site name",
+      "why": "one sentence: the gap this fills, in their terms",
+      "effort": "weeknight" | "project",
+      "vegetarian": "as-written" | "easy-swap" | "needs-meat"
+    }
+  ]
+}
+Six ideas at most. Spread them across different gaps rather than six of the
+same cuisine. At least half should work for the vegetarian adult."""
+
+
+def find_ideas(client=None) -> dict:
+    client = client or anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
+    prof = profile_collection()
+
+    if prof["count"] < 3:
+        raise ExtractionFailed(
+            "Not enough recipes yet to spot a gap. Save a few more first.")
+
+    trace(f"profiling {prof['count']} mains across {len(prof['cuisines'])} cuisines")
+
+    ask = (
+        "Here is what the household already cooks.\n\n"
+        f"Mains ({prof['count']}): {', '.join(prof['titles'])}\n"
+        f"Cuisines: {json.dumps(prof['cuisines'])}\n"
+        f"Proteins: {json.dumps(prof['proteins'])}\n"
+        f"Common equipment: {', '.join(prof['equipment'])}\n"
+        f"Common tags: {', '.join(prof['tags'])}\n"
+        f"Under 45 minutes: {prof['quick_count']} of {prof['count']}\n"
+        f"Works for the vegetarian: {prof['veg_friendly_count']} of {prof['count']}\n\n"
+        "Work out what is missing, then search for real recipes that fill those "
+        "gaps. Return the JSON."
+    )
+
+    resp = client.messages.create(
+        model=MODEL,
+        max_tokens=8000,
+        system=IDEAS_SYSTEM.replace(
+            "{SOURCES}", "\n".join(f"  - {d}" for d in sorted(set(TRUSTED_SOURCES)))),
+        messages=[{"role": "user", "content": ask}],
+        tools=[{"type": "web_search_20250305", "name": "web_search", "max_uses": 12}],
+    )
+
+    raw = "".join(b.text for b in resp.content if getattr(b, "type", "") == "text")
+    data = _parse(raw)
+
+    ideas = [i for i in (data.get("ideas") or []) if _usable_idea(i)]
+    if not ideas:
+        raise ExtractionFailed("Search didn't turn up anything solid this time.")
+
+    trace(f"{len(ideas)} ideas kept of {len(data.get('ideas') or [])}")
+    return {
+        "generatedAt": _today(),
+        "gaps": data.get("gaps") or [],
+        "ideas": ideas,
+        "basedOn": prof["count"],
+    }
+
+
+def _usable_idea(i: dict) -> bool:
+    """An idea without a real, fetchable URL is worthless -- drop it silently
+    rather than showing a suggestion that can't be saved."""
+    url = (i or {}).get("url") or ""
+    if not re.match(r"^https?://[^\s]+\.[^\s]+", url):
+        return False
+    if any(bad in url for bad in ("example.com", "recipe-url", "...")):
+        return False
+    return bool(i.get("title"))
+
+
+def _today() -> str:
+    return __import__("datetime").date.today().isoformat()
+
+
+def run_ideas() -> int:
+    """Writes ideas.json for the app to pick up."""
+    try:
+        data = find_ideas()
+    except ExtractionFailed as e:
+        say(f"**Couldn't come up with anything.**\n\n{e}")
+        out("saved", "false")
+        return 0
+    except Exception as e:
+        say(f"**Something went wrong looking for ideas.**\n\n```\n{e}\n```")
+        out("saved", "false")
+        return 1
+
+    (ROOT / "ideas.json").write_text(
+        json.dumps(data, indent=2, ensure_ascii=False) + "\n")
+
+    lines = ["**Some things you haven't made.**", ""]
+    for g in data["gaps"]:
+        lines.append(f"- {g}")
+    lines.append("")
+    for i in data["ideas"]:
+        lines.append(f"**{i['title']}** — {i.get('why','')}  ")
+        lines.append(f"{i.get('source','')} · {i['url']}")
+        lines.append("")
+    lines.append("Open the app to save any of them.")
+    say("\n".join(lines))
+    out("saved", "true")
+    out("kind", "ideas")
+    return 0
+
+
 def main() -> int:
     body = (os.environ.get("ISSUE_BODY") or "").strip()
     author = os.environ.get("ISSUE_AUTHOR", "")
@@ -1037,6 +1252,11 @@ def main() -> int:
     source = m.group(0) if m else body
 
     trace(f"issue body: {len(body)} chars, author={author!r} -> addedBy={added_by!r}")
+
+    # A bare keyword asks for suggestions rather than an extraction.
+    if re.fullmatch(r"(ideas|brainstorm|what should we (eat|cook)\??)", body.strip(), re.I):
+        trace("route: ideas")
+        return run_ideas()
     trace(f"first line: {body.splitlines()[0][:120]!r}" if body.splitlines() else "empty body")
 
     # A photo pasted into the issue, or a path committed by a Shortcut.

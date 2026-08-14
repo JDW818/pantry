@@ -1,66 +1,67 @@
 {
   "generatedAt": "2026-08-14",
   "gaps": [
-    "No Korean food at all — a cuisine the wok and kid-friendly palates are perfectly suited for.",
-    "No seafood of any kind in 13 mains.",
-    "No North African or Maghrebi cuisine.",
-    "No Sichuan or Taiwanese Chinese cooking despite owning a carbon steel wok.",
-    "Only one North Indian dish (rice kanji); no slow-cooked Punjabi/restaurant-style lentil dishes.",
-    "Pork appears once (birria uses beef, blanket dumplings use pork) but no standalone pork project for the Big Green Egg or oven."
+    "Zero fish or seafood in the rotation despite a Big Green Egg and cast iron that beg for it.",
+    "No East Asian cuisine beyond a single stir-fry noodle dish — no Japanese, no Korean, no Sichuan.",
+    "Pork appears once but only in dumplings; it is underdeveloped as a standalone protein.",
+    "North African and Moroccan cooking is completely absent.",
+    "North Indian cooking is limited to one South Indian kanji; no creamy dal, no paneer dishes.",
+    "Weekend project slots are empty — everything skews quick or one-pot with no real technique stretch.",
+    "The beef dish (birria) is a long braise; a fast, high-heat beef technique is missing."
   ],
   "ideas": [
     {
-      "title": "Easy Japchae (Korean Stir-Fried Glass Noodles and Vegetables)",
-      "cuisine": "Korean",
-      "url": "https://www.maangchi.com/recipe/easy-japchae",
-      "source": "maangchi.com",
-      "why": "Opens Korean cuisine for the first time and is a natural wok dish; meat is simply omitted for the vegetarian with no separate pan needed.",
-      "effort": "weeknight",
-      "vegetarian": "easy-swap"
-    },
-    {
-      "title": "Three Cup Tofu",
-      "cuisine": "Taiwanese",
-      "url": "https://thewoksoflife.com/three-cup-tofu/",
+      "title": "Vegan Mapo Tofu",
+      "cuisine": "Sichuan Chinese",
+      "url": "https://thewoksoflife.com/vegan-mapo-tofu/",
       "source": "thewoksoflife.com",
-      "why": "Introduces Taiwanese cooking and a bold wok-based tofu technique that is as-written vegetarian and unfamiliar to the household.",
+      "why": "Fills the Sichuan gap and the tofu-protein gap in one wok dish the whole table — including the vegetarian — can eat as written.",
       "effort": "weeknight",
       "vegetarian": "as-written"
     },
     {
-      "title": "Mapo Tofu (The Real Deal)",
-      "cuisine": "Sichuan Chinese",
-      "url": "https://thewoksoflife.com/ma-po-tofu-real-deal/",
-      "source": "thewoksoflife.com",
-      "why": "Fills the Sichuan gap and exercises the wok properly; pork is a small garnish that is easily left out for the vegetarian using the site's linked vegan version.",
+      "title": "Japchae (Sweet Potato Starch Noodles Stir-Fried with Vegetables)",
+      "cuisine": "Korean",
+      "url": "https://www.maangchi.com/recipe/easy-japchae",
+      "source": "maangchi.com",
+      "why": "Opens Korean cuisine entirely, adds glass noodles as a new carb format, and works vegetarian by simply omitting meat.",
       "effort": "weeknight",
       "vegetarian": "easy-swap"
     },
     {
-      "title": "Dal Makhani (Restaurant-Style)",
-      "cuisine": "North Indian / Punjabi",
+      "title": "Vegetarian Japanese Curry",
+      "cuisine": "Japanese",
+      "url": "https://www.justonecookbook.com/vegetarian-japanese-curry/",
+      "source": "justonecookbook.com",
+      "why": "Brings Japanese cuisine into the rotation for the first time using a homemade roux — a technique they have never touched — and feeds the vegetarian adult as written.",
+      "effort": "weeknight",
+      "vegetarian": "as-written"
+    },
+    {
+      "title": "Dal Makhani",
+      "cuisine": "North Indian (Punjabi)",
       "url": "https://www.indianhealthyrecipes.com/dal-makhani-recipe/",
       "source": "indianhealthyrecipes.com",
-      "why": "Expands the thin North Indian slot beyond kanji with a slow-cooked black lentil project that is as-written vegetarian and suits the Dutch oven.",
+      "why": "Stretches the Indian repertoire beyond South Indian kanji into slow-cooked North Indian cooking with black lentils and kidney beans — completely vegetarian and Big Green Egg-smokeable.",
       "effort": "project",
       "vegetarian": "as-written"
     },
     {
       "title": "Moroccan Fish Tagine",
-      "cuisine": "North African / Moroccan",
-      "url": "https://americastestkitchen.com/recipes/12828-moroccan-fish-tagine",
+      "cuisine": "North African (Moroccan)",
+      "url": "https://www.americastestkitchen.com/recipes/12829-moroccan-fish-tagine-for-two",
       "source": "americastestkitchen.com",
-      "why": "Adds both seafood and North African cuisine — two gaps in one — using the Dutch oven and a tested chermoula technique from ATK.",
+      "why": "Closes two gaps simultaneously — fish as a protein and Moroccan cuisine — using the Dutch oven they already own and a chermoula herb-spice paste that is a completely new technique.",
       "effort": "weeknight",
       "vegetarian": "needs-meat"
     },
     {
-      "title": "Char Siu (Chinese BBQ Pork), Restaurant-Style",
-      "cuisine": "Cantonese Chinese",
-      "url": "https://thewoksoflife.com/chinese-bbq-pork-cha-siu/",
-      "source": "thewoksoflife.com",
-      "why": "A Big Green Egg weekend project that fills the Cantonese gap and gives pork a proper starring role; skinless pork shoulder is called for, fitting the household's no-skin rule.",
-      "effort": "project",
+      "title": "Ultra-Smashed Cheeseburger",
+      "cuisine": "American",
+      "url": "https://www.seriouseats.com/recipes/2014/03/ultra-smashed-cheeseburger-recipe-food-lab.html",
+      "source": "seriouseats.com",
+      "why": "Adds a fast, high-heat cast-iron beef technique that is completely different from the long birria braise — maximizing Maillard crust, a skill the household does not yet have in the burger format.",
+      "effort": "weeknight",
       "vegetarian": "needs-meat"
     }
   ],

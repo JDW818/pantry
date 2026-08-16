@@ -473,6 +473,31 @@ ol.steps .amt{font-weight:600;color:#1B1815}
 .trio .field{margin-bottom:14px}
 .trio input{padding:12px 10px;text-align:center}
 /* ---------- suggestion review ---------- */
+details.taste{margin-top:20px;border-top:1px solid var(--line);padding-top:16px}
+details.taste summary{
+  font-size:17px;color:var(--text);cursor:pointer;list-style:none;
+  min-height:44px;display:flex;align-items:center;
+}
+details.taste summary::-webkit-details-marker{display:none}
+details.taste summary::before{content:"› ";display:inline-block;margin-right:8px;transition:transform .2s}
+details.taste[open] summary::before{transform:rotate(90deg)}
+details.taste .note{margin:0 0 12px}
+details.taste textarea{margin-bottom:10px}
+details.gaps{margin:0 0 18px;border:1px solid var(--line);border-radius:var(--r);padding:13px 15px}
+details.gaps summary{
+  font-size:15px;color:var(--muted);cursor:pointer;list-style:none;
+  min-height:24px;display:flex;align-items:center;
+}
+details.gaps summary::-webkit-details-marker{display:none}
+details.gaps summary::before{content:"› ";display:inline-block;margin-right:7px;transition:transform .2s}
+details.gaps[open] summary::before{transform:rotate(90deg)}
+details.gaps ul{margin:12px 0 0;padding-left:18px}
+details.gaps li{font-size:15px;line-height:1.5;color:var(--muted-2);margin-bottom:7px}
+.idea-acts{display:flex;align-items:center;gap:6px}
+.idea-no{
+  font-size:15px;color:var(--muted-2);padding:11px 13px;border-radius:9px;white-space:nowrap;
+}
+.idea-no:active{color:var(--chile)}
 .working{padding:34px 8px;text-align:center}
 .working-dot{
   width:11px;height:11px;border-radius:50%;background:var(--herb);margin:0 auto 18px;
@@ -740,6 +765,17 @@ textarea.ed:focus{border-color:var(--herb);outline:none}
   <button class="back" onclick="go('home')"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>Kitchen</button>
   <div class="head"><h1>Something new</h1><p class="sub" id="ideas-sub"></p></div>
   <div id="ideas-list"></div>
+
+  <details class="taste" id="taste-box">
+    <summary>What to keep in mind</summary>
+    <p class="note">Written into the prompt as you put it. Nuance is fine — it
+      reads better than a list of yes and no.</p>
+    <textarea class="ed" rows="5" id="taste-notes"
+      placeholder="e.g. We eat bacon and pancetta, but nobody wants pork chops. Ground pork I'd sub for chicken. The 6-year-old won't touch anything with visible chunks of tomato."
+      oninput="editTaste(this.value)"></textarea>
+    <p class="note" id="taste-rejected"></p>
+  </details>
+
   <button class="btn btn-s btn-w" style="margin-top:16px" onclick="askForIdeas()">Look again</button>
 </section>
 
@@ -832,7 +868,7 @@ textarea.ed:focus{border-color:var(--herb);outline:none}
 
 /* Bumped every time this file ships. Settings shows it, so there's a way to
    tell whether the copy running on your phone is the one you were handed. */
-const BUILD = '2026-08-14 · ideas render';
+const BUILD = '2026-08-16 · taste notes';
 
 /* ==================== storage ==================== */
 const mem = {};
@@ -1018,7 +1054,7 @@ async function boot(){
     '<div class="skel" style="height:150px"></div><div class="skel"></div><div class="skel"></div>';
   try {
     [PENDING, APPROVED] = await Promise.all([listFolder('pending'), listFolder('approved')]);
-    await Promise.all([loadPlan(), loadHave(), loadGot(), checkSeed(), loadIdeas()]);
+    await Promise.all([loadPlan(), loadHave(), loadGot(), checkSeed(), loadIdeas(), loadTaste()]);
     lastRefresh = Date.now();
     render();
   } catch (e) {
@@ -1337,7 +1373,7 @@ async function refresh({ quiet = true } = {}){
 
     const [pend, appr] = await Promise.all([listFolder('pending'), listFolder('approved')]);
     PENDING = pend; APPROVED = appr;
-    await Promise.all([loadPlan(), loadHave(), loadGot(), checkSeed(), loadIdeas()]);
+    await Promise.all([loadPlan(), loadHave(), loadGot(), checkSeed(), loadIdeas(), loadTaste()]);
     lastRefresh = Date.now();
     render();
     if (pane === 'list') renderList();
@@ -2382,6 +2418,59 @@ const isMain = r => roleOf(r) === 'main';
    is a link that goes through the same extraction and review as anything else. */
 let IDEAS = null, IDEAS_SHA = null, ideasPending = false;
 
+/* Taste is prose, not toggles. "We eat bacon but I don't want pork chops, and
+   I'd sub chicken into pork dumplings" cannot be expressed as a checkbox, and
+   flattening it into one would lose the part that matters. Free text goes
+   verbatim into the prompt. */
+let TASTE = { notes: '', rejected: [] }, TASTE_SHA = null;
+
+async function loadTaste(){
+  const f = await gh(`/repos/${CFG.repo}/contents/taste.json`);
+  if (f && f.content) {
+    try {
+      const t = JSON.parse(b64decode(f.content));
+      TASTE = { notes: t.notes || '', rejected: t.rejected || [] };
+      TASTE_SHA = f.sha;
+    } catch { /* leave the defaults */ }
+  }
+}
+
+function saveTaste(){
+  return queueWrite('taste.json', async () => {
+    const res = await commitShared('taste.json', raw => ({
+      notes: TASTE.notes,
+      /* merge, so a dismissal from the other phone isn't lost */
+      rejected: [...new Map(
+        [...(raw?.rejected || []), ...TASTE.rejected].map(r => [r.title, r])
+      ).values()],
+    }), () => TASTE);
+    if (res) { TASTE = res.value; TASTE_SHA = res.sha; }
+    return !!res;
+  });
+}
+
+let tasteTimer;
+function editTaste(text){
+  TASTE.notes = text;
+  clearTimeout(tasteTimer);
+  tasteTimer = setTimeout(async () => {
+    try { await saveTaste(); toast('Saved'); }
+    catch { toast("Couldn't save that", true); }
+  }, 1200);
+}
+
+/* Saying no is information. It comes off the list and goes into the prompt. */
+async function dismissIdea(n){
+  const idea = IDEAS?.ideas?.[n];
+  if (!idea) return;
+  TASTE.rejected = [...TASTE.rejected.filter(r => r.title !== idea.title),
+                    { title: idea.title, cuisine: idea.cuisine || '' }];
+  IDEAS.ideas = IDEAS.ideas.filter((_, i) => i !== n);
+  renderIdeas(); renderHome();
+  try { await saveTaste(); toast(`Won't suggest ${idea.title} again`); }
+  catch { toast("Couldn't save that", true); }
+}
+
 async function loadIdeas(){
   const f = await gh(`/repos/${CFG.repo}/contents/ideas.json`);
   if (f && f.content) {
@@ -2422,7 +2511,10 @@ async function latestRunState(since){
 async function askForIdeas(){
   if (ideasPending) { go('ideas'); return; }
   ideasPending = true;
-  const before = IDEAS?.generatedAt || '';
+  /* Fingerprint the actual ideas. A timestamp can repeat; the set of URLs
+     changing is what "new results" really means. */
+  const fingerprint = () => (IDEAS?.ideas || []).map(i => i.url).join('|');
+  const before = fingerprint();
   const startedAt = new Date(Date.now() - 5000);
 
   setStage('Asking…');
@@ -2453,7 +2545,7 @@ async function askForIdeas(){
       }
 
       await loadIdeas();
-      if (IDEAS?.ideas?.length && IDEAS.generatedAt !== before) break;
+      if (IDEAS?.ideas?.length && fingerprint() !== before) break;
 
       if (stage === 'failed') {
         ideasPending = false; setStage('');
@@ -2463,7 +2555,7 @@ async function askForIdeas(){
       if (stage === 'done') {
         /* Finished but nothing new committed: it found nothing worth showing. */
         await loadIdeas();
-        if (!IDEAS?.ideas?.length || IDEAS.generatedAt === before) {
+        if (!IDEAS?.ideas?.length || fingerprint() === before) {
           ideasPending = false; setStage('');
           renderIdeas();
           return toast("Didn't turn up anything solid this time", true);
@@ -2484,6 +2576,15 @@ async function askForIdeas(){
 }
 
 function renderIdeas(){
+  const box = document.getElementById('taste-notes');
+  if (box && box.value !== TASTE.notes && document.activeElement !== box) {
+    box.value = TASTE.notes;
+  }
+  const rej = document.getElementById('taste-rejected');
+  if (rej) rej.textContent = TASTE.rejected.length
+    ? `Won't suggest again: ${TASTE.rejected.map(r => r.title).join(', ')}`
+    : '';
+
   const sub = document.getElementById('ideas-sub');
   const list = document.getElementById('ideas-list');
   if (!sub || !list) return;
@@ -2504,8 +2605,15 @@ function renderIdeas(){
     return;
   }
 
-  sub.textContent = IDEAS.gaps?.length ? IDEAS.gaps.join(' · ') : '';
-  list.innerHTML = `<div class="rows">${IDEAS.ideas.map((i, n) => {
+  /* The gap analysis is genuinely useful but it is reference material, not the
+     thing you came for. Collapsed, with the ideas first. */
+  sub.textContent = '';
+  const gaps = IDEAS.gaps?.length
+    ? `<details class="gaps"><summary>${IDEAS.gaps.length} gaps found</summary>
+        <ul>${IDEAS.gaps.map(g => `<li>${esc(g)}</li>`).join('')}</ul></details>`
+    : '';
+
+  list.innerHTML = gaps + `<div class="rows">${IDEAS.ideas.map((i, n) => {
     const have = APPROVED.some(r => (r.source?.url || '').split('?')[0] === (i.url || '').split('?')[0]);
     const bits = [i.cuisine, i.effort, i.vegetarian === 'as-written' ? 'vegetarian'
                   : i.vegetarian === 'easy-swap' ? 'one swap' : null].filter(Boolean);
@@ -2516,7 +2624,10 @@ function renderIdeas(){
       <div class="idea-foot">
         <a class="idea-src" href="${esc(i.url)}" target="_blank" rel="noopener">${esc(i.source || 'source')} ↗</a>
         ${have ? `<span class="idea-have">Already saved</span>`
-               : `<button class="btn btn-s idea-save" onclick="saveIdea(${n})">Save it</button>`}
+               : `<span class="idea-acts">
+                    <button class="idea-no" onclick="dismissIdea(${n})">Not for us</button>
+                    <button class="btn btn-s idea-save" onclick="saveIdea(${n})">Save it</button>
+                  </span>`}
       </div>
     </div>`;
   }).join('')}</div>`;

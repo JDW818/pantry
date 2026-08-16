@@ -1,66 +1,65 @@
 {
-  "generatedAt": "2026-08-14",
+  "generatedAt": "2026-08-16",
   "gaps": [
-    "Zero fish or seafood in the rotation despite a Big Green Egg and cast iron that beg for it.",
-    "No East Asian cuisine beyond a single stir-fry noodle dish — no Japanese, no Korean, no Sichuan.",
-    "Pork appears once but only in dumplings; it is underdeveloped as a standalone protein.",
-    "North African and Moroccan cooking is completely absent.",
-    "North Indian cooking is limited to one South Indian kanji; no creamy dal, no paneer dishes.",
-    "Weekend project slots are empty — everything skews quick or one-pot with no real technique stretch.",
-    "The beef dish (birria) is a long braise; a fast, high-heat beef technique is missing."
+    "No fish or seafood of any kind — a large protein category completely absent.",
+    "No Korean, Japanese, or Chinese cuisine — East Asian cooking is nearly missing despite owning a wok and a Big Green Egg.",
+    "No egg-led mains — a fast, cheap vegetarian anchor that is missing.",
+    "Indian cooking appears only as a single South-Indian kanji; North Indian cuisine (the broader sub-cuisine) is untouched.",
+    "The Big Green Egg and Ooni are unused in the current list — no live-fire or slow-smoke projects.",
+    "Weeknight roster is thin on protein variety: only chicken appears once; pork and beef each once; no fish, no tofu, no eggs as a main."
   ],
   "ideas": [
     {
-      "title": "Vegan Mapo Tofu",
-      "cuisine": "Sichuan Chinese",
-      "url": "https://thewoksoflife.com/vegan-mapo-tofu/",
-      "source": "thewoksoflife.com",
-      "why": "Fills the Sichuan gap and the tofu-protein gap in one wok dish the whole table — including the vegetarian — can eat as written.",
-      "effort": "weeknight",
-      "vegetarian": "as-written"
-    },
-    {
-      "title": "Japchae (Sweet Potato Starch Noodles Stir-Fried with Vegetables)",
-      "cuisine": "Korean",
-      "url": "https://www.maangchi.com/recipe/easy-japchae",
-      "source": "maangchi.com",
-      "why": "Opens Korean cuisine entirely, adds glass noodles as a new carb format, and works vegetarian by simply omitting meat.",
-      "effort": "weeknight",
-      "vegetarian": "easy-swap"
-    },
-    {
-      "title": "Vegetarian Japanese Curry",
-      "cuisine": "Japanese",
-      "url": "https://www.justonecookbook.com/vegetarian-japanese-curry/",
-      "source": "justonecookbook.com",
-      "why": "Brings Japanese cuisine into the rotation for the first time using a homemade roux — a technique they have never touched — and feeds the vegetarian adult as written.",
-      "effort": "weeknight",
-      "vegetarian": "as-written"
-    },
-    {
-      "title": "Dal Makhani",
-      "cuisine": "North Indian (Punjabi)",
-      "url": "https://www.indianhealthyrecipes.com/dal-makhani-recipe/",
-      "source": "indianhealthyrecipes.com",
-      "why": "Stretches the Indian repertoire beyond South Indian kanji into slow-cooked North Indian cooking with black lentils and kidney beans — completely vegetarian and Big Green Egg-smokeable.",
-      "effort": "project",
-      "vegetarian": "as-written"
-    },
-    {
-      "title": "Moroccan Fish Tagine",
-      "cuisine": "North African (Moroccan)",
-      "url": "https://www.americastestkitchen.com/recipes/12829-moroccan-fish-tagine-for-two",
-      "source": "americastestkitchen.com",
-      "why": "Closes two gaps simultaneously — fish as a protein and Moroccan cuisine — using the Dutch oven they already own and a chermoula herb-spice paste that is a completely new technique.",
+      "title": "Cantonese Steamed Fish",
+      "cuisine": "Chinese (Cantonese)",
+      "url": "https://thewoksoflife.com/cantonese-steamed-fish/",
+      "source": "The Woks of Life",
+      "why": "Fills the total absence of fish and introduces a classic Chinese steaming technique the carbon-steel wok was built for.",
       "effort": "weeknight",
       "vegetarian": "needs-meat"
     },
     {
-      "title": "Ultra-Smashed Cheeseburger",
-      "cuisine": "American",
-      "url": "https://www.seriouseats.com/recipes/2014/03/ultra-smashed-cheeseburger-recipe-food-lab.html",
-      "source": "seriouseats.com",
-      "why": "Adds a fast, high-heat cast-iron beef technique that is completely different from the long birria braise — maximizing Maillard crust, a skill the household does not yet have in the burger format.",
+      "title": "Easy Japchae (Korean Stir-Fried Glass Noodles)",
+      "cuisine": "Korean",
+      "url": "https://www.maangchi.com/recipe/easy-japchae",
+      "source": "Maangchi",
+      "why": "Opens Korean cuisine entirely — a new country, a new noodle type (dangmyeon), and a new stir-fry technique; meat is simply omitted for the vegetarian.",
+      "effort": "weeknight",
+      "vegetarian": "easy-swap"
+    },
+    {
+      "title": "Braised Eggs with Leek and Za'atar",
+      "cuisine": "Middle Eastern",
+      "url": "https://ottolenghi.co.uk/pages/recipes/braised-eggs-leek-zaatar",
+      "source": "Ottolenghi",
+      "why": "Puts eggs at the centre of a proper main for the first time, deepens the thin Middle Eastern slot, and is on the table in under 30 minutes.",
+      "effort": "weeknight",
+      "vegetarian": "as-written"
+    },
+    {
+      "title": "Dal Makhani (Restaurant-Style)",
+      "cuisine": "North Indian",
+      "url": "https://www.indianhealthyrecipes.com/dal-makhani-recipe/",
+      "source": "Indian Healthy Recipes (Swasthi's)",
+      "why": "Fills the North Indian gap with a slow-cooked black lentil and kidney bean dish that rewards the Dutch oven or the Big Green Egg's low-and-slow capability.",
+      "effort": "project",
+      "vegetarian": "as-written"
+    },
+    {
+      "title": "Kare Raisu — Japanese Curry Rice with Chicken",
+      "cuisine": "Japanese",
+      "url": "https://www.americastestkitchen.com/recipes/15953-kare-raisu-japanese-curry-rice-with-chicken",
+      "source": "America's Test Kitchen",
+      "why": "Introduces Japanese cuisine and a completely different curry tradition (thick, sweet-savoury, roux-based) that nothing in the current list resembles.",
+      "effort": "weeknight",
+      "vegetarian": "easy-swap"
+    },
+    {
+      "title": "Miso-Glazed Salmon",
+      "cuisine": "Japanese",
+      "url": "https://www.seriouseats.com/miso-glazed-salmon-in-the-toaster-oven-recipe",
+      "source": "Serious Eats",
+      "why": "Adds salmon — a second fish protein and a new broiling technique — that is fast enough for weeknights and pairs naturally with the Japanese curry pantry already needed.",
       "effort": "weeknight",
       "vegetarian": "needs-meat"
     }

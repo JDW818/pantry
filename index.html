@@ -832,7 +832,7 @@ textarea.ed:focus{border-color:var(--herb);outline:none}
 
 /* Bumped every time this file ships. Settings shows it, so there's a way to
    tell whether the copy running on your phone is the one you were handed. */
-const BUILD = '2026-08-14 · spinner fix';
+const BUILD = '2026-08-14 · ideas render';
 
 /* ==================== storage ==================== */
 const mem = {};
@@ -1377,7 +1377,7 @@ function scrollTop(){
 /* Views that are "inside" something -- a swipe back or the browser's back
    button should return you, not leave the site. Tabs are not in this set:
    backing out of a tab should exit, the way a native app behaves. */
-const DEEP = new Set(['detail','edit','suggest','pick','queue','settings']);
+const DEEP = new Set(['detail','edit','suggest','pick','queue','settings','ideas']);
 const scrollMemory = {};
 let popping = false;
 
@@ -1419,8 +1419,15 @@ function go(v, forcePane){
   const tab = v === 'queue' ? 'home' : v === 'pick' ? 'plan' : v;
   document.querySelectorAll('nav button').forEach(b => b.classList.toggle('on', b.dataset.v === tab));
 
-  if (v === 'plan') setPane(pane);
-  if (v === 'pick') renderPick();
+  const ON_ARRIVAL = {
+    plan:  () => setPane(pane),
+    pick:  renderPick,
+    ideas: renderIdeas,
+    queue: renderQueue,
+    coll:  renderColl,
+    home:  renderHome,
+  };
+  ON_ARRIVAL[v]?.();
 
   /* Going deeper starts at the top; coming back lands where you left off. */
   if (scroller) {
@@ -1475,7 +1482,7 @@ function esc(s){
 
 /* ==================== render ==================== */
 function render(){
-  renderHome(); renderColl(); renderWeek(); renderQueue();
+  renderHome(); renderColl(); renderWeek(); renderQueue(); renderIdeas();
   if (pane === 'list' && document.getElementById('v-plan').classList.contains('on')) renderList();
 
   const queueBadge = document.getElementById('qn');

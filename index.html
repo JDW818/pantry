@@ -620,7 +620,7 @@ textarea.ed:focus{border-color:var(--herb);outline:none}
 .pull svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:none}
 .pull.ready{color:var(--herb);border-color:rgba(163,194,74,.45)}
 .pull.settling{transition:transform .26s cubic-bezier(.2,.8,.3,1),opacity .2s}
-.pull.spin svg{animation:sp .8s linear infinite;transform:none!important}
+.pull.turning svg{animation:sp .8s linear infinite;transform:none!important}
 .spin{width:24px;height:24px;border:2px solid var(--ink-4);border-top-color:var(--herb);border-radius:50%;animation:sp .7s linear infinite;margin:56px auto}
 @keyframes sp{to{transform:rotate(360deg)}}
 .skel{background:var(--ink-2);border-radius:var(--r);height:70px;margin-bottom:8px;animation:pulse 1.4s ease-in-out infinite}
@@ -832,7 +832,7 @@ textarea.ed:focus{border-color:var(--herb);outline:none}
 
 /* Bumped every time this file ships. Settings shows it, so there's a way to
    tell whether the copy running on your phone is the one you were handed. */
-const BUILD = '2026-08-14 · ideas';
+const BUILD = '2026-08-14 · spinner fix';
 
 /* ==================== storage ==================== */
 const mem = {};
@@ -1310,11 +1310,11 @@ function initPullToRefresh(){
     if (progress < 1) return hide();
 
     busy = true;
-    ind.classList.add('settling', 'spin');
+    ind.classList.add('settling', 'turning');
     ind.style.transform = `translateY(${PULL.SHOWN}px)`;
     ind.style.opacity = '1';
     try { await refresh({ quiet: false }); }
-    finally { ind.classList.remove('spin'); hide(); busy = false; }
+    finally { ind.classList.remove('turning'); hide(); busy = false; }
   }, { passive: true });
 
   scroller.addEventListener('touchcancel', hide, { passive: true });

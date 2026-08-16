@@ -1,67 +1,69 @@
 {
   "generatedAt": "2026-08-16",
   "gaps": [
-    "No fish or seafood of any kind — a large protein category completely absent.",
-    "No Korean, Japanese, or Chinese cuisine — East Asian cooking is nearly missing despite owning a wok and a Big Green Egg.",
-    "No egg-led mains — a fast, cheap vegetarian anchor that is missing.",
-    "Indian cooking appears only as a single South-Indian kanji; North Indian cuisine (the broader sub-cuisine) is untouched.",
-    "The Big Green Egg and Ooni are unused in the current list — no live-fire or slow-smoke projects.",
-    "Weeknight roster is thin on protein variety: only chicken appears once; pork and beef each once; no fish, no tofu, no eggs as a main."
+    "No Japanese cuisine or slow-braise project on the list — just one Asian-American dish.",
+    "No Chinese or Sichuan cuisine at all; the wok is underused for its natural home.",
+    "No Korean cuisine despite owning a carbon steel wok and feeding a crowd regularly.",
+    "Indian cooking is only South Indian; North Indian cuisine (paneer, tandoori flavors) is absent.",
+    "Fish and seafood are entirely missing as a protein.",
+    "Tofu appears nowhere as a deliberate weeknight protein with real technique behind it.",
+    "Ottolenghi-style vegetable-forward Middle Eastern cooking is listed as a cuisine tag but only one dish exists, and it is a stew — no roasted or composed vegetable mains.",
+    "Weekend projects are thin — only one dish (Birria Tacos) requires real commitment."
   ],
   "ideas": [
     {
-      "title": "Cantonese Steamed Fish",
-      "cuisine": "Chinese (Cantonese)",
-      "url": "https://thewoksoflife.com/cantonese-steamed-fish/",
-      "source": "The Woks of Life",
-      "why": "Fills the total absence of fish and introduces a classic Chinese steaming technique the carbon-steel wok was built for.",
-      "effort": "weeknight",
+      "title": "Kakuni (Japanese Braised Pork Belly)",
+      "cuisine": "Japanese",
+      "url": "https://www.justonecookbook.com/braised-pork-belly-kakuni/",
+      "source": "Just One Cookbook",
+      "why": "Opens up Japanese cuisine entirely and fills the weekend-project / long-braise gap — the Big Green Egg or Dutch oven makes this sing.",
+      "effort": "project",
       "vegetarian": "needs-meat"
     },
     {
-      "title": "Easy Japchae (Korean Stir-Fried Glass Noodles)",
+      "title": "Vegan Mapo Tofu",
+      "cuisine": "Chinese (Sichuan)",
+      "url": "https://thewoksoflife.com/vegan-mapo-tofu/",
+      "source": "The Woks of Life",
+      "why": "Introduces Sichuan cuisine and puts the carbon steel wok to work on a numbing-spicy weeknight dish the whole family — including the vegetarian — can eat as-written.",
+      "effort": "weeknight",
+      "vegetarian": "as-written"
+    },
+    {
+      "title": "Easy Japchae (Korean Glass Noodle Stir-Fry)",
       "cuisine": "Korean",
       "url": "https://www.maangchi.com/recipe/easy-japchae",
       "source": "Maangchi",
-      "why": "Opens Korean cuisine entirely — a new country, a new noodle type (dangmyeon), and a new stir-fry technique; meat is simply omitted for the vegetarian.",
+      "why": "Fills the Korean gap with a crowd-pleasing noodle dish that scales to six easily; meat is optional so the vegetarian adult is covered with a single omission.",
       "effort": "weeknight",
       "vegetarian": "easy-swap"
     },
     {
-      "title": "Braised Eggs with Leek and Za'atar",
-      "cuisine": "Middle Eastern",
-      "url": "https://ottolenghi.co.uk/pages/recipes/braised-eggs-leek-zaatar",
-      "source": "Ottolenghi",
-      "why": "Puts eggs at the centre of a proper main for the first time, deepens the thin Middle Eastern slot, and is on the table in under 30 minutes.",
-      "effort": "weeknight",
-      "vegetarian": "as-written"
-    },
-    {
-      "title": "Dal Makhani (Restaurant-Style)",
+      "title": "Paneer Tikka Masala",
       "cuisine": "North Indian",
-      "url": "https://www.indianhealthyrecipes.com/dal-makhani-recipe/",
-      "source": "Indian Healthy Recipes (Swasthi's)",
-      "why": "Fills the North Indian gap with a slow-cooked black lentil and kidney bean dish that rewards the Dutch oven or the Big Green Egg's low-and-slow capability.",
-      "effort": "project",
+      "url": "https://www.indianhealthyrecipes.com/paneer-tikka-masala-recipe-sanjeev-kapoor/",
+      "source": "Indian Healthy Recipes (Swasthi's Recipes)",
+      "why": "Expands Indian cooking beyond South Indian kanji into North Indian tandoori tradition; paneer is a new protein and the Ooni or cast iron delivers the char the marinade deserves.",
+      "effort": "weeknight",
       "vegetarian": "as-written"
     },
     {
-      "title": "Kare Raisu — Japanese Curry Rice with Chicken",
-      "cuisine": "Japanese",
-      "url": "https://www.americastestkitchen.com/recipes/15953-kare-raisu-japanese-curry-rice-with-chicken",
-      "source": "America's Test Kitchen",
-      "why": "Introduces Japanese cuisine and a completely different curry tradition (thick, sweet-savoury, roux-based) that nothing in the current list resembles.",
+      "title": "Roasted Cauliflower & Burnt Aubergine with Tomato Salsa",
+      "cuisine": "Middle Eastern / Israeli",
+      "url": "https://ottolenghi.co.uk/pages/recipes/roasted-cauliflower-burnt-aubergine-tomato-salsa",
+      "source": "Ottolenghi",
+      "why": "Adds a composed, technique-driven vegetable main — charring aubergine directly on the gas flame is a new skill — and deepens the Middle Eastern cuisine slot beyond stewing.",
       "effort": "weeknight",
-      "vegetarian": "easy-swap"
+      "vegetarian": "as-written"
     },
     {
-      "title": "Miso-Glazed Salmon",
-      "cuisine": "Japanese",
-      "url": "https://www.seriouseats.com/miso-glazed-salmon-in-the-toaster-oven-recipe",
-      "source": "Serious Eats",
-      "why": "Adds salmon — a second fish protein and a new broiling technique — that is fast enough for weeknights and pairs naturally with the Japanese curry pantry already needed.",
+      "title": "Crispy Sesame Baked Tofu & Shiitake Mushrooms",
+      "cuisine": "Asian-inspired",
+      "url": "https://food52.com/recipes/69829-crispy-sesame-baked-tofu-shiitake-mushrooms",
+      "source": "Food52",
+      "why": "Closes the tofu-as-intentional-protein gap with a sheet-pan technique (cornstarch + panko crust) that produces fried-level crispiness; fast weeknight meatless meal the kids will actually eat.",
       "effort": "weeknight",
-      "vegetarian": "needs-meat"
+      "vegetarian": "as-written"
     }
   ],
   "basedOn": 13

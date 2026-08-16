@@ -1,67 +1,67 @@
 {
-  "generatedAt": "2026-08-16T17:42:49+00:00",
+  "generatedAt": "2026-08-16T18:01:16+00:00",
   "gaps": [
-    "No seafood of any kind in the rotation.",
-    "No Japanese or Korean cuisine despite owning equipment well-suited to both.",
-    "Live-fire cooking (Big Green Egg, Ooni) is completely unused — no grilled or smoked mains.",
-    "Egg-based mains are absent.",
-    "Tex-Mex is a stated favourite but is represented by only one dish.",
-    "No Chinese wok cooking despite owning a carbon steel wok — only Thai and Asian-American noodle dishes.",
-    "Bacon is eaten and enjoyed but appears in no main dish despite being called out explicitly."
+    "No Korean food at all despite the family liking bold, spicy flavours and owning a cast-iron and a wok.",
+    "No egg- or paneer-based mains; the vegetarian adult has no high-protein anchor beyond beans and chickpeas.",
+    "No Japanese cuisine; ramen and noodle soups are an obvious fit given the family's love of noodle dishes.",
+    "No Indian food outside of a single South Indian kanji; North Indian curry is a wide-open lane.",
+    "No seafood whatsoever — fish tacos were declined but shrimp/prawn in other formats has never been tried.",
+    "The BGE and Ooni are listed equipment but no weekend project recipe uses live-fire or slow-smoke cooking.",
+    "No Sichuan or broader Chinese regional cooking; the wok is used but only for Thai-style noodles."
   ],
   "ideas": [
     {
-      "title": "Shakshuka (Eggs in Spicy Tomato and Roasted Red Pepper Sauce)",
+      "title": "Shakshuka",
       "cuisine": "North African / Middle Eastern",
-      "url": "https://www.americastestkitchen.com/recipes/11415-eggs-in-spicy-tomato-and-roasted-red-pepper-sauce-shakshuka",
-      "source": "America's Test Kitchen",
-      "why": "Fills the complete absence of egg-based mains and proper Middle Eastern cooking in one fast, one-skillet weeknight dish the whole family can eat.",
+      "url": "https://ottolenghi.co.uk/pages/recipes/shakshuka",
+      "source": "ottolenghi.co.uk",
+      "why": "Adds eggs as a weeknight vegetarian protein and opens up North African / Levantine cooking — a cuisine entirely absent from the collection.",
       "effort": "weeknight",
       "vegetarian": "as-written"
     },
     {
-      "title": "Miso Salmon",
+      "title": "Vegetarian Ramen (Soy Milk Miso)",
       "cuisine": "Japanese",
-      "url": "https://www.justonecookbook.com/miso-salmon/",
-      "source": "Just One Cookbook",
-      "why": "Fills both the seafood gap and the Japanese cuisine gap — a quick broil on a weeknight using pantry staples already common in this household.",
+      "url": "https://www.justonecookbook.com/vegetarian-ramen/",
+      "source": "justonecookbook.com",
+      "why": "Brings Japanese cuisine into the rotation for the first time and gives the vegetarian adult a rich, brothed noodle bowl to match the chicken-based soups everyone else enjoys.",
+      "effort": "weeknight",
+      "vegetarian": "as-written"
+    },
+    {
+      "title": "Paneer Butter Masala (Restaurant Style)",
+      "cuisine": "North Indian",
+      "url": "https://www.indianhealthyrecipes.com/paneer-butter-masala-restaurant-style/",
+      "source": "indianhealthyrecipes.com",
+      "why": "Fills the total absence of North Indian curry and adds paneer as a new vegetarian protein; the creamy tomato-cashew sauce is reliably kid-friendly.",
+      "effort": "weeknight",
+      "vegetarian": "as-written"
+    },
+    {
+      "title": "Mapo Tofu: The Real Deal",
+      "cuisine": "Sichuan Chinese",
+      "url": "https://thewoksoflife.com/ma-po-tofu-real-deal/",
+      "source": "thewoksoflife.com",
+      "why": "Opens up Sichuan cooking and gives the wok a genuine workout; ground pork (which the family eats as bacon) is easily swapped to ground chicken, and tofu adds a new protein the vegetarian adult can eat in a meatless version.",
+      "effort": "weeknight",
+      "vegetarian": "easy-swap"
+    },
+    {
+      "title": "Prawn (Shrimp) Stir Fry",
+      "cuisine": "Chinese",
+      "url": "https://www.recipetineats.com/prawn-stir-fry/",
+      "source": "recipetineats.com",
+      "why": "Introduces seafood — the only protein type completely missing from the collection — in a fast wok format the cook already handles well.",
       "effort": "weeknight",
       "vegetarian": "needs-meat"
     },
     {
-      "title": "Bibimbap (Mixed Rice with Vegetables)",
+      "title": "Dakgalbi (Korean Spicy Chicken Stir-Fry)",
       "cuisine": "Korean",
-      "url": "https://www.maangchi.com/recipe/bibimbap",
-      "source": "Maangchi",
-      "why": "Opens Korean cuisine entirely, puts the carbon steel wok and Dutch oven to use, and the seasoned-vegetables version is naturally vegetarian with beef as an easy side addition for meat eaters.",
+      "url": "https://www.beyondkimchee.com/dak-galbi/",
+      "source": "beyondkimchee.com",
+      "why": "Adds Korean cuisine for the first time and is a one-pan cast-iron dish built for a crowd — boneless skinless chicken thighs, chewy rice cakes, gochujang sauce, and cabbage cook in under 30 minutes.",
       "effort": "weeknight",
-      "vegetarian": "easy-swap"
-    },
-    {
-      "title": "Beef Enchiladas",
-      "cuisine": "Tex-Mex",
-      "url": "https://www.recipetineats.com/beef-enchiladas/",
-      "source": "RecipeTin Eats",
-      "why": "Tex-Mex is a stated family favourite with only one dish representing it — this homemade-sauce version is a crowd-pleasing, kid-friendly bake that fills that gap directly.",
-      "effort": "weeknight",
-      "vegetarian": "easy-swap"
-    },
-    {
-      "title": "Bacon and Egg Fried Rice",
-      "cuisine": "Chinese",
-      "url": "https://www.thewoksoflife.com/bacon-and-egg-fried-rice/",
-      "source": "The Woks of Life",
-      "why": "Puts the carbon steel wok to proper use for Chinese cooking, uses bacon (a family staple) as the protein, and is the fast weeknight wok technique dish entirely missing from the collection.",
-      "effort": "weeknight",
-      "vegetarian": "easy-swap"
-    },
-    {
-      "title": "Grill-Roasted Beef Short Ribs",
-      "cuisine": "American BBQ",
-      "url": "https://www.americastestkitchen.com/recipes/7084-grill-roasted-beef-short-ribs",
-      "source": "America's Test Kitchen",
-      "why": "The Big Green Egg has never been used for a main dish — this low-and-slow indirect charcoal project with a spice rub and glaze is exactly the weekend cook that equipment was built for.",
-      "effort": "project",
       "vegetarian": "needs-meat"
     }
   ],

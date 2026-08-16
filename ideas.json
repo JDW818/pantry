@@ -1,67 +1,66 @@
 {
-  "generatedAt": "2026-08-16T17:35:24+00:00",
+  "generatedAt": "2026-08-16T17:42:49+00:00",
   "gaps": [
-    "No Korean food at all — a rich, tested cuisine completely absent from the collection.",
-    "No Japanese food — the wok and Dutch oven sit idle for an entire cuisine.",
-    "No egg-forward main dishes despite eggs being a vegetarian anchor protein.",
-    "No fish or seafood in any format — a full protein category missing.",
-    "The Ooni pizza oven appears in the equipment list but has never been used for a recipe.",
-    "No Middle Eastern food that goes beyond pantry-staple spicing — lentils, proper rice pilaf technique absent.",
-    "Weekend projects are thin — the Big Green Egg has no low-and-slow recipe to justify it.",
-    "Legume variety is narrow: chickpeas and white beans only; lentils entirely absent."
+    "No seafood of any kind in the rotation.",
+    "No Japanese or Korean cuisine despite owning equipment well-suited to both.",
+    "Live-fire cooking (Big Green Egg, Ooni) is completely unused — no grilled or smoked mains.",
+    "Egg-based mains are absent.",
+    "Tex-Mex is a stated favourite but is represented by only one dish.",
+    "No Chinese wok cooking despite owning a carbon steel wok — only Thai and Asian-American noodle dishes.",
+    "Bacon is eaten and enjoyed but appears in no main dish despite being called out explicitly."
   ],
   "ideas": [
     {
-      "title": "Dakgalbi (Spicy Stir-Fried Chicken and Vegetables)",
-      "cuisine": "Korean",
-      "url": "https://www.maangchi.com/recipe/dakgalbi",
-      "source": "maangchi.com",
-      "why": "Opens Korean cuisine from scratch using the carbon steel wok, a technique and cuisine entirely absent from the collection.",
-      "effort": "weeknight",
-      "vegetarian": "easy-swap"
-    },
-    {
-      "title": "Mujaddara (Rice and Lentils with Crispy Onions)",
-      "cuisine": "Middle Eastern (Levantine)",
-      "url": "https://www.americastestkitchen.com/recipes/8035-rice-and-lentils-with-crispy-onions-mujaddara",
-      "source": "americastestkitchen.com",
-      "why": "Fills the lentil gap and the proper-Middle-Eastern gap in one shot; entirely vegetarian and deeply tested.",
-      "effort": "weeknight",
-      "vegetarian": "as-written"
-    },
-    {
       "title": "Shakshuka (Eggs in Spicy Tomato and Roasted Red Pepper Sauce)",
-      "cuisine": "North African / Israeli",
+      "cuisine": "North African / Middle Eastern",
       "url": "https://www.americastestkitchen.com/recipes/11415-eggs-in-spicy-tomato-and-roasted-red-pepper-sauce-shakshuka",
-      "source": "americastestkitchen.com",
-      "why": "Closes the egg-forward main gap with a one-skillet dish that works for the vegetarian adult without any modification.",
+      "source": "America's Test Kitchen",
+      "why": "Fills the complete absence of egg-based mains and proper Middle Eastern cooking in one fast, one-skillet weeknight dish the whole family can eat.",
       "effort": "weeknight",
       "vegetarian": "as-written"
     },
     {
-      "title": "Miso Salmon (Sake Misoyaki)",
+      "title": "Miso Salmon",
       "cuisine": "Japanese",
       "url": "https://www.justonecookbook.com/miso-salmon/",
-      "source": "justonecookbook.com",
-      "why": "Introduces Japanese cuisine and fish in a format the family will eat — broiled fillets with no skin, no tacos.",
+      "source": "Just One Cookbook",
+      "why": "Fills both the seafood gap and the Japanese cuisine gap — a quick broil on a weeknight using pantry staples already common in this household.",
       "effort": "weeknight",
       "vegetarian": "needs-meat"
     },
     {
-      "title": "Neapolitan-Style Pizza Dough",
-      "cuisine": "Italian",
-      "url": "https://www.seriouseats.com/recipes/2012/07/basic-neapolitan-pizza-dough-recipe.html",
-      "source": "seriouseats.com",
-      "why": "Finally deploys the Ooni; a proper 00-flour cold-ferment dough gives this experienced cook a genuine weekend project with a payoff the whole family can customize.",
-      "effort": "project",
-      "vegetarian": "as-written"
+      "title": "Bibimbap (Mixed Rice with Vegetables)",
+      "cuisine": "Korean",
+      "url": "https://www.maangchi.com/recipe/bibimbap",
+      "source": "Maangchi",
+      "why": "Opens Korean cuisine entirely, puts the carbon steel wok and Dutch oven to use, and the seasoned-vegetables version is naturally vegetarian with beef as an easy side addition for meat eaters.",
+      "effort": "weeknight",
+      "vegetarian": "easy-swap"
     },
     {
-      "title": "Texas-Style Smoked Brisket",
-      "cuisine": "American (Texas BBQ)",
-      "url": "https://amazingribs.com/tested-recipes/beef-and-bison-recipes/smoked-brisket-texas-style/",
-      "source": "amazingribs.com",
-      "why": "Gives the Big Green Egg its first real low-and-slow project; beef brisket (not a chop, not lamb) fits the household's stated meat preferences perfectly.",
+      "title": "Beef Enchiladas",
+      "cuisine": "Tex-Mex",
+      "url": "https://www.recipetineats.com/beef-enchiladas/",
+      "source": "RecipeTin Eats",
+      "why": "Tex-Mex is a stated family favourite with only one dish representing it — this homemade-sauce version is a crowd-pleasing, kid-friendly bake that fills that gap directly.",
+      "effort": "weeknight",
+      "vegetarian": "easy-swap"
+    },
+    {
+      "title": "Bacon and Egg Fried Rice",
+      "cuisine": "Chinese",
+      "url": "https://www.thewoksoflife.com/bacon-and-egg-fried-rice/",
+      "source": "The Woks of Life",
+      "why": "Puts the carbon steel wok to proper use for Chinese cooking, uses bacon (a family staple) as the protein, and is the fast weeknight wok technique dish entirely missing from the collection.",
+      "effort": "weeknight",
+      "vegetarian": "easy-swap"
+    },
+    {
+      "title": "Grill-Roasted Beef Short Ribs",
+      "cuisine": "American BBQ",
+      "url": "https://www.americastestkitchen.com/recipes/7084-grill-roasted-beef-short-ribs",
+      "source": "America's Test Kitchen",
+      "why": "The Big Green Egg has never been used for a main dish — this low-and-slow indirect charcoal project with a spice rub and glaze is exactly the weekend cook that equipment was built for.",
       "effort": "project",
       "vegetarian": "needs-meat"
     }

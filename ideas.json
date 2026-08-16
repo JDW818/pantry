@@ -1,69 +1,68 @@
 {
-  "generatedAt": "2026-08-16",
+  "generatedAt": "2026-08-16T17:13:36+00:00",
   "gaps": [
-    "No Japanese cuisine or slow-braise project on the list — just one Asian-American dish.",
-    "No Chinese or Sichuan cuisine at all; the wok is underused for its natural home.",
-    "No Korean cuisine despite owning a carbon steel wok and feeding a crowd regularly.",
-    "Indian cooking is only South Indian; North Indian cuisine (paneer, tandoori flavors) is absent.",
-    "Fish and seafood are entirely missing as a protein.",
-    "Tofu appears nowhere as a deliberate weeknight protein with real technique behind it.",
-    "Ottolenghi-style vegetable-forward Middle Eastern cooking is listed as a cuisine tag but only one dish exists, and it is a stew — no roasted or composed vegetable mains.",
-    "Weekend projects are thin — only one dish (Birria Tacos) requires real commitment."
+    "No fish or seafood in the collection at all — a major protein gap.",
+    "No Korean cuisine despite having the wok and the palate for bold fermented flavors.",
+    "No Japanese cuisine, and the carbon-steel wok and gas range are ideal for it.",
+    "North Indian cuisine is absent; the collection has South Indian (kanji) but nothing from the Punjabi canon.",
+    "The Big Green Egg appears in the equipment list but is not used in any current recipe — no low-and-slow smoke project.",
+    "Egg-based mains are missing entirely — a fast, vegetarian-friendly gap on weeknights.",
+    "Chinese fried rice, the highest-wok-skill weeknight workhorse, is not in the collection."
   ],
   "ideas": [
     {
-      "title": "Kakuni (Japanese Braised Pork Belly)",
+      "title": "Miso Salmon in Foil",
       "cuisine": "Japanese",
-      "url": "https://www.justonecookbook.com/braised-pork-belly-kakuni/",
-      "source": "Just One Cookbook",
-      "why": "Opens up Japanese cuisine entirely and fills the weekend-project / long-braise gap — the Big Green Egg or Dutch oven makes this sing.",
-      "effort": "project",
+      "url": "https://www.justonecookbook.com/miso-salmon-in-foil/",
+      "source": "justonecookbook.com",
+      "why": "Fills the complete absence of fish in the collection with a fast, sheet-pan-friendly Japanese technique that cooks in 30 minutes.",
+      "effort": "weeknight",
       "vegetarian": "needs-meat"
     },
     {
-      "title": "Vegan Mapo Tofu",
-      "cuisine": "Chinese (Sichuan)",
-      "url": "https://thewoksoflife.com/vegan-mapo-tofu/",
-      "source": "The Woks of Life",
-      "why": "Introduces Sichuan cuisine and puts the carbon steel wok to work on a numbing-spicy weeknight dish the whole family — including the vegetarian — can eat as-written.",
-      "effort": "weeknight",
-      "vegetarian": "as-written"
-    },
-    {
-      "title": "Easy Japchae (Korean Glass Noodle Stir-Fry)",
+      "title": "Bibimbap (Mixed Rice with Vegetables)",
       "cuisine": "Korean",
-      "url": "https://www.maangchi.com/recipe/easy-japchae",
-      "source": "Maangchi",
-      "why": "Fills the Korean gap with a crowd-pleasing noodle dish that scales to six easily; meat is optional so the vegetarian adult is covered with a single omission.",
+      "url": "https://www.maangchi.com/recipe/bibimbap",
+      "source": "maangchi.com",
+      "why": "Opens the Korean cuisine gap entirely absent from the collection; the beef is a small garnish easily omitted for the vegetarian adult.",
       "effort": "weeknight",
       "vegetarian": "easy-swap"
     },
     {
-      "title": "Paneer Tikka Masala",
+      "title": "Okonomiyaki (Savory Japanese Cabbage Pancake)",
+      "cuisine": "Japanese",
+      "url": "https://www.justonecookbook.com/okonomiyaki/",
+      "source": "justonecookbook.com",
+      "why": "Adds a Japanese egg-and-vegetable main cooked on the cast iron that works as-written without any protein, or with bacon on top for the non-vegetarian adults — aligning perfectly with the household's 'we eat bacon' note.",
+      "effort": "weeknight",
+      "vegetarian": "easy-swap"
+    },
+    {
+      "title": "Dal Makhani (Restaurant-Style Black Lentil Dal)",
       "cuisine": "North Indian",
-      "url": "https://www.indianhealthyrecipes.com/paneer-tikka-masala-recipe-sanjeev-kapoor/",
-      "source": "Indian Healthy Recipes (Swasthi's Recipes)",
-      "why": "Expands Indian cooking beyond South Indian kanji into North Indian tandoori tradition; paneer is a new protein and the Ooni or cast iron delivers the char the marinade deserves.",
+      "url": "https://www.indianhealthyrecipes.com/dal-makhani-recipe/",
+      "source": "indianhealthyrecipes.com",
+      "why": "Fills the North Indian gap that the South Indian kanji doesn't cover — a slow-simmered Punjabi lentil dish that is fully vegetarian and makes a big batch for six.",
       "effort": "weeknight",
       "vegetarian": "as-written"
     },
     {
-      "title": "Roasted Cauliflower & Burnt Aubergine with Tomato Salsa",
-      "cuisine": "Middle Eastern / Israeli",
-      "url": "https://ottolenghi.co.uk/pages/recipes/roasted-cauliflower-burnt-aubergine-tomato-salsa",
-      "source": "Ottolenghi",
-      "why": "Adds a composed, technique-driven vegetable main — charring aubergine directly on the gas flame is a new skill — and deepens the Middle Eastern cuisine slot beyond stewing.",
+      "title": "Shakshuka",
+      "cuisine": "Middle Eastern / North African",
+      "url": "https://ottolenghi.co.uk/pages/recipes/shakshuka",
+      "source": "ottolenghi.co.uk",
+      "why": "Adds an egg-based weeknight main that is fully vegetarian as written — a technique and protein form (eggs poached in sauce) completely absent from the current collection.",
       "effort": "weeknight",
       "vegetarian": "as-written"
     },
     {
-      "title": "Crispy Sesame Baked Tofu & Shiitake Mushrooms",
-      "cuisine": "Asian-inspired",
-      "url": "https://food52.com/recipes/69829-crispy-sesame-baked-tofu-shiitake-mushrooms",
-      "source": "Food52",
-      "why": "Closes the tofu-as-intentional-protein gap with a sheet-pan technique (cornstarch + panko crust) that produces fried-level crispiness; fast weeknight meatless meal the kids will actually eat.",
-      "effort": "weeknight",
-      "vegetarian": "as-written"
+      "title": "Texas-Style Smoked Beef Brisket",
+      "cuisine": "American BBQ",
+      "url": "https://amazingribs.com/tested-recipes/beef-and-bison-recipes/smoked-brisket-texas-style/",
+      "source": "amazingribs.com",
+      "why": "The Big Green Egg is sitting unused in the collection's equipment list — this is the canonical low-and-slow project that finally puts it to work, adding a weekend smoke tradition for the household.",
+      "effort": "project",
+      "vegetarian": "needs-meat"
     }
   ],
   "basedOn": 13

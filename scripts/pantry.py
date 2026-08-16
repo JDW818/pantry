@@ -293,15 +293,26 @@ def _check_vegetarian(r: dict, ids: set[str], res: Result) -> None:
 
     # Does the claim survive contact with the ingredient list?
     swapped = {sw.get("ingredientId") for sw in veg.get("swaps", [])}
-    flagged: set[str] = set()
+
+    # Two different questions, and conflating them caused a false positive:
+    # "which ingredients contain an animal product" is a fact about the recipe
+    # and has to be answered for every status. "Which ones did we complain
+    # about" is a separate thing.
+    animal: set[str] = set()
 
     for ing in r.get("ingredients", []):
         txt = _text_of(ing)
         iid = ing.get("id")
 
+        # Always scan for meat, whatever the status claims.
+        for m in MEAT_TERMS:
+            if m in txt:
+                animal.add(iid)
+                break
+
         for term, why in HIDDEN_ANIMAL.items():
             if term in txt:
-                flagged.add(iid)
+                animal.add(iid)
                 if iid in swapped:
                     break
                 # "inherently-veg" and "easily-adaptable" both assert the dish
@@ -316,19 +327,15 @@ def _check_vegetarian(r: dict, ids: set[str], res: Result) -> None:
                     res.warn(f"{iid} ({ing.get('item')}): {why} -- no swap recorded")
                 break
 
-        if status == "inherently-veg" and iid not in swapped:
-            for m in MEAT_TERMS:
-                if m in txt:
-                    flagged.add(iid)
-                    res.err(f"{iid} ({ing.get('item')}) looks like meat but status is inherently-veg")
-                    break
+        if status == "inherently-veg" and iid not in swapped and iid in animal:
+            res.err(f"{iid} ({ing.get('item')}) looks like meat but status is inherently-veg")
 
     # A swap aimed at something with no animal-product signal is the failure
     # mode that reads as correct: well-formed, plausible, and pointing at the
     # wrong line.
     for sw in veg.get("swaps", []):
         tgt = sw.get("ingredientId")
-        if tgt in ids and tgt not in flagged:
+        if tgt in ids and tgt not in animal:
             name = next((i.get("item") for i in r["ingredients"] if i.get("id") == tgt), tgt)
             res.err(
                 f"vegetarian swap targets {tgt} ({name}), which has no animal product in it "

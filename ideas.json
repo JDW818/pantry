@@ -1,66 +1,67 @@
 {
-  "generatedAt": "2026-08-16T17:13:36+00:00",
+  "generatedAt": "2026-08-16T17:27:30+00:00",
   "gaps": [
-    "No fish or seafood in the collection at all — a major protein gap.",
-    "No Korean cuisine despite having the wok and the palate for bold fermented flavors.",
-    "No Japanese cuisine, and the carbon-steel wok and gas range are ideal for it.",
-    "North Indian cuisine is absent; the collection has South Indian (kanji) but nothing from the Punjabi canon.",
-    "The Big Green Egg appears in the equipment list but is not used in any current recipe — no low-and-slow smoke project.",
-    "Egg-based mains are missing entirely — a fast, vegetarian-friendly gap on weeknights.",
-    "Chinese fried rice, the highest-wok-skill weeknight workhorse, is not in the collection."
+    "No Korean cuisine at all despite the cook having a carbon steel wok and high-heat capability.",
+    "No Japanese cuisine despite a clear interest in Asian cooking and noodles.",
+    "No seafood protein of any kind.",
+    "North Indian cooking is absent — the one Indian dish is South Indian (kanji).",
+    "No West African or sub-Saharan African cuisine.",
+    "Tofu has never appeared as a protein despite a vegetarian adult and a wok.",
+    "Weekend project dishes are almost entirely missing — nearly every dish is a weeknight one-pot.",
+    "Fish is a completely untapped protein that works quickly on a weeknight."
   ],
   "ideas": [
-    {
-      "title": "Miso Salmon in Foil",
-      "cuisine": "Japanese",
-      "url": "https://www.justonecookbook.com/miso-salmon-in-foil/",
-      "source": "justonecookbook.com",
-      "why": "Fills the complete absence of fish in the collection with a fast, sheet-pan-friendly Japanese technique that cooks in 30 minutes.",
-      "effort": "weeknight",
-      "vegetarian": "needs-meat"
-    },
     {
       "title": "Bibimbap (Mixed Rice with Vegetables)",
       "cuisine": "Korean",
       "url": "https://www.maangchi.com/recipe/bibimbap",
       "source": "maangchi.com",
-      "why": "Opens the Korean cuisine gap entirely absent from the collection; the beef is a small garnish easily omitted for the vegetarian adult.",
+      "why": "Opens Korean cuisine entirely — zero Korean dishes in the collection — and the beef is a straightforward skip for the vegetarian adult since the vegetables carry the dish.",
       "effort": "weeknight",
       "vegetarian": "easy-swap"
     },
     {
-      "title": "Okonomiyaki (Savory Japanese Cabbage Pancake)",
-      "cuisine": "Japanese",
-      "url": "https://www.justonecookbook.com/okonomiyaki/",
-      "source": "justonecookbook.com",
-      "why": "Adds a Japanese egg-and-vegetable main cooked on the cast iron that works as-written without any protein, or with bacon on top for the non-vegetarian adults — aligning perfectly with the household's 'we eat bacon' note.",
-      "effort": "weeknight",
-      "vegetarian": "easy-swap"
-    },
-    {
-      "title": "Dal Makhani (Restaurant-Style Black Lentil Dal)",
+      "title": "Dal Tadka (Restaurant-Style)",
       "cuisine": "North Indian",
-      "url": "https://www.indianhealthyrecipes.com/dal-makhani-recipe/",
+      "url": "https://www.indianhealthyrecipes.com/dal-tadka/",
       "source": "indianhealthyrecipes.com",
-      "why": "Fills the North Indian gap that the South Indian kanji doesn't cover — a slow-simmered Punjabi lentil dish that is fully vegetarian and makes a big batch for six.",
+      "why": "Fills the North Indian gap — the only Indian dish they have is South Indian — and introduces the tadka technique (blooming spices in ghee) which is absent from the whole collection.",
       "effort": "weeknight",
       "vegetarian": "as-written"
     },
     {
-      "title": "Shakshuka",
-      "cuisine": "Middle Eastern / North African",
-      "url": "https://ottolenghi.co.uk/pages/recipes/shakshuka",
-      "source": "ottolenghi.co.uk",
-      "why": "Adds an egg-based weeknight main that is fully vegetarian as written — a technique and protein form (eggs poached in sauce) completely absent from the current collection.",
+      "title": "Vegan Mapo Tofu",
+      "cuisine": "Sichuan Chinese",
+      "url": "https://thewoksoflife.com/vegan-mapo-tofu/",
+      "source": "thewoksoflife.com",
+      "why": "Puts the carbon steel wok to real Sichuan use and introduces tofu as a protein — a complete blank in the collection — while being as-written vegan so the whole table eats the same bowl.",
       "effort": "weeknight",
       "vegetarian": "as-written"
     },
     {
-      "title": "Texas-Style Smoked Beef Brisket",
-      "cuisine": "American BBQ",
-      "url": "https://amazingribs.com/tested-recipes/beef-and-bison-recipes/smoked-brisket-texas-style/",
-      "source": "amazingribs.com",
-      "why": "The Big Green Egg is sitting unused in the collection's equipment list — this is the canonical low-and-slow project that finally puts it to work, adding a weekend smoke tradition for the household.",
+      "title": "Marinated Fish Tacos",
+      "cuisine": "Mexican",
+      "url": "https://www.recipetineats.com/marinated-fish-tacos/",
+      "source": "recipetineats.com",
+      "why": "Fish is the only mainstream protein entirely absent from the collection, and this slots into the taco format the family already enjoys without any pantry leap.",
+      "effort": "weeknight",
+      "vegetarian": "needs-meat"
+    },
+    {
+      "title": "West African Chicken Peanut Stew (Groundnut Stew)",
+      "cuisine": "West African",
+      "url": "https://food52.com/recipes/20752-west-african-chicken-peanut-stew",
+      "source": "food52.com",
+      "why": "West African cuisine is a total blank in the collection and this one-pot braise uses pantry staples (peanut butter, tomatoes, chicken) so the barrier is low despite the new flavour territory.",
+      "effort": "weeknight",
+      "vegetarian": "easy-swap"
+    },
+    {
+      "title": "Miso Tori Paitan Ramen (Creamy Chicken Broth Ramen)",
+      "cuisine": "Japanese",
+      "url": "https://www.seriouseats.com/miso-chicken-paitan-ramen",
+      "source": "seriouseats.com",
+      "why": "Japanese cuisine is absent from the collection and this is the kind of ambitious weekend project — building a proper paitan broth, tare, and aroma oil from scratch — that a cook with this equipment clearly has the skills and appetite for.",
       "effort": "project",
       "vegetarian": "needs-meat"
     }

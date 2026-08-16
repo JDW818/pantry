@@ -1,70 +1,70 @@
 {
-  "generatedAt": "2026-08-16T17:27:30+00:00",
+  "generatedAt": "2026-08-16T17:35:24+00:00",
   "gaps": [
-    "No Korean cuisine at all despite the cook having a carbon steel wok and high-heat capability.",
-    "No Japanese cuisine despite a clear interest in Asian cooking and noodles.",
-    "No seafood protein of any kind.",
-    "North Indian cooking is absent — the one Indian dish is South Indian (kanji).",
-    "No West African or sub-Saharan African cuisine.",
-    "Tofu has never appeared as a protein despite a vegetarian adult and a wok.",
-    "Weekend project dishes are almost entirely missing — nearly every dish is a weeknight one-pot.",
-    "Fish is a completely untapped protein that works quickly on a weeknight."
+    "No Korean food at all — a rich, tested cuisine completely absent from the collection.",
+    "No Japanese food — the wok and Dutch oven sit idle for an entire cuisine.",
+    "No egg-forward main dishes despite eggs being a vegetarian anchor protein.",
+    "No fish or seafood in any format — a full protein category missing.",
+    "The Ooni pizza oven appears in the equipment list but has never been used for a recipe.",
+    "No Middle Eastern food that goes beyond pantry-staple spicing — lentils, proper rice pilaf technique absent.",
+    "Weekend projects are thin — the Big Green Egg has no low-and-slow recipe to justify it.",
+    "Legume variety is narrow: chickpeas and white beans only; lentils entirely absent."
   ],
   "ideas": [
     {
-      "title": "Bibimbap (Mixed Rice with Vegetables)",
+      "title": "Dakgalbi (Spicy Stir-Fried Chicken and Vegetables)",
       "cuisine": "Korean",
-      "url": "https://www.maangchi.com/recipe/bibimbap",
+      "url": "https://www.maangchi.com/recipe/dakgalbi",
       "source": "maangchi.com",
-      "why": "Opens Korean cuisine entirely — zero Korean dishes in the collection — and the beef is a straightforward skip for the vegetarian adult since the vegetables carry the dish.",
+      "why": "Opens Korean cuisine from scratch using the carbon steel wok, a technique and cuisine entirely absent from the collection.",
       "effort": "weeknight",
       "vegetarian": "easy-swap"
     },
     {
-      "title": "Dal Tadka (Restaurant-Style)",
-      "cuisine": "North Indian",
-      "url": "https://www.indianhealthyrecipes.com/dal-tadka/",
-      "source": "indianhealthyrecipes.com",
-      "why": "Fills the North Indian gap — the only Indian dish they have is South Indian — and introduces the tadka technique (blooming spices in ghee) which is absent from the whole collection.",
+      "title": "Mujaddara (Rice and Lentils with Crispy Onions)",
+      "cuisine": "Middle Eastern (Levantine)",
+      "url": "https://www.americastestkitchen.com/recipes/8035-rice-and-lentils-with-crispy-onions-mujaddara",
+      "source": "americastestkitchen.com",
+      "why": "Fills the lentil gap and the proper-Middle-Eastern gap in one shot; entirely vegetarian and deeply tested.",
       "effort": "weeknight",
       "vegetarian": "as-written"
     },
     {
-      "title": "Vegan Mapo Tofu",
-      "cuisine": "Sichuan Chinese",
-      "url": "https://thewoksoflife.com/vegan-mapo-tofu/",
-      "source": "thewoksoflife.com",
-      "why": "Puts the carbon steel wok to real Sichuan use and introduces tofu as a protein — a complete blank in the collection — while being as-written vegan so the whole table eats the same bowl.",
+      "title": "Shakshuka (Eggs in Spicy Tomato and Roasted Red Pepper Sauce)",
+      "cuisine": "North African / Israeli",
+      "url": "https://www.americastestkitchen.com/recipes/11415-eggs-in-spicy-tomato-and-roasted-red-pepper-sauce-shakshuka",
+      "source": "americastestkitchen.com",
+      "why": "Closes the egg-forward main gap with a one-skillet dish that works for the vegetarian adult without any modification.",
       "effort": "weeknight",
       "vegetarian": "as-written"
     },
     {
-      "title": "Marinated Fish Tacos",
-      "cuisine": "Mexican",
-      "url": "https://www.recipetineats.com/marinated-fish-tacos/",
-      "source": "recipetineats.com",
-      "why": "Fish is the only mainstream protein entirely absent from the collection, and this slots into the taco format the family already enjoys without any pantry leap.",
+      "title": "Miso Salmon (Sake Misoyaki)",
+      "cuisine": "Japanese",
+      "url": "https://www.justonecookbook.com/miso-salmon/",
+      "source": "justonecookbook.com",
+      "why": "Introduces Japanese cuisine and fish in a format the family will eat — broiled fillets with no skin, no tacos.",
       "effort": "weeknight",
       "vegetarian": "needs-meat"
     },
     {
-      "title": "West African Chicken Peanut Stew (Groundnut Stew)",
-      "cuisine": "West African",
-      "url": "https://food52.com/recipes/20752-west-african-chicken-peanut-stew",
-      "source": "food52.com",
-      "why": "West African cuisine is a total blank in the collection and this one-pot braise uses pantry staples (peanut butter, tomatoes, chicken) so the barrier is low despite the new flavour territory.",
-      "effort": "weeknight",
-      "vegetarian": "easy-swap"
+      "title": "Neapolitan-Style Pizza Dough",
+      "cuisine": "Italian",
+      "url": "https://www.seriouseats.com/recipes/2012/07/basic-neapolitan-pizza-dough-recipe.html",
+      "source": "seriouseats.com",
+      "why": "Finally deploys the Ooni; a proper 00-flour cold-ferment dough gives this experienced cook a genuine weekend project with a payoff the whole family can customize.",
+      "effort": "project",
+      "vegetarian": "as-written"
     },
     {
-      "title": "Miso Tori Paitan Ramen (Creamy Chicken Broth Ramen)",
-      "cuisine": "Japanese",
-      "url": "https://www.seriouseats.com/miso-chicken-paitan-ramen",
-      "source": "seriouseats.com",
-      "why": "Japanese cuisine is absent from the collection and this is the kind of ambitious weekend project — building a proper paitan broth, tare, and aroma oil from scratch — that a cook with this equipment clearly has the skills and appetite for.",
+      "title": "Texas-Style Smoked Brisket",
+      "cuisine": "American (Texas BBQ)",
+      "url": "https://amazingribs.com/tested-recipes/beef-and-bison-recipes/smoked-brisket-texas-style/",
+      "source": "amazingribs.com",
+      "why": "Gives the Big Green Egg its first real low-and-slow project; beef brisket (not a chop, not lamb) fits the household's stated meat preferences perfectly.",
       "effort": "project",
       "vegetarian": "needs-meat"
     }
   ],
-  "basedOn": 13
+  "basedOn": 14
 }

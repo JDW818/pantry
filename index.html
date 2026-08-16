@@ -868,7 +868,7 @@ textarea.ed:focus{border-color:var(--herb);outline:none}
 
 /* Bumped every time this file ships. Settings shows it, so there's a way to
    tell whether the copy running on your phone is the one you were handed. */
-const BUILD = '2026-08-16 · taste notes';
+const BUILD = '2026-08-16 · dismiss fix';
 
 /* ==================== storage ==================== */
 const mem = {};
@@ -1618,7 +1618,7 @@ function renderHome(){
       <span class="n">✦</span>
       <span class="txt">Find something new
         <small>${ideasPending ? 'Looking…'
-          : IDEAS?.ideas?.length ? `${IDEAS.ideas.length} ideas waiting`
+          : liveIdeas().length ? `${liveIdeas().length} ideas waiting`
           : "Gaps in what you cook, and real recipes to fill them"}</small></span>
       <span class="arw">›</span>
     </button>`;
@@ -2459,16 +2459,29 @@ function editTaste(text){
   }, 1200);
 }
 
-/* Saying no is information. It comes off the list and goes into the prompt. */
-async function dismissIdea(n){
-  const idea = IDEAS?.ideas?.[n];
+/* The rejected list is the single source of truth for what you've turned down.
+   Filtering at render time rather than splicing the array means a refresh --
+   which re-reads ideas.json from the repo -- can't resurrect a dismissal. */
+function liveIdeas(){
+  const no = new Set(TASTE.rejected.map(r => r.title));
+  return (IDEAS?.ideas || []).filter(i => !no.has(i.title));
+}
+
+async function dismissIdea(id){
+  const idea = (IDEAS?.ideas || []).find(i => i.title === id);
   if (!idea) return;
-  TASTE.rejected = [...TASTE.rejected.filter(r => r.title !== idea.title),
+  const previous = TASTE.rejected;
+  TASTE.rejected = [...previous.filter(r => r.title !== idea.title),
                     { title: idea.title, cuisine: idea.cuisine || '' }];
-  IDEAS.ideas = IDEAS.ideas.filter((_, i) => i !== n);
   renderIdeas(); renderHome();
-  try { await saveTaste(); toast(`Won't suggest ${idea.title} again`); }
-  catch { toast("Couldn't save that", true); }
+  try {
+    if (!await saveTaste()) throw new Error('conflict');
+    toast(`Won't suggest ${idea.title} again`);
+  } catch {
+    TASTE.rejected = previous;          // the screen must not claim more than the repo holds
+    renderIdeas(); renderHome();
+    toast("Couldn't save that", true);
+  }
 }
 
 async function loadIdeas(){
@@ -2598,10 +2611,14 @@ function renderIdeas(){
     </div>`;
     return;
   }
-  if (!IDEAS || !IDEAS.ideas?.length) {
+  const live = liveIdeas();
+  if (!live.length) {
     sub.textContent = '';
-    list.innerHTML = emptyState('search', 'Nothing yet',
-      'Ask and Claude will look at what you already cook, work out what\'s missing, and go find real recipes for it.');
+    list.innerHTML = emptyState('search',
+      IDEAS?.ideas?.length ? 'You\'ve been through these' : 'Nothing yet',
+      IDEAS?.ideas?.length
+        ? 'Everything from that batch has been saved or turned down. Look again for a fresh set.'
+        : 'Ask and Claude will look at what you already cook, work out what\'s missing, and go find real recipes for it.');
     return;
   }
 
@@ -2613,7 +2630,7 @@ function renderIdeas(){
         <ul>${IDEAS.gaps.map(g => `<li>${esc(g)}</li>`).join('')}</ul></details>`
     : '';
 
-  list.innerHTML = gaps + `<div class="rows">${IDEAS.ideas.map((i, n) => {
+  list.innerHTML = gaps + `<div class="rows">${live.map(i => {
     const have = APPROVED.some(r => (r.source?.url || '').split('?')[0] === (i.url || '').split('?')[0]);
     const bits = [i.cuisine, i.effort, i.vegetarian === 'as-written' ? 'vegetarian'
                   : i.vegetarian === 'easy-swap' ? 'one swap' : null].filter(Boolean);
@@ -2625,8 +2642,8 @@ function renderIdeas(){
         <a class="idea-src" href="${esc(i.url)}" target="_blank" rel="noopener">${esc(i.source || 'source')} ↗</a>
         ${have ? `<span class="idea-have">Already saved</span>`
                : `<span class="idea-acts">
-                    <button class="idea-no" onclick="dismissIdea(${n})">Not for us</button>
-                    <button class="btn btn-s idea-save" onclick="saveIdea(${n})">Save it</button>
+                    <button class="idea-no" onclick="dismissIdea('${esc(i.title).replace(/'/g,"&#39;")}')">Not for us</button>
+                    <button class="btn btn-s idea-save" onclick="saveIdea('${esc(i.title).replace(/'/g,"&#39;")}')">Save it</button>
                   </span>`}
       </div>
     </div>`;
@@ -2635,8 +2652,8 @@ function renderIdeas(){
 
 /* Sending it through the normal pipeline is the whole point -- it arrives in
    the queue with rawText and a source URL, and gets reviewed like anything else. */
-async function saveIdea(n){
-  const idea = IDEAS?.ideas?.[n];
+async function saveIdea(id){
+  const idea = (IDEAS?.ideas || []).find(i => i.title === id);
   if (!idea) return;
   try {
     await gh(`/repos/${CFG.repo}/issues`, {

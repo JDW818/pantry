@@ -1111,6 +1111,9 @@ THE HOUSEHOLD
 - The cook is experienced: gas range, cast iron, carbon steel wok, Ooni pizza
   oven, Big Green Egg. Do not suggest beginner food or shortcut versions.
 - Standing rules: no lamb, no skin-on cuts.
+- If the cook's own notes are included below, they outrank everything you
+  would otherwise infer. A gap in the collection is not a reason to suggest
+  something they have told you they don't want.
 - Weeknights need to be manageable. Weekends can be projects.
 
 WHAT MAKES A GOOD SUGGESTION
@@ -1142,9 +1145,24 @@ Six ideas at most. Spread them across different gaps rather than six of the
 same cuisine. At least half should work for the vegetarian adult."""
 
 
+def load_taste() -> dict:
+    """Free-text preferences and things already turned down. Written by hand in
+    the app; passed through verbatim because the nuance is the point."""
+    f = ROOT / "taste.json"
+    if not f.exists():
+        return {"notes": "", "rejected": []}
+    try:
+        t = json.loads(f.read_text())
+        return {"notes": (t.get("notes") or "").strip(),
+                "rejected": t.get("rejected") or []}
+    except Exception:
+        return {"notes": "", "rejected": []}
+
+
 def find_ideas(client=None) -> dict:
     client = client or anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
     prof = profile_collection()
+    taste = load_taste()
 
     if prof["count"] < 3:
         raise ExtractionFailed(
@@ -1165,6 +1183,28 @@ def find_ideas(client=None) -> dict:
         "gaps. Return the JSON."
     )
 
+    if taste["notes"]:
+        ask += (
+            "\n\nTHE COOK'S OWN NOTES ON WHAT THIS FAMILY WILL AND WON'T EAT.\n"
+            "These override anything you would infer from the collection, and\n"
+            "they are deliberately nuanced -- read them carefully rather than\n"
+            "flattening them into likes and dislikes:\n"
+            f"{taste['notes']}"
+        )
+
+    if taste["rejected"]:
+        turned_down = ", ".join(
+            f"{r.get('title')}" + (f" ({r.get('cuisine')})" if r.get("cuisine") else "")
+            for r in taste["rejected"][-40:])
+        ask += (
+            "\n\nAlready suggested and turned down -- do not offer these again, "
+            "and take the pattern into account:\n"
+            f"{turned_down}"
+        )
+
+    trace(f"taste notes: {len(taste['notes'])} chars, "
+          f"{len(taste['rejected'])} previously turned down")
+
     resp = client.messages.create(
         model=MODEL,
         max_tokens=8000,
@@ -1183,7 +1223,11 @@ def find_ideas(client=None) -> dict:
 
     trace(f"{len(ideas)} ideas kept of {len(data.get('ideas') or [])}")
     return {
-        "generatedAt": _today(),
+        # A full timestamp, not a date: two runs on the same day were
+        # indistinguishable, so the app reported failure while showing the
+        # new ideas it had just fetched.
+        "generatedAt": __import__("datetime").datetime.now(
+            __import__("datetime").timezone.utc).isoformat(timespec="seconds"),
         "gaps": data.get("gaps") or [],
         "ideas": ideas,
         "basedOn": prof["count"],

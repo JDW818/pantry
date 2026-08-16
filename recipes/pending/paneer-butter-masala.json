@@ -1,0 +1,424 @@
+{
+  "id": "paneer-butter-masala",
+  "title": "Paneer Butter Masala Recipe",
+  "description": "This paneer butter masala is a curry lover's dream!! Soft paneer is dunked in a creamy, silky, super flavorful and delicious curry. My easy paneer recipe will help you make the best butter paneer that tastes better than anything from a restaurant. Make this once, I am sure you will never order it in a restaurant. Serve it with butter naan, roti or Basmati rice.",
+  "source": {
+    "type": "web",
+    "url": "https://www.indianhealthyrecipes.com/paneer-butter-masala-restaurant-style/",
+    "author": "www.indianhealthyrecipes.com",
+    "addedBy": "JDW818"
+  },
+  "dateAdded": "2026-08-16",
+  "status": "pending",
+  "recipeType": "meal",
+  "componentOf": [],
+  "yield": "4 servings",
+  "cuisine": "North Indian",
+  "tags": [
+    "curry",
+    "paneer",
+    "vegetarian",
+    "indian",
+    "main course",
+    "butter masala"
+  ],
+  "mainProtein": "paneer",
+  "equipment": [
+    "blender",
+    "large pan or skillet",
+    "strainer"
+  ],
+  "activeTimeMin": 35,
+  "totalTimeMin": 40,
+  "serves": 4,
+  "vegetarian": {
+    "status": "inherently-veg",
+    "notes": "This dish is fully vegetarian as written — no swaps needed.",
+    "swaps": []
+  },
+  "ingredients": [
+    {
+      "id": "i01",
+      "qty": 1,
+      "unit": "tablespoon",
+      "item": "oil",
+      "prep": null,
+      "note": "15 ml",
+      "section": "pantry",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i02",
+      "qty": 2,
+      "unit": null,
+      "item": "green cardamoms",
+      "prep": null,
+      "note": "or ¼ to ⅓ tsp ground cardamom (elaichi)",
+      "section": "spices",
+      "vague": false,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i03",
+      "qty": 1,
+      "unit": "cup",
+      "item": "onions",
+      "prep": "sliced or diced",
+      "note": "130 grams; from 1 medium yellow or 2 small red onions",
+      "section": "produce",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i04",
+      "qty": 1,
+      "unit": "inch",
+      "item": "fresh ginger",
+      "prep": "peeled and sliced",
+      "note": "10 grams; or use 1½ to 2 teaspoon ginger garlic paste",
+      "section": "produce",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i05",
+      "qty": null,
+      "unit": null,
+      "item": "large garlic cloves",
+      "prep": "peeled",
+      "note": "5 to 6 cloves (12 grams); omit if using ginger garlic paste",
+      "section": "produce",
+      "vague": true,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i06",
+      "qty": 2,
+      "unit": "cups",
+      "item": "tomatoes",
+      "prep": "sliced",
+      "note": "350 grams; use up to 420 grams from 2 large or 4 medium tomatoes",
+      "section": "produce",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i07",
+      "qty": 15,
+      "unit": null,
+      "item": "whole cashew nuts",
+      "prep": null,
+      "note": "30 grams; use up to 18 nuts/36g if using more tomatoes, or substitute almonds",
+      "section": "pantry",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i08",
+      "qty": 1,
+      "unit": "teaspoon",
+      "item": "sea salt",
+      "prep": null,
+      "note": "adjust to taste",
+      "section": "pantry",
+      "vague": false,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i09",
+      "qty": 1,
+      "unit": "teaspoon",
+      "item": "jaggery or sugar",
+      "prep": null,
+      "note": null,
+      "section": "pantry",
+      "vague": false,
+      "optional": true,
+      "scalable": false
+    },
+    {
+      "id": "i10",
+      "qty": null,
+      "unit": "teaspoon",
+      "item": "Kashmiri red chilli powder",
+      "prep": null,
+      "note": "¾ to 1 teaspoon; or paprika; adjust to heat and color preference",
+      "section": "spices",
+      "vague": true,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i11",
+      "qty": null,
+      "unit": "teaspoon",
+      "item": "garam masala",
+      "prep": null,
+      "note": "¾ to 1 teaspoon; adjust to taste",
+      "section": "spices",
+      "vague": true,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i12",
+      "qty": 1,
+      "unit": "teaspoon",
+      "item": "coriander powder",
+      "prep": null,
+      "note": "daniya powder",
+      "section": "spices",
+      "vague": false,
+      "optional": true,
+      "scalable": false
+    },
+    {
+      "id": "i13",
+      "qty": 1,
+      "unit": "cup",
+      "item": "cold water",
+      "prep": null,
+      "note": "240 ml; for blending",
+      "section": "other",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i14",
+      "qty": 0.5,
+      "unit": "cup",
+      "item": "water",
+      "prep": null,
+      "note": "added to pan after straining puree",
+      "section": "other",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i15",
+      "qty": 2,
+      "unit": "tablespoons",
+      "item": "unsalted butter",
+      "prep": null,
+      "note": "30 grams",
+      "section": "dairy",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i16",
+      "qty": 1,
+      "unit": null,
+      "item": "small bay leaf",
+      "prep": null,
+      "note": "tej patta",
+      "section": "spices",
+      "vague": false,
+      "optional": true,
+      "scalable": false
+    },
+    {
+      "id": "i17",
+      "qty": 2,
+      "unit": "inch",
+      "item": "Ceylon cinnamon piece",
+      "prep": null,
+      "note": "or 1 inch dalchini",
+      "section": "spices",
+      "vague": false,
+      "optional": true,
+      "scalable": false
+    },
+    {
+      "id": "i18",
+      "qty": 3,
+      "unit": null,
+      "item": "cloves",
+      "prep": null,
+      "note": "laung",
+      "section": "spices",
+      "vague": false,
+      "optional": true,
+      "scalable": false
+    },
+    {
+      "id": "i19",
+      "qty": null,
+      "unit": "grams",
+      "item": "paneer",
+      "prep": "cut to ¾ inch cubes",
+      "note": "250 to 300 grams (9 to 10 oz)",
+      "section": "dairy",
+      "vague": true,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i20",
+      "qty": 0.5,
+      "unit": "tablespoon",
+      "item": "kasuri methi",
+      "prep": "crushed",
+      "note": "dried fenugreek leaves",
+      "section": "pantry",
+      "vague": false,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i21",
+      "qty": null,
+      "unit": "tablespoons",
+      "item": "heavy cream",
+      "prep": null,
+      "note": "3 to 4 tablespoons (45 to 60 ml); sub with fresh cream, cooking cream or thickened cream; reserve 1 tablespoon to garnish",
+      "section": "dairy",
+      "vague": true,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i22",
+      "qty": null,
+      "unit": "tablespoon",
+      "item": "coriander leaves (cilantro)",
+      "prep": "finely chopped",
+      "note": "1 to 2 tablespoon; to garnish",
+      "section": "produce",
+      "vague": true,
+      "optional": true,
+      "scalable": true
+    }
+  ],
+  "steps": [
+    {
+      "id": "s01",
+      "title": "Sauté aromatics",
+      "text": "Pour {i01} to a pan and add {i02}, {i03}, {i04} and {i05}. Saute for 4 to 5 mins, until the onions turn transparent.",
+      "timerSeconds": 270,
+      "unattended": false,
+      "ingredientIds": [
+        "i01",
+        "i02",
+        "i03",
+        "i04",
+        "i05"
+      ]
+    },
+    {
+      "id": "s02",
+      "title": "Cook tomatoes and cashews",
+      "text": "Add {i06}, {i08} and {i07}. Mix well and cook covered until the tomatoes turn mushy and break down. (Takes me about 7 mins on a medium heat. If your pan is dry, add a splash of water).",
+      "timerSeconds": 420,
+      "unattended": false,
+      "ingredientIds": [
+        "i06",
+        "i08",
+        "i07"
+      ]
+    },
+    {
+      "id": "s03",
+      "title": "Add spices and cool",
+      "text": "Stir in {i10}, {i12} and {i11}. Saute on a medium heat for 3 to 4 mins, until aromatic. Turn off and cool down.",
+      "timerSeconds": 210,
+      "unattended": false,
+      "ingredientIds": [
+        "i10",
+        "i12",
+        "i11"
+      ]
+    },
+    {
+      "id": "s04",
+      "title": "Blend to puree",
+      "text": "Pour {i13} to a blender jar and transfer the onion tomato masala. Blend to a silky smooth puree.",
+      "timerSeconds": null,
+      "unattended": false,
+      "ingredientIds": [
+        "i13"
+      ]
+    },
+    {
+      "id": "s05",
+      "title": "Melt butter and bloom whole spices",
+      "text": "On a low heat, melt {i15} in the same pan and add the optional whole spices if using — {i16}, {i17} and {i18}.",
+      "timerSeconds": null,
+      "unattended": false,
+      "ingredientIds": [
+        "i15",
+        "i16",
+        "i17",
+        "i18"
+      ]
+    },
+    {
+      "id": "s06",
+      "title": "Strain in the masala puree",
+      "text": "When they begin to sizzle, stir in the optional {i10}. Hold a strainer over the pan and pour the onion tomato masala. Stir with a spoon to strain.",
+      "timerSeconds": null,
+      "unattended": false,
+      "ingredientIds": [
+        "i10"
+      ]
+    },
+    {
+      "id": "s07",
+      "title": "Simmer curry until thick",
+      "text": "Pour {i14} and mix well. Cook covered on a medium heat until slightly thick, yet flowy. It will thicken upon cooling. (Takes about 10 to 12 mins, keep stirring every 3 to 4 mins). You will see traces of fat on the butter masala when it is ready.",
+      "timerSeconds": 660,
+      "unattended": false,
+      "ingredientIds": [
+        "i14"
+      ]
+    },
+    {
+      "id": "s08",
+      "title": "Add paneer, kasuri methi, and cream",
+      "text": "Remove the whole spices to discard and taste test to adjust salt and garam masala. Stir in the {i09}, {i20} and {i19}. Cook covered for 2 to 3 mins on a low heat and turn off. Stir in {i21} (reserve a tablespoon to garnish).",
+      "timerSeconds": 150,
+      "unattended": false,
+      "ingredientIds": [
+        "i08",
+        "i11",
+        "i09",
+        "i20",
+        "i19",
+        "i21"
+      ]
+    },
+    {
+      "id": "s09",
+      "title": "Garnish and serve",
+      "text": "Garnish paneer butter masala with {i21} and chopped {i22}. Best served with Basmati Rice, Jeera Rice, Butter Naan, Tandoori Roti or plain parathas.",
+      "timerSeconds": null,
+      "unattended": false,
+      "ingredientIds": [
+        "i21",
+        "i22"
+      ]
+    }
+  ],
+  "household": {
+    "lastCooked": null,
+    "timesCooked": null,
+    "ratings": {},
+    "kidNotes": null,
+    "inRotation": true
+  },
+  "rawText": "{\n \"@type\": \"Recipe\",\n \"name\": \"Paneer Butter Masala Recipe\",\n \"author\": {\n  \"@id\": \"https://www.indianhealthyrecipes.com/#/schema/person/2d7d264cdc5dc6602ee06a087cd3fcb0\"\n },\n \"description\": \"This paneer butter masala is a curry lover\\u2019s dream!! Soft paneer is dunked in a creamy, silky, super flavorful and delicious curry. My easy paneer recipe will help you make the best butter paneer that tastes better than anything from a restaurant. Make this once, I am sure you will never order it in a restaurant. Serve it with butter naan, roti or Basmati rice.\",\n \"datePublished\": \"2020-12-21T06:56:00+00:00\",\n \"image\": [\n  \"https://www.indianhealthyrecipes.com/wp-content/uploads/2014/11/paneer-butter-masala-recipe-2.jpg\",\n  \"https://www.indianhealthyrecipes.com/wp-content/uploads/2014/11/paneer-butter-masala-recipe-2-500x500.jpg\",\n  \"https://www.indianhealthyrecipes.com/wp-content/uploads/2014/11/paneer-butter-masala-recipe-2-500x375.jpg\",\n  \"https://www.indianhealthyrecipes.com/wp-content/uploads/2014/11/paneer-butter-masala-recipe-2-480x270.jpg\"\n ],\n \"video\": {\n  \"name\": \"Paneer Butter Masala\",\n  \"description\": \"Find the written recipe on our website -\",\n  \"uploadDate\": \"2025-08-19T08:35:02+00:00\",\n  \"duration\": \"PT1M16S\",\n  \"thumbnailUrl\": \"https://i.ytimg.com/vi/U56cWrIr6xg/hqdefault.jpg\",\n  \"embedUrl\": \"https://www.youtube.com/embed/U56cWrIr6xg?feature=oembed\",\n  \"contentUrl\": \"https://www.youtube.com/watch?v=U56cWrIr6xg\",\n  \"@type\": \"VideoObject\"\n },\n \"recipeYield\": [\n  \"4\"\n ],\n \"prepTime\": \"PT15M\",\n \"cookTime\": \"PT30M\",\n \"totalTime\": \"PT40M\",\n \"recipeIngredient\": [\n  \"1 tablespoon (15 ml)  oil\",\n  \"2  green cardamoms ( (or \\u00bc to \\u2153 tsp ground cardamom, elaichi))\",\n  \"1 cup (130 grams)  onions  ((sliced or diced from 1 medium yellow or 2 small red onions))\",\n  \"1 inch (10 grams)   ginger  ((peeled &amp; sliced or use 1\\u00bd to 2 teaspoon ginger garlic paste, read notes))\",\n  \"5 to 6 (12 grams)  large  garlic cloves  ((peeled, omit to use gg paste))\",\n  \"2 cups (350 grams)  tomatoes  ((sliced, use up to 420 grams from 2 large or 4 medium))\",\n  \"15 (30 grams)  whole cashew nuts  ((use up to 18 nuts/ 36 g if using more tomatoes or use almonds))\",\n  \"1 teaspoon sea salt ( (adjust to taste))\",\n  \"1 teaspoon jaggery/ sugar ( (optional))\",\n  \"\\u00be to 1 teaspoon Kashmiri red chilli powder ((or paprika) (adjust to heat &amp; color preference))\",\n  \"\\u00be to 1 teaspoon garam masala ( (adjust to taste))\",\n  \"1 teaspoon coriander powder  ((daniya powder) (optional))\",\n  \"1 cup (240 ml)  cold water  ((to blend))\",\n  \"2 tablespoons (30 grams)  unsalted butter\",\n  \"1 small  bay leaf ((tej patta, optional))\",\n  \"2 inch Ceylon cinnamon piece ((or 1 inch dalchini, optional))\",\n  \"3  cloves ((laung, optional))\",\n  \"250 to 300 grams (9 to 10 oz)  paneer  ((I cut mine to \\u00be inch))\",\n  \"\\u00bd tablespoon kasuri methi ( (dried fenugreek leaves, crushed))\",\n  \"3 to 4 tablespoons  (45 to 60 ml)   heavy cream ((sub with fresh cream, cooking cream or thickened cream))\",\n  \"1 to 2 tablespoon coriander leaves ( (cilantro finely chopped, to garnish))\"\n ],\n \"recipeInstructions\": [\n  {\n   \"@type\": \"HowToSection\",\n   \"name\": \"To saute & puree\",\n   \"itemListElement\": [\n    {\n     \"@type\": \"HowToStep\",\n     \"text\": \"Pour oil to a pan and add cardamoms, onions, ginger and garlic. Saute for 4 to 5 mins, until the onions turn transparent.\",\n     \"name\": \"Pour oil to a pan and add cardamoms, onions, ginger and garlic. Saute for 4 to 5 mins, until the onions turn transparent.\",\n     \"url\": \"https://www.indianhealthyrecipes.com/paneer-butter-masala-restaurant-style/#wprm-recipe-38268-step-0-0\"\n    },\n    {\n     \"@type\": \"HowToStep\",\n     \"text\": \"Add tomatoes, salt and cashews. Mix well and cook covered until the tomatoes turn mushy and break down. (Takes me about 7 mins on a medium heat. If your pan is dry, add a splash of water).\",\n     \"name\": \"Add tomatoes, salt and cashews. Mix well and cook covered until the tomatoes turn mushy and break down. (Takes me about 7 mins on a medium heat. If your pan is dry, add a splash of water).\",\n     \"url\": \"https://www.indianhealthyrecipes.com/paneer-butter-masala-restaurant-style/#wprm-recipe-38268-step-0-1\"\n    },\n    {\n     \"@type\": \"HowToStep\",\n     \"text\": \"Stir in the red chili powder, coriander powder and garam masala. Saute on a medium heat for 3 to 4 mins, until aromatic. Turn off and cool down.\",\n     \"name\": \"Stir in the red chili powder, coriander powder and garam masala. Saute on a medium heat for 3 to 4 mins, until aromatic. Turn off and cool down.\",\n     \"url\": \"https://www.indianhealthyrecipes.com/paneer-butter-masala-restaurant-style/#wprm-recipe-38268-step-0-2\"\n    },\n    {\n     \"@type\": \"HowToStep\",\n     \"text\": \"Pour 1 cup cold water to a blender jar & transfer the onion tomato masala. Blend to a silky smooth puree.\",\n     \"name\": \"Pour 1 cup cold water to a blender jar & transfer the onion tomato masala. Blend to a silky smooth puree.\",\n     \"url\": \"https://www.indianhealthyrecipes.com/paneer-butter-masala-restaurant-style/#wprm-recipe-38268-step-0-3\"\n    }\n   ]\n  },\n  {\n   \"@type\": \"HowToSection\",\n   \"name\": \"Make Paneer Butter Masala\",\n   \"itemListElement\": [\n    {\n     \"@type\": \"HowToStep\",\n     \"text\": \"On a low heat, melt butter in the same pan and add the optional whole spices if using \\u2013 bay leaf, cinnamon and cloves.\",\n     \"name\": \"On a low heat, melt butter in the same pan and add the optional whole spices if using \\u2013 bay leaf, cinnamon and cloves.\",\n     \"url\": \"https://www.indianhealthyrecipes.com/paneer-butter-masala-restaurant-style/#wprm-recipe-38268-step-1-0\"\n    },\n    {\n     \"@type\": \"HowToStep\",\n     \"text\": \"When they begin to sizzle, stir in the optional red chili powder. Hold a strainer over the pan and pour the onion tomato masala. Stir with a spoon to strain.\",\n     \"name\": \"When they begin to sizzle, stir in the optional red chili powder. Hold a strainer over the pan and pour the onion tomato masala. Stir with a spoon to strain.\",\n     \"url\": \"https://www.indianhealthyrecipes.com/paneer-butter-masala-restaurant-style/#wprm-recipe-38268-step-1-1\"\n    },\n    {\n     \"@type\": \"HowToStep\",\n     \"text\": \"Pour \\u00bd cup more water &amp; mix well. Cook covered on a medium heat until slightly thick, yet flowy. It will thicken upon cooling.  (Takes about 10 to 12 mins, keep stirring every 3 to 4 mins). You will see traces of fat on the butter masala when it is ready.\",\n     \"name\": \"Pour \\u00bd cup more water &amp; mix well. Cook covered on a medium heat until slightly thick, yet flowy. It will thicken upon cooling.  (Takes about 10 to 12 mins, keep stirring every 3 to 4 mins). You will see traces of fat on the butter masala when it is ready.\",\n     \"url\": \"https://www.indianhealthyrecipes.com/paneer-butter-masala-restaurant-style/#wprm-recipe-38268-step-1-2\"\n    },\n    {\n     \"@type\": \"HowToStep\",\n     \"text\": \"Remove the whole spices to discard and taste test to adjust salt and garam masala. Stir in the jaggery, kasuri methi &amp; paneer. Cook covered for 2 to 3 mins on a low heat and turn off. Stir in the cream (reserve a tablespoon to garnish).\",\n     \"name\": \"Remove the whole spices to discard and taste test to adjust salt and garam masala. Stir in the jaggery, kasuri methi &amp; paneer. Cook covered for 2 to 3 mins on a low heat and turn off. Stir in the cream (reserve a tablespoon to garnish).\",\n     \"url\": \"https://www.indianhealthyrecipes.com/paneer-butter-masala-restaurant-style/#wprm-recipe-38268-step-1-3\"\n    },\n    {\n     \"@type\": \"HowToStep\",\n     \"text\": \"Garnish paneer butter masala with cream and chopped coriander leaves. Best served with Basmati Rice, Jeera Rice, Butter Naan, Tandoori Roti or plain parathas.\",\n     \"name\": \"Garnish paneer butter masala with cream and chopped coriander leaves. Best served with Basmati Rice, Jeera Rice, Butter Naan, Tandoori Roti or plain parathas.\",\n     \"url\": \"https://www.indianhealthyrecipes.com/paneer-butter-masala-restaurant-style/#wprm-recipe-38268-step-1-4\"\n    }\n   ]\n  }\n ],\n \"aggregateRating\": {\n  \"@type\": \"AggregateRating\",\n  \"ratingValue\": \"4.98\",\n  \"ratingCount\": \"1584\",\n  \"reviewCount\": \"6\"\n },\n \"review\": [\n  {\n   \"@type\": \"Review\",\n   \"reviewRating\": {\n    \"@type\": \"Rating\",\n    \"ratingValue\": \"5\"\n   },\n   \"reviewBody\": \"I made this for my sister's house warming and this was a show stopper. Thank you Swasthi\",\n   \"author\": {\n    \"@type\": \"Person\",\n    \"name\": \"Mohana\"\n   },\n   \"datePublished\": \"2026-08-06\"\n  },\n  {\n   \"@type\": \"Review\",\n   \"reviewRating\": {\n    \"@type\": \"Rating\",\n    \"ratingValue\": \"5\"\n   },\n   \"reviewBody\": \"Swathi, thank you for your beautiful recipes, they are easy to follow and turn out delicious.. especially for a nervous chef your recipes are a blessing! I have tried making this specific one before and came perfect, however today it has turned out a little grainy and yellowish orange instead of the expected creamy red-orange - how do i fix that? Thank you! Any help is greatly appreciated!\",\n   \"author\": {\n    \"@type\": \"Person\",\n    \"name\": \"Kranti\"\n   },\n   \"datePublished\": \"2026-08-05\"\n  },\n  {\n   \"@type\": \"Review\",\n   \"reviewRating\": {\n    \"@type\": \"Rating\",\n    \"ratingValue\": \"5\"\n   },\n   \"reviewBody\": \"I've been following your website for a very long-time and this is one of my favorite paneer dishes. I love how you post the quantities in grams and that helps to scale the recipes well. We made a large batch to serve 16 people and that turned out wonderful. Will be adding paneer, methi and cream on the day of serving. I'll be making goli baje, mango sheera and tehri. Thank you for the beautiful work.\",\n   \"author\": {\n    \"@type\": \"Person\",\n    \"name\": \"Nandini Roy\"\n   },\n   \"datePublished\": \"2026-08-03\"\n  },\n  {\n   \"@type\": \"Review\",\n   \"reviewRating\": {\n    \"@type\": \"Rating\",\n    \"ratingValue\": \"5\"\n   },\n   \"reviewBody\": \"Amazing foolproof recipe!! This was super delicious\",\n   \"author\": {\n    \"@type\": \"Person\",\n    \"name\": \"Carmen\"\n   },\n   \"datePublished\": \"2026-07-26\"\n  },\n  {\n   \"@type\": \"Review\",\n   \"reviewRating\": {\n    \"@type\": \"Rating\",\n    \"ratingValue\": \"5\"\n   },\n   \"reviewBody\": \"Made a huge batch of this paneer makhani and used butter and ground cashews for the richest flavor combo. I followed her recipe 98% of the way, with maybe slightly less garlic and more ginger, but left out Kasuri Methi, as mine was old and not flavorful or fragrant.  This is certainly the best recipe I\\u2019ve used online. I used a good quantity of chili powder as we like the heat, and the flavors still shined through. I also cooked my onions very well so they would carmelize and become sweeter before I added tomatoes.  We have leftovers and definitely will enjoy this tomorrow. First time making using her recipe\\u2026.. I will add this to my rotation because it\\u2019s superb!!\",\n   \"author\": {\n    \"@type\": \"Person\",\n    \"name\": \"Kimberly\"\n   },\n   \"datePublished\": \"2026-07-25\"\n  },\n  {\n   \"@type\": \"Review\",\n   \"reviewRating\": {\n    \"@type\": \"Rating\",\n    \"ratingValue\": \"5\"\n   },\n   \"reviewBody\": \"Best recipe! I made this many times and get rave reviews from my friends. Thank you for such a fantastic recipe.\",\n   \"author\": {\n    \"@type\": \"Person\",\n    \"name\": \"Julian\"\n   },\n   \"datePublished\": \"2026-07-25\"\n  }\n ],\n \"recipeCategory\": [\n  \"Main Course\"\n ],\n \"recipeCuisine\": [\n  \"North Indian\"\n ],\n \"keywords\": \"butter paneer, how to make paneer butter masala, paneer butter masala, paneer butter masala recipe\",\n \"nutrition\": {\n  \"@type\": \"NutritionInformation\",\n  \"calories\": \"347 kcal\",\n  \"carbohydrateContent\": \"11 g\",\n  \"proteinContent\": \"10 g\",\n  \"fatContent\": \"29 g\",\n  \"saturatedFatContent\": \"15 g\",\n  \"cholesterolContent\": \"68 mg\",\n  \"sodiumContent\": \"77 mg\",\n  \"fiberContent\": \"2 g\",\n  \"sugarContent\": \"4 g\",\n  \"servingSize\": \"1 serving\"\n },\n \"@id\": \"https://www.indianhealthyrecipes.com/paneer-butter-masala-restaurant-style/#recipe\",\n \"isPartOf\": {\n  \"@id\": \"https://www.indianhealthyrecipes.com/paneer-butter-masala-restaurant-style/#arti",
+  "sourceNotes": "The source lists totalTime as PT40M but prepTime (15M) + cookTime (30M) = 45M. The 40M figure is used as given; the discrepancy is the source's own. The ½ cup water added in the simmering step is listed only in the instructions, not the ingredient list — it has been added as i14. Read from the page's structured recipe data.",
+  "confidence": "high"
+}

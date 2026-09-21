@@ -1,0 +1,326 @@
+{
+  "id": "selena-v-salted-maple-banana-bread",
+  "title": "Salted Maple Banana Bread",
+  "description": "An enormous, supremely moist banana bread from @theselena_v, made with browned butter, brown sugar, ripe bananas, buttermilk, and molasses, finished straight from the oven with Grade A maple syrup and a sprinkle of flaky salt. Makes multiple XL loaves.",
+  "source": {
+    "type": "instagram",
+    "url": "https://www.instagram.com/reel/DdhGNDpRDen/?stkn=NndlOHlxODl3dTNw",
+    "author": "Butter Luck Next Time",
+    "addedBy": "JDW818"
+  },
+  "dateAdded": "2026-09-21",
+  "status": "pending",
+  "recipeType": "meal",
+  "componentOf": [],
+  "yield": "Multiple XL loaves (recipe makes an obscene amount)",
+  "cuisine": "American",
+  "tags": [
+    "banana bread",
+    "baking",
+    "breakfast",
+    "brunch",
+    "freezer-friendly",
+    "sweet",
+    "large-batch"
+  ],
+  "mainProtein": "none",
+  "equipment": [
+    "stand mixer or hand mixer",
+    "XL loaf pans",
+    "large mixing bowls",
+    "kitchen scale",
+    "whisk",
+    "pastry brush",
+    "instant-read thermometer"
+  ],
+  "activeTimeMin": 40,
+  "totalTimeMin": 190,
+  "serves": null,
+  "vegetarian": {
+    "status": "inherently-veg",
+    "notes": null,
+    "swaps": []
+  },
+  "ingredients": [
+    {
+      "id": "i01",
+      "qty": 595,
+      "unit": "g",
+      "item": "unsalted butter",
+      "prep": "room temperature",
+      "note": null,
+      "section": "dairy",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i02",
+      "qty": 800,
+      "unit": "g",
+      "item": "light brown sugar",
+      "prep": null,
+      "note": null,
+      "section": "pantry",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i03",
+      "qty": 250,
+      "unit": "g",
+      "item": "white granulated sugar",
+      "prep": null,
+      "note": null,
+      "section": "pantry",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i04",
+      "qty": 1190,
+      "unit": "g",
+      "item": "ripe bananas",
+      "prep": "mashed",
+      "note": "Transcript says approximately 12 bananas; caption amount 1190 g is authoritative. Use very ripe bananas.",
+      "section": "produce",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i05",
+      "qty": 7,
+      "unit": null,
+      "item": "eggs",
+      "prep": "room temperature",
+      "note": null,
+      "section": "dairy",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i06",
+      "qty": 20,
+      "unit": "g",
+      "item": "molasses",
+      "prep": null,
+      "note": null,
+      "section": "pantry",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i07",
+      "qty": 20,
+      "unit": "g",
+      "item": "vanilla extract",
+      "prep": null,
+      "note": null,
+      "section": "pantry",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i08",
+      "qty": 875,
+      "unit": "g",
+      "item": "all-purpose flour",
+      "prep": null,
+      "note": null,
+      "section": "pantry",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i09",
+      "qty": 18,
+      "unit": "g",
+      "item": "baking soda",
+      "prep": null,
+      "note": null,
+      "section": "pantry",
+      "vague": false,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i10",
+      "qty": 18,
+      "unit": "g",
+      "item": "kosher salt",
+      "prep": null,
+      "note": "Author notes they may increase salt next time to further bring out banana flavor.",
+      "section": "spices",
+      "vague": false,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i11",
+      "qty": 16,
+      "unit": "oz",
+      "item": "buttermilk",
+      "prep": null,
+      "note": null,
+      "section": "dairy",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i12",
+      "qty": null,
+      "unit": null,
+      "item": "Grade A maple syrup",
+      "prep": null,
+      "note": "Caption says \"a full half cup per loaf\" per transcript; caption instructs to splurge on the best quality. Exact total quantity depends on number of loaves.",
+      "section": "pantry",
+      "vague": true,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i13",
+      "qty": null,
+      "unit": null,
+      "item": "flaky salt (maldon or similar)",
+      "prep": null,
+      "note": "Transcript says \"malt and salt\" which is interpreted as flaky/maldon salt; qty not given in caption or transcript.",
+      "section": "spices",
+      "vague": true,
+      "optional": false,
+      "scalable": false
+    }
+  ],
+  "steps": [
+    {
+      "id": "s01",
+      "title": "Beat butter and sugars",
+      "text": "In the largest bowl or stand mixer you have, beat {i01} with {i02} and {i03} until light and fluffy.",
+      "timerSeconds": null,
+      "unattended": false,
+      "ingredientIds": [
+        "i01",
+        "i02",
+        "i03"
+      ]
+    },
+    {
+      "id": "s02",
+      "title": "Add mashed bananas",
+      "text": "Add {i04} to the butter-sugar mixture and mix in. The batter will look severely split and curdled — this is normal. Trust the process.",
+      "timerSeconds": null,
+      "unattended": false,
+      "ingredientIds": [
+        "i04"
+      ]
+    },
+    {
+      "id": "s03",
+      "title": "Add eggs, molasses, and vanilla",
+      "text": "Add {i05} one at a time, then mix in {i06} and {i07} until combined.",
+      "timerSeconds": null,
+      "unattended": false,
+      "ingredientIds": [
+        "i05",
+        "i06",
+        "i07"
+      ]
+    },
+    {
+      "id": "s04",
+      "title": "Whisk dry ingredients",
+      "text": "In a separate bowl, whisk together {i08}, {i09}, and {i10} until evenly combined.",
+      "timerSeconds": null,
+      "unattended": false,
+      "ingredientIds": [
+        "i08",
+        "i09",
+        "i10"
+      ]
+    },
+    {
+      "id": "s05",
+      "title": "Fold dry into wet",
+      "text": "Add the dry ingredients to the wet ingredients and fold together until just incorporated. Do not overmix.",
+      "timerSeconds": null,
+      "unattended": false,
+      "ingredientIds": [
+        "i08",
+        "i09",
+        "i10"
+      ]
+    },
+    {
+      "id": "s06",
+      "title": "Stream in buttermilk",
+      "text": "Add {i11} a half cup at a time, folding gently after each addition until the batter reaches a smooth, cohesive texture.",
+      "timerSeconds": null,
+      "unattended": false,
+      "ingredientIds": [
+        "i11"
+      ]
+    },
+    {
+      "id": "s07",
+      "title": "Preheat oven and prepare pans",
+      "text": "Preheat oven to 325°F. Grease XL loaf pans (Pullman pans work well but any XL loaf pan is fine). Divide batter evenly among the pans.",
+      "timerSeconds": null,
+      "unattended": false,
+      "ingredientIds": []
+    },
+    {
+      "id": "s08",
+      "title": "Bake",
+      "text": "Bake at 325°F. Begin checking the loaves around 90 minutes (transcript says the baker starts checking at 1 hour 20 minutes). Continue baking until an instant-read thermometer inserted into the center reads 160°F — total bake time was approximately 2 hours 30 minutes for this large batch. Tent with foil if tops are browning too fast.",
+      "timerSeconds": 9000,
+      "unattended": true,
+      "ingredientIds": []
+    },
+    {
+      "id": "s09",
+      "title": "Brush with maple syrup",
+      "text": "Immediately out of the oven, generously brush {i12} over the top of each hot loaf — approximately a half cup per loaf. Use the best quality Grade A maple syrup you can find.",
+      "timerSeconds": null,
+      "unattended": false,
+      "ingredientIds": [
+        "i12"
+      ]
+    },
+    {
+      "id": "s10",
+      "title": "Finish with flaky salt",
+      "text": "While the maple syrup is still wet, sprinkle {i13} over the top of each loaf.",
+      "timerSeconds": null,
+      "unattended": false,
+      "ingredientIds": [
+        "i13"
+      ]
+    },
+    {
+      "id": "s11",
+      "title": "Cool, slice, and store",
+      "text": "Allow loaves to cool before slicing. Any extras can be wrapped tightly and frozen; thaw at room temperature. Author notes frozen-then-thawed loaves may be even more moist.",
+      "timerSeconds": null,
+      "unattended": true,
+      "ingredientIds": []
+    }
+  ],
+  "household": {
+    "lastCooked": null,
+    "timesCooked": null,
+    "ratings": {},
+    "kidNotes": null,
+    "inRotation": true
+  },
+  "rawText": "CAPTION (as written by the author -- trust these amounts):\nIf you don’t know about @theselena_v ’s Banana Bread recipe….. now you do. I will shout this recipe from the rooftops. \n\nThis banana bread recipe does make an obscene amount of banana bread but it’s well worth the investment into some XL loaf pans. The butter and buttermilk bring crazy moisture along with the added molasses for flavor….. it’s a stellar recipe. \n\nOne note: I think I probably ended up baking these for about 2 hours and 30 minutes….. Theres a lot of batter there. Keep an eye on your loaves around 90 minutes and go from there until the interior reaches 160 degrees. Also, next time, I think I might increase the amount of salt to further bring out the banana flavor…. Food for thought. \n\nStraight out of the oven start brushing on that GRADE A maple syrup. You want to splurge on the best maple syrup you can find. If nothing else, to honor the patience and hard work you put in to making these loaves. \n\nI highly recommend giving this recipe a try. If you have extras, go ahead and wrap them up to freeze and thaw at room temp…. I have never had extras but apparently thawing them from frozen makes them even more moist…… \n\nPeace and love, \nMadison\n\nSPOKEN TRANSCRIPT (what they say in the video -- the method is usually here, and often includes steps the caption omits):\nThat's the best banana bread I've ever had in my entire life. And I'm me. I've made a lot of banana bread. There are two things in this world that I do not play about. One is my man. Two is my banana bread. This is my salted maple banana bread. I was sold from the second that I saw this video. This is my second time making this banana bread now. It is good. It's really good. She's got a great recipe. Let's get into it. We're gonna be 595 grams of unsalted butter with 800 grams of light brown sugar and 250 grams of white sugar. I don't have a bowl that's gonna be big enough to fit all this, so we're just gonna pray. Ha ha ha! Butter and sugars are beaten. Add 1,190 grams of bananas mashed up. Panorso bananas. Air towards 12. If you're getting them specifically for this, add these to here and mix it up. Be aware that it's gonna look super split. And not to worry about it. Yay! Okay, so she was not lying. It does look crazy split. Trusting the process. In goes seven eggs from temp, obviously. 20 grams of molasses and 20 grams of vanilla. A separate bowl. I have 875 grams of AP flour. 18 grams of baking soda and 18 grams kosher salt. Whisk that all together. I'm gonna have to cut off your view because I have to use this ginormous bowl. Add my dry. Add my wets, who my dries and fold it in. This is the biggest bowl that I have. So, well, I think that it's folded enough. We're going to add 16 ounces of buttermilk, a half a cup at a time. Let's see if we can get the texture right. Guess we'll see. I think we're finally done mixing. I hope these are XL Pullman loaf pans. They don't have to be Pullman, but they do need to be XL loaf pans. Here we go. Ah! Ah! These are going into the oven at 325. And I'm going to start taking a look at them around an hour and 20 minutes. It's going to take a while. Straight out of the oven, we are going to brush on a full half cup of maple syrup onto each of these loaves. Sprinkle over top, some malt and salt. I'm going to cut into it. It is so moist. This is outrageous. That's the best banana bread I've ever had in my entire life. And I'm me. I've made a lot of banana bread.",
+  "sourceNotes": "The transcript says to start checking the loaves at 1 hour 20 minutes; the caption says around 90 minutes — followed caption wording in the step but noted the transcript's earlier check time. The transcript's phrase 'malt and salt' is ambiguous speech recognition; interpreted as flaky/maldon salt based on context (the recipe is called 'salted maple' and no malt ingredient appears anywhere in the caption). The maple syrup quantity per loaf ('a full half cup per loaf') comes from the transcript only; the caption does not specify an amount. Built from the caption and the voiceover together -- check amounts before cooking.",
+  "confidence": "medium"
+}

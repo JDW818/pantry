@@ -1,0 +1,252 @@
+{
+  "id": "creamy-lemon-pepper-chickpea-skillet",
+  "title": "Creamy Lemon Pepper Chickpea Skillet",
+  "description": "This 20-minute lemon pepper chickpea skillet dinner is about to earn a spot in your dinner rotation! Creamy, zesty, and full of flavor.",
+  "source": {
+    "type": "web",
+    "url": "https://www.liveeatlearn.com/lemon-pepper-chickpeas/",
+    "author": "www.liveeatlearn.com",
+    "addedBy": "JDW818"
+  },
+  "dateAdded": "2026-09-21",
+  "status": "pending",
+  "recipeType": "meal",
+  "componentOf": [],
+  "yield": "4 servings",
+  "cuisine": "Mediterranean",
+  "tags": [
+    "chickpea",
+    "skillet",
+    "vegetarian",
+    "20-minute",
+    "weeknight",
+    "creamy"
+  ],
+  "mainProtein": "chickpeas",
+  "equipment": [
+    "large saucepan"
+  ],
+  "activeTimeMin": 15,
+  "totalTimeMin": 20,
+  "serves": 4,
+  "vegetarian": {
+    "status": "easily-adaptable",
+    "notes": "Swap the Parmesan for a vegetarian-certified Parmesan (look for 'vegetarian rennet' on the label) — same quantity, stir in at the same step. Everything else is already vegetarian.",
+    "swaps": [
+      {
+        "ingredientId": "i10",
+        "with": "vegetarian-certified Parmesan"
+      }
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "i01",
+      "qty": 2,
+      "unit": "tbsp",
+      "item": "unsalted butter",
+      "prep": null,
+      "note": "28 g",
+      "section": "dairy",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i02",
+      "qty": 2,
+      "unit": "cloves",
+      "item": "garlic",
+      "prep": "minced",
+      "note": null,
+      "section": "produce",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i03",
+      "qty": 2,
+      "unit": "tsp",
+      "item": "lemon pepper seasoning",
+      "prep": null,
+      "note": null,
+      "section": "spices",
+      "vague": false,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i04",
+      "qty": 0.5,
+      "unit": "tsp",
+      "item": "salt",
+      "prep": null,
+      "note": "½ tsp each salt and mustard powder",
+      "section": "spices",
+      "vague": false,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i05",
+      "qty": 0.5,
+      "unit": "tsp",
+      "item": "mustard powder",
+      "prep": null,
+      "note": "½ tsp each salt and mustard powder",
+      "section": "spices",
+      "vague": false,
+      "optional": false,
+      "scalable": false
+    },
+    {
+      "id": "i06",
+      "qty": 2,
+      "unit": "tbsp",
+      "item": "all-purpose flour",
+      "prep": null,
+      "note": null,
+      "section": "pantry",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i07",
+      "qty": 1,
+      "unit": "cup",
+      "item": "vegetable broth",
+      "prep": null,
+      "note": "236 mL",
+      "section": "canned",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i08",
+      "qty": 2,
+      "unit": "15-oz cans",
+      "item": "chickpeas",
+      "prep": "drained",
+      "note": "425 g cans",
+      "section": "canned",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i09",
+      "qty": 1,
+      "unit": "cup",
+      "item": "heavy cream",
+      "prep": null,
+      "note": "236 mL",
+      "section": "dairy",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i10",
+      "qty": 0.5,
+      "unit": "cup",
+      "item": "Parmesan",
+      "prep": "freshly grated",
+      "note": "Traditional Parmesan uses animal rennet; use a vegetarian-certified alternative",
+      "section": "dairy",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i11",
+      "qty": 0.25,
+      "unit": "cup",
+      "item": "Italian parsley",
+      "prep": "chopped",
+      "note": null,
+      "section": "produce",
+      "vague": false,
+      "optional": false,
+      "scalable": true
+    },
+    {
+      "id": "i12",
+      "qty": null,
+      "unit": null,
+      "item": "lemon slices",
+      "prep": null,
+      "note": "to serve",
+      "section": "produce",
+      "vague": true,
+      "optional": true,
+      "scalable": false
+    },
+    {
+      "id": "i13",
+      "qty": null,
+      "unit": null,
+      "item": "coarsely ground black pepper",
+      "prep": null,
+      "note": "to serve",
+      "section": "spices",
+      "vague": true,
+      "optional": true,
+      "scalable": false
+    }
+  ],
+  "steps": [
+    {
+      "id": "s01",
+      "title": "Build Flavor Base",
+      "text": "Melt {i01} in a large saucepan over medium heat. Add {i02}, {i03}, {i04}, and {i05}. Cook for 1 to 2 minutes, or until garlic is fragrant.",
+      "timerSeconds": 90,
+      "unattended": false,
+      "ingredientIds": [
+        "i01",
+        "i02",
+        "i03",
+        "i04",
+        "i05"
+      ]
+    },
+    {
+      "id": "s02",
+      "title": "Make Sauce and Simmer Chickpeas",
+      "text": "Stir in {i06} until combined, then slowly drizzle in {i07}. Bring to a gentle simmer until sauce thickens. Stir in {i08} (drained), cover, and let simmer for about 5 minutes.",
+      "timerSeconds": 300,
+      "unattended": false,
+      "ingredientIds": [
+        "i06",
+        "i07",
+        "i08"
+      ]
+    },
+    {
+      "id": "s03",
+      "title": "Finish and Garnish",
+      "text": "Remove pan from the heat then stir in {i09}, {i10}, and {i11}. Garnish with {i12} and {i13}. (Sauce will continue to thicken as it cools.)",
+      "timerSeconds": null,
+      "unattended": false,
+      "ingredientIds": [
+        "i09",
+        "i10",
+        "i11",
+        "i12",
+        "i13"
+      ]
+    }
+  ],
+  "household": {
+    "lastCooked": null,
+    "timesCooked": null,
+    "ratings": {},
+    "kidNotes": null,
+    "inRotation": true
+  },
+  "rawText": "{\n \"@type\": \"Recipe\",\n \"name\": \"Creamy Lemon Pepper Chickpea Skillet\",\n \"author\": {\n  \"@id\": \"https://www.liveeatlearn.com/#/schema/person/33a4a3d84c1dee069d08677ee885218b\"\n },\n \"description\": \"This 20-minute lemon pepper chickpea skillet dinner is about to earn a spot in your dinner rotation! Creamy, zesty, and full of flavor.\",\n \"datePublished\": \"2025-02-28T18:34:45+00:00\",\n \"image\": [\n  \"https://www.liveeatlearn.com/wp-content/uploads/2025/02/lemon-pepper-chickpeas-14.jpg\",\n  \"https://www.liveeatlearn.com/wp-content/uploads/2025/02/lemon-pepper-chickpeas-14-500x500.jpg\",\n  \"https://www.liveeatlearn.com/wp-content/uploads/2025/02/lemon-pepper-chickpeas-14-500x375.jpg\",\n  \"https://www.liveeatlearn.com/wp-content/uploads/2025/02/lemon-pepper-chickpeas-14-480x270.jpg\"\n ],\n \"video\": {\n  \"name\": \"Creamy 20-Minute Lemon Pepper Chickpeas\",\n  \"description\": \"This creamy lemon pepper chickpea skillet is a quick and easy weeknight dinner that\\u2019s ready in just 20 minutes! Featuring protein-packed chickpeas in a smooth and creamy lemon pepper sauce, this dish balances tangy citrus seasoning, rich Parmesan cheese, and a buttery, garlicky base for ultimate comfort food vibes. Serve over pasta, rice, or with crusty bread for a flavorful vegetarian main dish that\\u2019s perfect for meal prep!\\n\\nGrab the full written recipe here:\\n\\nMy debut vegetarian cookbook is now available! This hardcover spiral-bound cookbook includes over 100 easy vegetarian recipes, and I can't wait for you to cook from it:\\n\\nInstagram:\\nTikTok:\\nFacebook:\\nPinterest:\",\n  \"uploadDate\": \"2025-03-01T00:52:13+00:00\",\n  \"duration\": \"PT30S\",\n  \"thumbnailUrl\": \"https://i.ytimg.com/vi/L3H4LIjFlao/hqdefault.jpg\",\n  \"embedUrl\": \"https://www.youtube.com/embed/L3H4LIjFlao?feature=oembed\",\n  \"contentUrl\": \"https://www.youtube.com/watch?v=L3H4LIjFlao\",\n  \"@type\": \"VideoObject\"\n },\n \"recipeYield\": [\n  \"4\",\n  \"4 servings\"\n ],\n \"prepTime\": \"PT5M\",\n \"cookTime\": \"PT15M\",\n \"totalTime\": \"PT20M\",\n \"recipeIngredient\": [\n  \"2 Tbsp unsalted butter (28 g)\",\n  \"2 cloves garlic (minced)\",\n  \"2 tsp lemon pepper seasoning\",\n  \"\\u00bd tsp each salt and mustard powder\",\n  \"2 Tbsp all-purpose flour\",\n  \"1 cup vegetable broth (236 mL)\",\n  \"2 15-oz cans chickpeas (drained, 425 g cans)\",\n  \"1 cup heavy cream (236 mL)\",\n  \"\\u00bd cup freshly grated Parmesan\",\n  \"\\u00bc cup chopped Italian parsley\",\n  \"To serve: lemon slices, coarsely ground black pepper\"\n ],\n \"recipeInstructions\": [\n  {\n   \"@type\": \"HowToStep\",\n   \"text\": \"Flavor Base: Melt  in a large saucepan over medium heat. Add  (minced), , and . Cook for 1 to 2 minutes, or until garlic is fragrant.\",\n   \"name\": \"Flavor Base\",\n   \"url\": \"https://www.liveeatlearn.com/lemon-pepper-chickpeas/#wprm-recipe-123041-step-0-0\",\n   \"image\": \"https://www.liveeatlearn.com/wp-content/uploads/2025/02/lemon-pepper-chickpeas-2.jpg\"\n  },\n  {\n   \"@type\": \"HowToStep\",\n   \"text\": \"Simmer: Stir in  until combined, then slowly drizzle in . Bring to a gentle simmer until sauce thickens. Stir in  (drained), cover, and let simmer for about 5 minutes.\",\n   \"name\": \"Simmer\",\n   \"url\": \"https://www.liveeatlearn.com/lemon-pepper-chickpeas/#wprm-recipe-123041-step-0-1\",\n   \"image\": \"https://www.liveeatlearn.com/wp-content/uploads/2025/02/lemon-pepper-chickpeas-3.jpg\"\n  },\n  {\n   \"@type\": \"HowToStep\",\n   \"text\": \"Finish: Remove pan from the heat then stir in , , and . Garnish with sliced lemons and freshly ground black pepper! (Sauce will continue to thicken as it cools.)\",\n   \"name\": \"Finish\",\n   \"url\": \"https://www.liveeatlearn.com/lemon-pepper-chickpeas/#wprm-recipe-123041-step-0-2\",\n   \"image\": \"https://www.liveeatlearn.com/wp-content/uploads/2025/02/lemon-pepper-chickpeas-4.jpg\"\n  }\n ],\n \"aggregateRating\": {\n  \"@type\": \"AggregateRating\",\n  \"ratingValue\": \"4.88\",\n  \"ratingCount\": \"116\",\n  \"reviewCount\": \"3\"\n },\n \"review\": [\n  {\n   \"@type\": \"Review\",\n   \"reviewRating\": {\n    \"@type\": \"Rating\",\n    \"ratingValue\": \"5\"\n   },\n   \"reviewBody\": \"We loved this!  I didn\\u2019t have dry mustard, but it was excellent without it. I substituted Oatmilk for heavy cream, and added fresh spinach at the end. Served over jasmine rice.  Quick to make and delicious!  Thank you for the recipe!\",\n   \"author\": {\n    \"@type\": \"Person\",\n    \"name\": \"Cherri\"\n   },\n   \"datePublished\": \"2025-03-18\"\n  },\n  {\n   \"@type\": \"Review\",\n   \"reviewRating\": {\n    \"@type\": \"Rating\",\n    \"ratingValue\": \"5\"\n   },\n   \"reviewBody\": \"I just made this recipe and it was delicious! I put the chickpeas over pasta like you suggested. I\\u2019m definitely going to make this again soon. Thanks for sharing!\",\n   \"author\": {\n    \"@type\": \"Person\",\n    \"name\": \"Jana\"\n   },\n   \"datePublished\": \"2025-03-02\"\n  },\n  {\n   \"@type\": \"Review\",\n   \"reviewRating\": {\n    \"@type\": \"Rating\",\n    \"ratingValue\": \"5\"\n   },\n   \"reviewBody\": \"Saw this recipe on Tiktok and I\\u2019m so glad I tried it! I added a shallot in with the garlic and had it over rice with roasted veggies. Definitely will be in my regular rotation of meals!\",\n   \"author\": {\n    \"@type\": \"Person\",\n    \"name\": \"Caitlin\"\n   },\n   \"datePublished\": \"2025-03-01\"\n  }\n ],\n \"recipeCategory\": [\n  \"Main Dishes\"\n ],\n \"recipeCuisine\": [\n  \"Mediterranean\"\n ],\n \"suitableForDiet\": [\n  \"https://schema.org/DiabeticDiet\",\n  \"https://schema.org/GlutenFreeDiet\",\n  \"https://schema.org/HalalDiet\",\n  \"https://schema.org/HinduDiet\",\n  \"https://schema.org/KosherDiet\",\n  \"https://schema.org/LowLactoseDiet\",\n  \"https://schema.org/VegetarianDiet\"\n ],\n \"keywords\": \"chickpea skillet, lemon pepper chickpeas, sweet chickpea recipes\",\n \"nutrition\": {\n  \"@type\": \"NutritionInformation\",\n  \"servingSize\": \"1 serving\",\n  \"calories\": \"520 kcal\",\n  \"carbohydrateContent\": \"41 g\",\n  \"proteinContent\": \"17 g\",\n  \"fatContent\": \"33 g\",\n  \"saturatedFatContent\": \"18 g\",\n  \"cholesterolContent\": \"85 mg\",\n  \"sodiumContent\": \"78 mg\",\n  \"fiberContent\": \"10 g\",\n  \"sugarContent\": \"4 g\",\n  \"unsaturatedFatContent\": \"12 g\"\n },\n \"@id\": \"https://www.liveeatlearn.com/lemon-pepper-chickpeas/#recipe\",\n \"isPartOf\": {\n  \"@id\": \"https://www.liveeatlearn.com/lemon-pepper-chickpeas/#article\"\n },\n \"mainEntityOfPage\": \"https://www.liveeatlearn.com/lemon-pepper-chickpeas/\"\n}",
+  "sourceNotes": "The structured recipe data had placeholder blanks in the step text where ingredient names were stripped out by the recipe plugin. Ingredients were matched to steps based on recipe order and culinary logic. Read from the page's structured recipe data.",
+  "confidence": "high"
+}
